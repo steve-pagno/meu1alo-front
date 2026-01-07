@@ -1,27 +1,46 @@
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../../../providers/auth/Auth';
+import HttpHelper  from '../../../helpers/HttpHelper';
+import { toast } from 'react-toastify';
 
-const useBasePasswordForgottenController = () => {
-    const { handleSubmit, register } = useForm();
-    const auth = useAuth();
+// Recebemos 'userType' como parâmetro na inicialização do hook
+const useBasePasswordForgottenController = (userType) => {
+    const { handleSubmit, register, formState: { errors, isSubmitting } } = useForm();
 
-    // A função onSubmit agora recebe apenas os dados do formulário
     const onSubmit = async (formData) => {
         try {
-            // Chama a função correta do contexto, passando o e-mail do formulário
-            await auth.sendPasswordResetEmail(formData.email);
+            // Validação de segurança simples no front
+            if (!userType) {
+                alert('Erro: Tipo de usuário não identificado.');
+                return;
+            }
 
-            // Dá um feedback para o usuário
-            alert('Se este e-mail estiver cadastrado, um link de recuperação foi enviado!');
+            // Chamada direta para a API Node.js que criamos
+            // Payload: { email: "...", userType: "therapist" }
+            const response = await HttpHelper.post('/users/recover-password', {
+                email: formData.email,
+                userType: userType 
+            });
+
+            if (response.httpStatus === 200) {
+                 // Sucesso
+                 alert('Se o e-mail estiver cadastrado, você receberá a nova senha em instantes.');
+                 // Se quiser redirecionar para login:
+                 // window.location.href = `/${userType}/login`;
+            } else {
+                 alert(response.result?.message || 'Erro ao solicitar senha.');
+            }
+
         } catch (error) {
-            // Lida com possíveis erros da API
-            console.error("Falha ao enviar e-mail de recuperação:", error);
-            alert('Ocorreu um erro. Por favor, tente novamente mais tarde.');
+            console.error("Erro na recuperação:", error);
+            alert('Não foi possível conectar ao servidor. Tente novamente.');
         }
     };
 
-    // O handleSubmit do react-hook-form já previne o comportamento padrão do formulário
-    return { onSubmit: handleSubmit(onSubmit), register };
+    return { 
+        onSubmit: handleSubmit(onSubmit), 
+        register,
+        loading: isSubmitting
+    };
 };
 
 export default useBasePasswordForgottenController;

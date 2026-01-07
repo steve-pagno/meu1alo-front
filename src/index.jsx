@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Route, Routes as RoutesRouter } from 'react-router-dom';
 import { createTheme, CssBaseline, responsiveFontSizes, ThemeProvider } from '@mui/material';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import HtmlHead from './components/HtmlHead';
 import TopBar from './components/TopBar';
 import { LoggerProvider } from './providers/genericLogger/GenericLogger';
@@ -26,6 +30,11 @@ const App = () => {
                     <LoggerProvider>
                         <CssBaseline/>
                         <HtmlHead/>
+                        
+                        {/* 2. ADICIONE O CONTAINER AQUI */}
+                        {/* Ele fica visível sobre qualquer rota */}
+                        <ToastContainer autoClose={3000} position="top-right" />
+
                         <BrowserRouter>
                             <RoutesRouter>
                                 <Route exact path={'/'} element={<Site/>} />

@@ -26,6 +26,7 @@ const Therapist = () => {
             baseRoute={'/fono'}
             userTypeTitle={'Fonoaudiólogo'}
             userTypeTitleWithConjunction={'do Fonoaudiólogo'}
+            userType="therapist"
             service={service}
             metaRoutesLink={MetaLinkMenu}
             withDashboard={true}

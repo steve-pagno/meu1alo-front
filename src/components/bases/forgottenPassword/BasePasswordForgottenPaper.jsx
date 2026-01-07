@@ -7,10 +7,13 @@ import HtmlHead from '../../HtmlHead';
 import useBasePasswordForgottenController from './useBasePasswordForgottenController';
 import useBasePasswordForgottenStyles from './useBasePasswordForgottenStyles';
 
-const BasePasswordForgottenPaper = ({ userTypeTitle }) => {
+// 1. Adicione 'userType' nas props recebidas
+const BasePasswordForgottenPaper = ({ userTypeTitle, userType }) => {
 
     const styles = useBasePasswordForgottenStyles();
-    const { onSubmit, register } = useBasePasswordForgottenController();
+    
+    // 2. Passe o 'userType' para o controller e pegue o 'loading'
+    const { onSubmit, register, loading } = useBasePasswordForgottenController(userType);
 
     return (
         <>
@@ -18,7 +21,6 @@ const BasePasswordForgottenPaper = ({ userTypeTitle }) => {
             <Grid container sx={styles.container}>
                 <Grid item xs={12} sm={12} md={6}>
                     <Paper sx={styles.paper}>
-                        {/* Adaptado para o formulário de recuperação */}
                         <form onSubmit={onSubmit}>
                             <Grid container spacing={2} justifyContent={'center'} alignItems={'center'}>
                                 <Grid item xs={12}>
@@ -28,7 +30,7 @@ const BasePasswordForgottenPaper = ({ userTypeTitle }) => {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Typography variant={'h6'} color={'primary'} style={styles.subtitle}>
-                                        Digite seu e-mail abaixo para enviarmos um link de recuperação de senha.
+                                        Digite seu e-mail abaixo para enviarmos uma nova senha.
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12}>
@@ -48,13 +50,13 @@ const BasePasswordForgottenPaper = ({ userTypeTitle }) => {
                                         color="secondary"
                                         type="submit"
                                         variant="contained"
-                                        fullWidth // Botão ocupa a largura toda
+                                        fullWidth
+                                        disabled={loading} // 3. Desabilita se estiver carregando
                                     >
-                                        Enviar
+                                        {loading ? 'Enviando...' : 'Enviar'} 
                                     </Button>
                                 </Grid>
                                 <Grid item xs={12} sx={{ mt: 2 }}>
-                                    {/* Link para voltar, usando o padrão MUI + React Router */}
                                     <Link component={RouterLink} to={'../login'} variant="body2">
                                         Lembrou a senha? Voltar para o login
                                     </Link>

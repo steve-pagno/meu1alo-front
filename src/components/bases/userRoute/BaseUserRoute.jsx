@@ -10,7 +10,7 @@ import BasePasswordForgotten from '../forgottenPassword/BasePasswordForgottenPap
 import BaseHome from '../home/BaseHome';
 import BaseLoginPaper from '../login/BaseLoginPaper';
 
-const BaseUserRoute = ({ baseRoute, children, hasRegisterRoute, metaRoutesLink, service, userTypeTitle, userTypeTitleWithConjunction, withDashboard, withNotifications }) => {
+const BaseUserRoute = ({ baseRoute, children, hasRegisterRoute, metaRoutesLink, service, userTypeTitle, userTypeTitleWithConjunction, withDashboard, withNotifications, userType }) => {
     return (
         <AuthProvider service={service} baseRoute={baseRoute} loginRoute={`${baseRoute}/login`}>
             <TopBar
@@ -34,9 +34,13 @@ const BaseUserRoute = ({ baseRoute, children, hasRegisterRoute, metaRoutesLink, 
                         </RequireAuth>
                     } />
 
+                    {/* ✅ CORREÇÃO AQUI: Passando o userType para o componente */}
                     <Route path={'/esqueci-minha-senha'} element={
                         <RedirectIfAuth>
-                            <BasePasswordForgotten userTypeTitle={userTypeTitle} />
+                            <BasePasswordForgotten 
+                                userTypeTitle={userTypeTitle} 
+                                userType={userType} 
+                            />
                         </RedirectIfAuth>
                     } />
 
