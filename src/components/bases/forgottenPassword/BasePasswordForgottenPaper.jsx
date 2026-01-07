@@ -7,12 +7,10 @@ import HtmlHead from '../../HtmlHead';
 import useBasePasswordForgottenController from './useBasePasswordForgottenController';
 import useBasePasswordForgottenStyles from './useBasePasswordForgottenStyles';
 
-// 1. Adicione 'userType' nas props recebidas
 const BasePasswordForgottenPaper = ({ userTypeTitle, userType }) => {
 
     const styles = useBasePasswordForgottenStyles();
     
-    // 2. Passe o 'userType' para o controller e pegue o 'loading'
     const { onSubmit, register, loading } = useBasePasswordForgottenController(userType);
 
     return (
@@ -51,7 +49,7 @@ const BasePasswordForgottenPaper = ({ userTypeTitle, userType }) => {
                                         type="submit"
                                         variant="contained"
                                         fullWidth
-                                        disabled={loading} // 3. Desabilita se estiver carregando
+                                        disabled={loading}
                                     >
                                         {loading ? 'Enviando...' : 'Enviar'} 
                                     </Button>

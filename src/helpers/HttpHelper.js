@@ -53,6 +53,10 @@ const _genericFetch = (method, path, data, auth, accept = 'application/json') =>
     });
 };
 
-const makeUrl = (path) => import.meta.env.REACT_APP_SERVER_URL+'/'+path;
+const makeUrl = (path) => {
+    const baseUrl = import.meta.env.REACT_APP_SERVER_URL;
+    const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+    return `${baseUrl}/${cleanPath}`;
+};
 
 export default { deleted, get, login, logout, makeUrl, post, put };
