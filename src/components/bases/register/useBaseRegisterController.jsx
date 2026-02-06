@@ -7,6 +7,8 @@ const useBaseRegisterController = (serviceFunction, baseRoute) => {
     const onSubmit = (data) => {
         serviceFunction(data).then((response) => {
             if(response.isSuccess){
+                const message = response.result?.message || 'Cadastro realizado com sucesso!';
+                alert(message);
                 navigate(baseRoute);
             }
         });

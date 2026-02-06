@@ -106,7 +106,7 @@ const RegisterInstitutionUser = () => {
                 </React.Fragment>
             }
             {isRegisterInstitutionOpen === true &&
-                <RegisterInstitution register={register} watch={watch}/>
+                <RegisterInstitution register={register} setValue={setValue} watch={watch}/>
             }
         </BaseRegisterPaper>
     );

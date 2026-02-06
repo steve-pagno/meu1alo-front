@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Route, Routes as RoutesRouter } from 'react-router-dom';
 import { createTheme, CssBaseline, responsiveFontSizes, ThemeProvider } from '@mui/material';
-
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
