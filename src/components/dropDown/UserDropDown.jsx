@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, IconButton, ListItemIcon, Menu, MenuItem, Tooltip } from '@mui/material';
+import { Box, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Divider } from '@mui/material'; // Adicionado Divider
 import { AccountCircle as AccountCircleIcon, Logout as LogoutIcon } from '@mui/icons-material';
 import useUserDropDownController from './useUserDropDownController';
 import useUserDropDownStyles from './useUserDropDownStyles';
@@ -25,19 +25,8 @@ const UserDropDown = ({ editRoute, loginRoute, logoutRoute, withNotification }) 
         );
     }
 
-    const title = 'Você possui ' + notificationsNumber + ' notificações';
-
     return (
         <Box sx={styles.container}>
-            {/*{withNotification &&*/}
-            {/*    <Tooltip title={title} arrow>*/}
-            {/*        <IconButton color="inherit" component="span" aria-label={title}>*/}
-            {/*            <Badge badgeContent={notificationsNumber} color="secondary">*/}
-            {/*                <CommentIcon/>*/}
-            {/*            </Badge>*/}
-            {/*        </IconButton>*/}
-            {/*    </Tooltip>*/}
-            {/*}*/}
             <Tooltip title={'Minha conta'} arrow>
                 <IconButton color="inherit" component="span"
                     aria-label="Minha conta"
@@ -59,13 +48,16 @@ const UserDropDown = ({ editRoute, loginRoute, logoutRoute, withNotification }) 
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                {/*<MenuItem onClick={onClickUserName}>*/}
-                {/*    <ListItemIcon>*/}
-                {/*        <AccountCircleIcon fontSize="small" />*/}
-                {/*    </ListItemIcon>*/}
-                {/*    {user.name}*/}
-                {/*</MenuItem>*/}
-                {/*<Divider />*/}
+                {/* Opção Meu Perfil adicionada acima do Sair */}
+                <MenuItem onClick={onClickUserName}>
+                    <ListItemIcon>
+                        <AccountCircleIcon fontSize="small" />
+                    </ListItemIcon>
+                    Meu Perfil
+                </MenuItem>
+                
+                <Divider /> {/* Linha divisória para separar as ações */}
+
                 <MenuItem onClick={onClickExit}>
                     <ListItemIcon>
                         <LogoutIcon fontSize="small" />

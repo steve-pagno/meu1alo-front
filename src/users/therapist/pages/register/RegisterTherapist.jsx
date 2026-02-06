@@ -32,11 +32,20 @@ const RegisterTherapist = () => {
                     error={errors?.name}
                 />
             </Grid>
-            <UserFieldsRegister register={register} errors={errors}/>
+            <UserFieldsRegister register={register} errors={errors} />
             <Grid item xs={12} sm={12} md={6}>
                 <TextField
-                    {...register('crfa')} label="CRFa"
-                    inputProps={inputProps.crfa}
+                    {...register('crfa', {
+                        setValueAs: (v) => v.replace(/\D/g, ''),
+                        onChange: (e) => {
+                            const rawValue = e.target.value.replace(/\D/g, '');
+                            if (rawValue.length > 0) {
+                                e.target.value = rawValue.replace(/(\d{1})(\d{1,})/, '$1-$2');
+                            }
+                        }
+                    })}
+                    label="CRFa"
+                    inputProps={{ maxLength: 9 }}
                     variant="outlined" size="small" required
                     error={errors?.crfa}
                 />

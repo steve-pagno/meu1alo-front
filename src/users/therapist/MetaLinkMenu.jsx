@@ -3,7 +3,7 @@ import { AiOutlineTool } from 'react-icons/ai';
 import { BsFileEarmarkText } from 'react-icons/bs';
 import { GoGraph } from 'react-icons/go';
 import { TbCheckupList, TbPresentation } from 'react-icons/tb';
-import { Home } from '@mui/icons-material';
+import { Home, AccountCircle } from '@mui/icons-material'; // Adicionado AccountCircle
 
 const data = [
     {
@@ -20,21 +20,11 @@ const data = [
             },
             {
                 subOptions: [
-                    // {
-                    //     icon: <TbPresentation size={25}/>,
-                    //     label: 'Indicador',
-                    //     route: '/fono/indicador/cadastro'
-                    // },
                     {
                         icon: <BsFileEarmarkText size={25}/>,
                         label: 'Orientação',
                         route: '/fono/orientacao/cadastro'
                     },
-                    // {
-                    //     icon: <BsFileEarmarkText size={25}/>,
-                    //     label: 'Conduta',
-                    //     route: '/fono/conduta/cadastro'
-                    // },
                     {
                         icon: <AiOutlineTool size={27}/>,
                         label: 'Equipamento',
@@ -60,11 +50,6 @@ const data = [
             },
             {
                 subOptions: [
-                // {
-                //     icon: <FaBaby size={25}/>,
-                //     label: 'Bebês',
-                //     route: '/fono/bebe'
-                // },
                     {
                         icon: <TbPresentation size={25}/>,
                         label: 'Indicadores',
@@ -109,6 +94,12 @@ const data = [
                         icon: <Home size={25}/>,
                         label: 'Início Fonoaudiólogo',
                         route: '/fono'
+                    },
+                    // ADICIONADO AQUI: Permissão para a rota de perfil
+                    {
+                        icon: <AccountCircle size={25}/>,
+                        label: 'Meu Perfil',
+                        route: '/fono/perfil'
                     },
                 ],
                 subTitle: 'Página inicial'

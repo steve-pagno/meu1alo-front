@@ -1,6 +1,5 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
 import { CircularProgress, Grid, TextField, Typography } from '@mui/material';
 import AsyncRequest from '../../../../components/api/AsyncRequest';
 import BaseEditPaper from '../../../../components/bases/edit/BaseEditPaper';
@@ -10,8 +9,7 @@ import useTherapistService from '../../useTherapistService';
 
 const inputProps = {
     crfa: {
-        maxLength: '8',
-        pattern: '[0-9]+'
+        maxLength: '9', // Aumentado para 9 para suportar o hífen da máscara (0-000000)
     },
     general: {
         maxLength: '255'
@@ -21,14 +19,16 @@ const inputProps = {
 const EditTherapist = () => {
     const { formState: { errors }, handleSubmit, register, setValue } = useForm();
     const service = useTherapistService();
-    const { id } = useParams();
 
     return (
-        <BaseEditPaper title={'Fonoaudiólogo'}
+        <BaseEditPaper 
+            title={'Meu Perfil'}
             handleSubmit={handleSubmit}
             serviceFunction={service.update}
-            serviceGetFunction={service.get}
-            setValue={setValue} id={id}
+            // Alterado para a função que busca os dados do usuário logado
+            serviceGetFunction={service.getLoggedTherapist} 
+            setValue={setValue} 
+            // Removido o ID, pois o backend identificará o usuário pelo Token JWT
         >
             <Grid item xs={12} sm={12} md={6}>
                 <TextField
@@ -36,6 +36,7 @@ const EditTherapist = () => {
                     inputProps={inputProps.general}
                     variant="outlined" size="small"
                     InputLabelProps={{ shrink: true }} required
+                    error={errors?.name}
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
@@ -43,16 +44,27 @@ const EditTherapist = () => {
                     {...register('login')} label={'Login'}
                     variant="outlined" size="small"
                     inputProps={inputProps.general}
-                    helperText={<p>Nome que será usado para acessar a plataforma junto a senha</p>}
+                    helperText="Nome usado para acessar a plataforma"
                     InputLabelProps={{ shrink: true }} required
+                    error={errors?.login}
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
                 <TextField
-                    {...register('crfa')} label="CRFa"
+                    {...register('crfa', {
+                        setValueAs: (v) => v.replace(/\D/g, ''), // Envia apenas números ao banco
+                        onChange: (e) => {
+                            const rawValue = e.target.value.replace(/\D/g, '');
+                            if (rawValue.length > 0) {
+                                e.target.value = rawValue.replace(/(\d{1})(\d{1,})/, '$1-$2');
+                            }
+                        }
+                    })} 
+                    label="CRFa"
                     inputProps={inputProps.crfa}
                     variant="outlined" size="small"
                     InputLabelProps={{ shrink: true }} required
+                    error={errors?.crfa}
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
@@ -99,16 +111,21 @@ const EditTherapist = () => {
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-                <BrazilianPhoneField  register={register} name="phones.0" formErrors={errors}
-                    label="Telefone principal" variant="outlined" size="small"  InputLabelProps={{ shrink: true }} required
+                <BrazilianPhoneField  
+                    register={register} name="phones.0" formErrors={errors}
+                    label="Telefone principal" variant="outlined" size="small" 
+                    InputLabelProps={{ shrink: true }} required
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-                <BrazilianPhoneField  register={register} name="phones.1" formErrors={errors}
-                    label="Telefone alternativo" variant="outlined" size="small" InputLabelProps={{ shrink: true }}
+                <BrazilianPhoneField  
+                    register={register} name="phones.1" formErrors={errors}
+                    label="Telefone alternativo" variant="outlined" size="small" 
+                    InputLabelProps={{ shrink: true }}
                 />
             </Grid>
         </BaseEditPaper>
     );
 };
+
 export default EditTherapist;

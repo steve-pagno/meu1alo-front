@@ -32,13 +32,16 @@ const Therapist = () => {
             withDashboard={true}
             withNotifications={true}
             hasRegisterRoute={true}
+            // Adicionado para vincular o clique no UserDropDown à rota correta
+            editRoute={'/fono/perfil'} 
         >
             <Route path={'/cadastro'} element={
                 <RedirectIfAuth>
                     <RegisterTherapist />
                 </RedirectIfAuth>
             } />
-            <Route path={'/minha-conta/:id'} element={
+
+            <Route path={'/perfil'} element={
                 <RequireAuth>
                     <EditTherapist />
                 </RequireAuth>

@@ -209,4 +209,5 @@ const useTherapistService = () => {
     }
     return therapistServiceInstance;
 };
+
 export default useTherapistService;
