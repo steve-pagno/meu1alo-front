@@ -23,8 +23,9 @@ const useUserDropDownController = (editRoute, loginRoute, logoutRoute) => {
     };
 
     const onClickUserName = () => {
-        navigate(editRoute+auth.user.id);
+        navigate(editRoute);
     };
+
 
     const onClickExit = () => {
         auth.logout(logoutRoute);

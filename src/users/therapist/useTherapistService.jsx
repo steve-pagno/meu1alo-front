@@ -4,7 +4,7 @@ import HttpHelper from '../../helpers/HttpHelper';
 import { useGenericLogger } from '../../providers/genericLogger/GenericLogger';
 
 const TherapistService = (genericLog) => {
-    const generic = GenericService('therapist','therapistUser', genericLog);
+    const generic = GenericService('therapist', 'therapistUser', genericLog);
 
     const getAllInstitutions = () => {
         return HttpHelper.get('institution', generic.getUser().token).then(genericLog);
@@ -33,13 +33,13 @@ const TherapistService = (genericLog) => {
     const _getAllOrientations = (data, listAllActives) => {
         let params = '';
 
-        if(data){
-            if(data.description){
+        if (data) {
+            if (data.description) {
                 params += `description=${data.description}&`;
             }
         }
 
-        if(listAllActives){
+        if (listAllActives) {
             params += `listAllActives=${listAllActives}`;
         }
 
@@ -53,7 +53,7 @@ const TherapistService = (genericLog) => {
     const getAllIndicators = (data) => {
         let params = '';
 
-        if(data) {
+        if (data) {
             if (data.name) {
                 params += `?name=${data.name}`;
             }
@@ -77,21 +77,21 @@ const TherapistService = (genericLog) => {
     const _getAllEquipments = (data, listAllActives) => {
         let params = '';
 
-        if(data){
-            if(data.model){
+        if (data) {
+            if (data.model) {
                 params += `model=${data.model}&`;
             }
 
-            if (data.brand){
+            if (data.brand) {
                 params += `brand=${data.brand}&`;
             }
 
-            if(data.dateOfLastCalibration){
+            if (data.dateOfLastCalibration) {
                 params += `dateOfLastCalibration=${data.dateOfLastCalibration}`;
             }
         }
 
-        if(listAllActives){
+        if (listAllActives) {
             params += `listAllActives=${listAllActives}`;
         }
 
@@ -106,7 +106,7 @@ const TherapistService = (genericLog) => {
         let params = '';
         const typeAll = '4';
 
-        if(data) {
+        if (data) {
             if (data.rightEar !== typeAll) {
                 params += `rightEar=${data.rightEar}&`;
             }
@@ -130,7 +130,7 @@ const TherapistService = (genericLog) => {
     const getConduct = (data) => {
         let params = '';
 
-        if(data) {
+        if (data) {
             params += `${data.leftEar}/`;
             params += `${data.rightEar}/`;
             params += `${data.irda}/`;
@@ -148,19 +148,19 @@ const TherapistService = (genericLog) => {
         let params = '';
         const typeAll = '4';
 
-        if(data.rightEar !== typeAll){
+        if (data.rightEar !== typeAll) {
             params += `rightEar=${data.rightEar}`;
         }
 
-        if(data.leftEar !== typeAll){
+        if (data.leftEar !== typeAll) {
             params += `leftEar=${data.leftEar}&`;
         }
 
-        if(data.testType !== typeAll){
+        if (data.testType !== typeAll) {
             params += `testType=${data.testType}&`;
         }
 
-        if(data.evaluationDate){
+        if (data.evaluationDate) {
             params += `evaluationDate=${data.evaluationDate}`;
         }
 
@@ -191,10 +191,30 @@ const TherapistService = (genericLog) => {
     const getFileTriageReportsTest = (id) => getFileTriageReports(id, 'test');
     const getFileTriageReportsRetest = (id) => getFileTriageReports(id, 'retest');
 
+    const getLoggedTherapist = () => {
+        return HttpHelper.get(`${generic.pathName}/me`, generic.getUser().token).then(genericLog);
+    };
+
+    const updateLoggedTherapist = (data) => {
+        return HttpHelper.put(`${generic.pathName}/me`, data, generic.getUser().token).then(genericLog);
+    };
+
+    const changePassword = ({ currentPassword, newPassword }) => {
+        return HttpHelper.put(
+            `${generic.pathName}/password`,
+            { currentPassword, newPassword },
+            generic.getUser().token
+        ).then(genericLog);
+    };
+
+
     return {
         ...generic,
+        getLoggedTherapist,
+        updateLoggedTherapist,
+        changePassword,
         conductRegister,
-        consultationRegister, deleteEquipment, deleteOrientation, equipmentRegister, getAllBabies,getAllConducts, getAllEquipments,
+        consultationRegister, deleteEquipment, deleteOrientation, equipmentRegister, getAllBabies, getAllConducts, getAllEquipments,
         getAllEquipmentsActives, getAllIndicators, getAllInstitutions, getAllOrientations, getAllOrientationsActives, getAllTriages,
         getChildBirthType, getConduct, getFileTriageReportsOrientations, getFileTriageReportsRetest, getFileTriageReportsTest, getTriageTypes,
         getXpTypes, indicatorRegister, orientationRegister,
@@ -204,7 +224,7 @@ const TherapistService = (genericLog) => {
 let therapistServiceInstance = null;
 const useTherapistService = () => {
     const { genericLog } = useGenericLogger();
-    if(!therapistServiceInstance) {
+    if (!therapistServiceInstance) {
         therapistServiceInstance = TherapistService(genericLog);
     }
     return therapistServiceInstance;

@@ -21,14 +21,13 @@ const EditTherapist = () => {
     const service = useTherapistService();
 
     return (
-        <BaseEditPaper 
+        <BaseEditPaper
             title={'Meu Perfil'}
             handleSubmit={handleSubmit}
-            serviceFunction={service.update}
-            // Alterado para a função que busca os dados do usuário logado
-            serviceGetFunction={service.getLoggedTherapist} 
-            setValue={setValue} 
-            // Removido o ID, pois o backend identificará o usuário pelo Token JWT
+            serviceFunction={service.updateLoggedTherapist}
+            serviceGetFunction={service.getLoggedTherapist}
+            setValue={setValue}
+        // Removido o ID, pois o backend identificará o usuário pelo Token JWT
         >
             <Grid item xs={12} sm={12} md={6}>
                 <TextField
@@ -59,7 +58,7 @@ const EditTherapist = () => {
                                 e.target.value = rawValue.replace(/(\d{1})(\d{1,})/, '$1-$2');
                             }
                         }
-                    })} 
+                    })}
                     label="CRFa"
                     inputProps={inputProps.crfa}
                     variant="outlined" size="small"
@@ -111,19 +110,56 @@ const EditTherapist = () => {
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-                <BrazilianPhoneField  
+                <BrazilianPhoneField
                     register={register} name="phones.0" formErrors={errors}
-                    label="Telefone principal" variant="outlined" size="small" 
+                    label="Telefone principal" variant="outlined" size="small"
                     InputLabelProps={{ shrink: true }} required
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-                <BrazilianPhoneField  
+                <BrazilianPhoneField
                     register={register} name="phones.1" formErrors={errors}
-                    label="Telefone alternativo" variant="outlined" size="small" 
+                    label="Telefone alternativo" variant="outlined" size="small"
                     InputLabelProps={{ shrink: true }}
                 />
             </Grid>
+            <Grid item xs={12}>
+                <Typography variant="h6">Segurança</Typography>
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+                <TextField
+                    {...register('currentPassword')}
+                    label="Senha atual"
+                    type="password"
+                    variant="outlined"
+                    size="small"
+                    InputLabelProps={{ shrink: true }}
+                />
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+                <TextField
+                    {...register('newPassword')}
+                    label="Nova senha"
+                    type="password"
+                    variant="outlined"
+                    size="small"
+                    InputLabelProps={{ shrink: true }}
+                />
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+                <TextField
+                    {...register('confirmNewPassword')}
+                    label="Confirmar nova senha"
+                    type="password"
+                    variant="outlined"
+                    size="small"
+                    InputLabelProps={{ shrink: true }}
+                />
+            </Grid>
+
         </BaseEditPaper>
     );
 };
