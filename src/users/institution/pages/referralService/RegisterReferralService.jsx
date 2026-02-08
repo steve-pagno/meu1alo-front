@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { CircularProgress, Grid, TextField, Typography } from '@mui/material';
+import { CircularProgress, Grid, TextField, Typography, Snackbar, Alert } from '@mui/material';
 import AsyncRequest from '../../../../components/api/AsyncRequest';
 import BaseRegisterPaper from '../../../../components/bases/register/BaseRegisterPaper';
 import CNPJField from '../../../../components/fileds/documents/CNPJField';
 import BrazilianPhoneField from '../../../../components/fileds/phone/BrazilianPhoneField';
 import RadioField from '../../../../components/fileds/radio/RadioField';
-import SelectField from '../../../../components/fileds/select/SelectField';
+import CEPField from '../../../../components/fileds/address/CEPField';
 import useInstitutionService from '../../useInstituionService';
-import useRegisterReferralServiceController from './useRegisterReferralServiceController';
+// Endereço segue a mesma lógica do cadastro de Instituição (ViaCEP + UF/Cidade por texto)
 
 const inputProps = {
     cep: {
@@ -28,12 +28,61 @@ const inputProps = {
     }
 };
 const RegisterReferralService = () => {
-    const { formState: { errors }, handleSubmit, register } = useForm();
+    const { formState: { errors }, handleSubmit, register, setValue } = useForm();
     const service = useInstitutionService();
-    const { getCities, getStates, onChangeState, state } = useRegisterReferralServiceController();
+
+    // Notificações (mesma UX do cadastro de Instituição)
+    const [notify, setNotify] = useState({
+        open: false,
+        message: '',
+        severity: 'info'
+    });
+
+    const handleCloseNotify = (_event, reason) => {
+        if (reason === 'clickaway') return;
+        setNotify({ ...notify, open: false });
+    };
+
+    const handleSearchStart = () => {
+        setNotify({ open: true, message: 'Buscando CEP...', severity: 'info' });
+        setValue('address.street', '...');
+        setValue('address.adjunct', '...');
+        setValue('address.state_uf', '...');
+        setValue('address.city_name', '...');
+    };
+
+    const handleAddressFound = (data) => {
+        setNotify({ open: true, message: 'Endereço encontrado!', severity: 'success' });
+        setValue('address.street', data.logradouro);
+        setValue('address.adjunct', data.complemento);
+        setValue('address.state_uf', data.uf);
+        setValue('address.city_name', data.localidade);
+
+        const numberField = document.querySelector('input[name="address.number"]');
+        if (numberField) numberField.focus();
+    };
+
+    const handleError = (msg) => {
+        setNotify({ open: true, message: msg || 'Erro ao localizar o CEP.', severity: 'error' });
+        setValue('address.street', '');
+        setValue('address.adjunct', '');
+        setValue('address.state_uf', '');
+        setValue('address.city_name', '');
+    };
 
     return (
         <BaseRegisterPaper handleSubmit={handleSubmit} title={'de Serviço de Saúde Auditiva'} serviceFunction={service.referralServiceRegister} baseRoute={'/institucional'}>
+            <Snackbar 
+                open={notify.open} 
+                autoHideDuration={4000} 
+                onClose={handleCloseNotify}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+                <Alert onClose={handleCloseNotify} severity={notify.severity} variant="filled" sx={{ width: '100%' }}>
+                    {notify.message}
+                </Alert>
+            </Snackbar>
+
             <Grid item xs={12} sm={12} md={12}>
                 <TextField
                     {...register('name')} label="Nome do serviço"
@@ -96,36 +145,39 @@ const RegisterReferralService = () => {
                 </Typography>
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-                <TextField
-                    {...register('address.cep')} label="CEP"
-                    variant="outlined" size="small" inputProps={inputProps.cep} required
+                <CEPField
+                    register={register}
+                    name="address.cep"
+                    setValue={setValue}
+                    onSearchStart={handleSearchStart}
+                    onAddressFound={handleAddressFound}
+                    onError={handleError}
+                    inputProps={inputProps.cep}
+                    variant="outlined"
+                    size="small"
+                    required
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
                 <TextField
                     {...register('address.street')} label="Logradouro"
                     variant="outlined" size="small" inputProps={inputProps.general} required
+                    InputLabelProps={{ shrink: true }}
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-                <AsyncRequest requestFunction={getStates} loaderChildren={<CircularProgress />}>
-                    {(states) => (
-                        <SelectField
-                            title={'Estado'} register={{ ...register('address.state') }}
-                            onChange={onChangeState} required values={states}
-                        />
-                    )}
-                </AsyncRequest>
+                <TextField
+                    {...register('address.state_uf')} label="Estado (UF)"
+                    variant="outlined" size="small" inputProps={{ maxLength: '2' }} required
+                    InputLabelProps={{ shrink: true }}
+                />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-                <AsyncRequest requestFunction={state ? getCities : null} loaderChildren={<CircularProgress />}>
-                    {(cities) => (
-                        <SelectField
-                            title={'Cidade'} register={register('address.city.id')}
-                            disabled={!state} required values={cities}
-                        />
-                    )}
-                </AsyncRequest>
+                <TextField
+                    {...register('address.city_name')} label="Cidade"
+                    variant="outlined" size="small" inputProps={inputProps.general} required
+                    InputLabelProps={{ shrink: true }}
+                />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
                 <TextField
@@ -137,6 +189,7 @@ const RegisterReferralService = () => {
                 <TextField
                     {...register('address.adjunct')} label="Complemento"
                     variant="outlined" size="small" inputProps={inputProps.general}
+                    InputLabelProps={{ shrink: true }}
                 />
             </Grid>
             {/*<Grid item xs={12} sm={12} md={12}>*/}

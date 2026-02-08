@@ -18,7 +18,7 @@ const RegisterTriage = () => {
 
     const steps = [
         {
-            element: <RegisterResponsible register={register} errors={errors}/>,
+            element: <RegisterResponsible errors={errors} register={register} setValue={setValue}/>,
             label: 'Cadastrar Responsáveis'
         },
         {

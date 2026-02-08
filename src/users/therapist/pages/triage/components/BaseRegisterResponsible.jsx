@@ -1,9 +1,6 @@
 import React, { Fragment, useState } from 'react';
-import { Grid, TextField, Typography } from '@mui/material';
-import AsyncRequest from '../../../../../components/api/AsyncRequest';
+import { Grid, TextField, Typography, Snackbar, Alert } from '@mui/material';
 import BrazilianPhoneField from '../../../../../components/fileds/phone/BrazilianPhoneField';
-import SelectField from '../../../../../components/fileds/select/SelectField';
-import useTherapistService from '../../../useTherapistService';
 import CEPField from '../../../../../components/fileds/address/CEPField'; // ✅ import do seu campo customizado
 
 const inputProps = {
@@ -20,32 +17,35 @@ const inputProps = {
     }
 };
 
-const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, states }) => { // ✅ adicionamos setValue
-    const [state, setState] = useState(null);
-    const service = useTherapistService();
+const BaseRegisterResponsible = ({ errors, prefixName, register, setValue }) => {
+    // Endereço segue a mesma lógica do cadastro de Instituição (ViaCEP + UF/Cidade por texto)
+    const [notify, setNotify] = useState({
+        open: false,
+        message: '',
+        severity: 'info'
+    });
 
-    const getCities = () => {
-        return service.getCities(state);
-    };
-
-    const onChangeState = (event) => {
-        setState(event.target.value);
+    const handleCloseNotify = (_event, reason) => {
+        if (reason === 'clickaway') return;
+        setNotify({ ...notify, open: false });
     };
 
     // ✅ 1. Função chamada quando começa a busca (coloca "..." nos campos)
     const handleSearchStart = () => {
+        setNotify({ open: true, message: 'Buscando CEP...', severity: 'info' });
         setValue(`${prefixName}.address.street`, '...');
         setValue(`${prefixName}.address.adjunct`, '...');
-        setValue(`${prefixName}.address.state`, '...');
-        setValue(`${prefixName}.address.city.id`, '...');
+        setValue(`${prefixName}.address.state_uf`, '...');
+        setValue(`${prefixName}.address.city_name`, '...');
     };
 
     // ✅ 2. Função chamada quando o CEP é encontrado
     const handleAddressFound = (data) => {
+        setNotify({ open: true, message: 'Endereço encontrado!', severity: 'success' });
         setValue(`${prefixName}.address.street`, data.logradouro);
         setValue(`${prefixName}.address.adjunct`, data.complemento);
-        setValue(`${prefixName}.address.state`, data.uf);
-        setValue(`${prefixName}.address.city.id`, data.localidade);
+        setValue(`${prefixName}.address.state_uf`, data.uf);
+        setValue(`${prefixName}.address.city_name`, data.localidade);
 
         // opcional: focar no campo de número
         const numberField = document.querySelector(`input[name="${prefixName}.address.number"]`);
@@ -56,15 +56,26 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, state
 
     // ✅ 3. Função chamada em caso de erro
     const handleError = (msg) => {
-        alert(msg);
+        setNotify({ open: true, message: msg || 'Erro ao localizar o CEP.', severity: 'error' });
         setValue(`${prefixName}.address.street`, '');
         setValue(`${prefixName}.address.adjunct`, '');
-        setValue(`${prefixName}.address.state`, '');
-        setValue(`${prefixName}.address.city.id`, '');
+        setValue(`${prefixName}.address.state_uf`, '');
+        setValue(`${prefixName}.address.city_name`, '');
     };
 
     return (
         <Fragment>
+            <Snackbar
+                open={notify.open}
+                autoHideDuration={4000}
+                onClose={handleCloseNotify}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+                <Alert onClose={handleCloseNotify} severity={notify.severity} variant="filled" sx={{ width: '100%' }}>
+                    {notify.message}
+                </Alert>
+            </Snackbar>
+
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={12} md={9}>
                     <TextField
@@ -138,27 +149,19 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, state
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={6}>
-                    <SelectField
-                        register={register(`${prefixName}.address.state`)}
-                        values={states}
-                        title={'Estado'}
-                        onChange={onChangeState}
-                        required
+                    <TextField
+                        {...register(`${prefixName}.address.state_uf`)} label="Estado (UF)"
+                        variant="outlined" size="small" inputProps={{ maxLength: '2' }} required
+                        InputLabelProps={{ shrink: true }}
                     />
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={6}>
-                    <AsyncRequest requestFunction={state ? getCities : null} watch={state}>
-                        {(values) => (
-                            <SelectField
-                                register={register(`${prefixName}.address.city.id`)}
-                                values={values}
-                                title={'Cidade'}
-                                disabled={!state}
-                                required
-                            />
-                        )}
-                    </AsyncRequest>
+                    <TextField
+                        {...register(`${prefixName}.address.city_name`)} label="Cidade"
+                        variant="outlined" size="small" inputProps={inputProps.general} required
+                        InputLabelProps={{ shrink: true }}
+                    />
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={6}>

@@ -1,14 +1,10 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Button, Divider, Grid, Typography } from '@mui/material';
-import useTherapistService from '../../../useTherapistService';
 import BaseRegisterResponsible from './BaseRegisterResponsible';
 import useRegisterResponsibleStyles from './useRegisterResponsibleStyles';
 
 const RegisterResponsible = ({ errors, register, setValue }) => { // ✅ mantemos apenas os props
-    const service = useTherapistService();
     const styles = useRegisterResponsibleStyles();
-
-    const [states, setStates] = useState([]);
     const [responsibleCount, setResponsibleCount] = useState(0);
 
     const addClick = () => {
@@ -19,10 +15,6 @@ const RegisterResponsible = ({ errors, register, setValue }) => { // ✅ mantemo
         setValue(`responsible.${responsibleCount}`, undefined);
         setResponsibleCount(responsibleCount - 1);
     };
-
-    useEffect(() => {
-        service.getStates().then(r => r.body).then(setStates);
-    }, []);
 
     return (
         <Fragment>
@@ -37,7 +29,6 @@ const RegisterResponsible = ({ errors, register, setValue }) => { // ✅ mantemo
                 setValue={setValue}
                 errors={errors}
                 prefixName={'baby.birthMother'}
-                states={states}
             />
 
             {responsibleCount > 0 && (
@@ -60,7 +51,6 @@ const RegisterResponsible = ({ errors, register, setValue }) => { // ✅ mantemo
                             setValue={setValue}
                             errors={errors}
                             prefixName={`baby.guardians.${index}`}
-                            states={states}
                         />
                     </Fragment>
                 ))}
