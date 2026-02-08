@@ -13,6 +13,7 @@ const Parents = () => {
             baseRoute={'/pais'}
             userTypeTitle={'Pais'}
             userTypeTitleWithConjunction={'dos Pais'}
+            userType="parents"
             service={service}
             metaRoutesLink={MetaLinkMenu}
             withDashboard={false}

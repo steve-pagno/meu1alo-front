@@ -16,6 +16,7 @@ const Institution = () => {
             baseRoute={'/institucional'}
             userTypeTitle={'Institucional'}
             userTypeTitleWithConjunction={'Institucional'}
+            userType="institution"
             service={service}
             metaRoutesLink={MetaLinkMenu}
             withDashboard={true}
