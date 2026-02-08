@@ -46,6 +46,7 @@ const EditTherapist = () => {
                     helperText="Nome usado para acessar a plataforma"
                     InputLabelProps={{ shrink: true }} required
                     error={errors?.login}
+                    disabled
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
