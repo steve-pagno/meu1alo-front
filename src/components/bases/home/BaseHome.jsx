@@ -10,7 +10,7 @@ const BaseHome = ({ meta }) => {
     return (
         <Container style={{ padding: '30px' }}>
             <Typography component='h4' variant='h4'>
-                Olá {auth.user.name}
+                Olá, {auth.user.name}!
             </Typography>
 
             {meta && meta.map((item, key) => (

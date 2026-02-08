@@ -49,14 +49,14 @@ const UserDropDown = ({ editRoute, loginRoute, logoutRoute, withNotification }) 
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 {/* Opção Meu Perfil adicionada acima do Sair */}
-                <MenuItem onClick={onClickUserName}>
-                    <ListItemIcon>
-                        <AccountCircleIcon fontSize="small" />
-                    </ListItemIcon>
-                    Meu Perfil
-                </MenuItem>
-                
-                <Divider /> {/* Linha divisória para separar as ações */}
+                    {/* <MenuItem onClick={onClickUserName}>
+                        <ListItemIcon>
+                            <AccountCircleIcon fontSize="small" />
+                        </ListItemIcon>
+                        Meu Perfil
+                    </MenuItem>
+                    
+                    <Divider /> */}
 
                 <MenuItem onClick={onClickExit}>
                     <ListItemIcon>

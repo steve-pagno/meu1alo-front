@@ -32,7 +32,7 @@ const Therapist = () => {
             withDashboard={true}
             withNotifications={true}
             hasRegisterRoute={true}
-            editRoute={'/fono/perfil'} 
+            // editRoute={'/fono/perfil'} 
         >
             <Route path={'/cadastro'} element={
                 <RedirectIfAuth>
@@ -40,11 +40,11 @@ const Therapist = () => {
                 </RedirectIfAuth>
             } />
 
-            <Route path={'/perfil'} element={
+            {/* <Route path={'/perfil'} element={
                 <RequireAuth>
                     <EditTherapist />
                 </RequireAuth>
-            } />
+            } /> */}
 
             <Route path={'/triagem'} element={
                 <RequireAuth>

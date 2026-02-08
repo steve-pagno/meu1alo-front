@@ -95,12 +95,11 @@ const data = [
                         label: 'Início Fonoaudiólogo',
                         route: '/fono'
                     },
-                    // ADICIONADO AQUI: Permissão para a rota de perfil
-                    {
-                        icon: <AccountCircle size={25}/>,
-                        label: 'Meu Perfil',
-                        route: '/fono/perfil'
-                    },
+                    // {
+                    //     icon: <AccountCircle size={25}/>,
+                    //     label: 'Meu Perfil',
+                    //     route: '/fono/perfil'
+                    // },
                 ],
                 subTitle: 'Página inicial'
             }
