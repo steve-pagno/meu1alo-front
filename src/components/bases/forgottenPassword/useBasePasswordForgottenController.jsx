@@ -7,6 +7,7 @@ const useBasePasswordForgottenController = (userType) => {
 
     const onSubmit = async (formData) => {
         try {
+            // Verifique se o userType está chegando aqui
             if (!userType) {
                 toast.error('Erro: Tipo de usuário não identificado.');
                 return;
@@ -14,23 +15,18 @@ const useBasePasswordForgottenController = (userType) => {
 
             const response = await HttpHelper.post('/user/recover-password', {
                 email: formData.email,
-                userType: userType 
+                userType: userType // Certifique-se de que o backend espera este campo exato
             });
 
             if (response.isSuccess || response.status === 200) {
-                 if(toast) toast.success('Se o e-mail estiver cadastrado, você receberá a nova senha em instantes.');
-                 else alert('Solicitação enviada! Verifique seu e-mail.');
-                 
+                toast.success('Se o e-mail estiver cadastrado, você receberá a nova senha em instantes.');
             } else {
-                 const msg = response.body?.message || 'Erro ao solicitar senha.';
-                 if(toast) toast.warning(msg);
-                 else alert(msg);
+                const msg = response.body?.message || 'Erro ao solicitar senha.';
+                toast.warning(msg);
             }
-
         } catch (error) {
             console.error("Erro na recuperação:", error);
-            if(toast) toast.error('Não foi possível conectar ao servidor.');
-            else alert('Erro de conexão.');
+            toast.error('Não foi possível conectar ao servidor.');
         }
     };
 
