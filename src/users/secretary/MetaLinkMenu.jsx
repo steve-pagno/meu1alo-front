@@ -1,11 +1,11 @@
 import React from 'react';
 import { GoGraph } from 'react-icons/go';
 import { TbCheckupList } from 'react-icons/tb';
-import { Home } from '@mui/icons-material';
+import { Home, AddCircleOutline, Edit } from '@mui/icons-material'; // Importados os novos ícones
 
-const getData = (isState) => {
+const getData = (isState, userId) => {
     return [
-        ...(isState? [{
+        ...(isState ? [{
             options: [
                 {
                     subOptions: [
@@ -16,12 +16,32 @@ const getData = (isState) => {
                         }
                     ],
                     subTitle: 'Cidades e Regiões'
+                },
+                {
+                    subOptions: [
+                        {
+                            icon: <AddCircleOutline sx={{ fontSize: 27 }}/>,
+                            label: 'Cadastrar Secretaria',
+                            route: '/secretaria/novo-cadastro' // <-- Ajustado para a nova rota
+                        }
+                    ],
+                    subTitle: 'Secretarias Municipais'
                 }
             ],
             title: 'Atualizar'
         }] : []),
         {
             options: [
+                {
+                    subOptions: [
+                        {
+                            icon: <Edit sx={{ fontSize: 25 }}/>,
+                            label: 'Editar Meu Perfil',
+                            route: `/secretaria/minha-conta/${userId}` // <-- Link dinâmico com o ID do usuário
+                        }
+                    ],
+                    subTitle: 'Configurações'
+                },
                 {
                     subOptions: [
                         {
@@ -35,7 +55,7 @@ const getData = (isState) => {
                 {
                     subOptions: [
                         {
-                            icon: <Home size={25}/>,
+                            icon: <Home sx={{ fontSize: 25 }}/>,
                             label: 'Início',
                             route: '/secretaria'
                         },

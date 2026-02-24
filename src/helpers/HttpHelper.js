@@ -10,6 +10,10 @@ const put = (path, data, token) => {
     return _genericFetch('PUT', path, data, 'Bearer '+token);
 };
 
+const patch = (path, data, token) => {
+    return _genericFetch('PATCH', path, data, 'Bearer '+token);
+};
+
 const deleted = (path, token) => {
     return _genericFetch('DELETE', path, null, 'Bearer '+token);
 };
@@ -59,4 +63,4 @@ const makeUrl = (path) => {
     return `${baseUrl}/${cleanPath}`;
 };
 
-export default { deleted, get, login, logout, makeUrl, post, put };
+export default { deleted, get, login, logout, makeUrl, post, put, patch };
