@@ -13,31 +13,31 @@ const Partners = () => {
     const styles = usePartnersStyles();
     const partners = [
         {
-            element: <UnivaliIcon size={'140px'}/>,
+            element: <UnivaliIcon size={'90px'}/>,
             url: 'https://univali.br'
         },
         {
-            element: <SecretaryIcon size={'320px'}/>,
+            element: <SecretaryIcon size={'180px'}/>,
             url: 'https://saude.sc.gov.br/'
         },
         {
-            element: <CNPqIcon size={'220px'}/>,
+            element: <CNPqIcon size={'130px'}/>,
             url: 'https://cnpq.br'
         },
         {
-            element: <UnieduIcon size={'130px'}/>,
+            element: <UnieduIcon size={'85px'}/>,
             url: 'http://www.uniedu.sed.sc.gov.br/'
         },
         {
-            element: <CrefonoIcon size={'290px'}/>,
+            element: <CrefonoIcon size={'165px'}/>,
             url: 'https://crefono3.org.br/'
         },
         {
-            element: <FapescIcon size={'310px'}/>,
+            element: <FapescIcon size={'175px'}/>,
             url: 'https://fapesc.sc.gov.br/programa-nascer/'
         },
         {
-            element: <NascerIcon size={'280px'}/>,
+            element: <NascerIcon size={'160px'}/>,
             url: 'https://fapesc.sc.gov.br/programa-nascer/'
         }
     ];

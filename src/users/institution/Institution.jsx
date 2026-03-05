@@ -21,7 +21,7 @@ const Institution = () => {
             metaRoutesLink={MetaLinkMenu}
             withDashboard={true}
             withNotifications={true}
-            hasRegisterRoute={true}
+            hasRegisterRoute={false}
         >
             <Route path={'/cadastro'} element={<RedirectIfAuth> <RegisterInstitutionUser/> </RedirectIfAuth>} />
             <Route path={'/minha-conta/:id'} element={<RequireAuth> <EditInstitution/> </RequireAuth>} />

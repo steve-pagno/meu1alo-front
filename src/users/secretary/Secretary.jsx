@@ -55,7 +55,7 @@ const Secretary = () => {
             metaRoutesLink={MetaLinkMenu(isState, userId)}
             withDashboard={true}
             withNotifications={true}
-            hasRegisterRoute={true}
+            hasRegisterRoute={false}
         >
             {/* Mantemos as rotas protegidas que arrumamos antes */}
             <Route path={'/novo-cadastro'} element={<RequireAuth> <RegisterSecretaryUser/> </RequireAuth>} />

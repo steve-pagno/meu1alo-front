@@ -37,10 +37,10 @@ const App = () => {
                         <BrowserRouter>
                             <RoutesRouter>
                                 <Route exact path={'/'} element={<Site/>} />
+                                <Route path={'/fono/*'} element={<Therapist/>} />
+                                <Route path={'/institucional/*'} element={<Institution/>} />
                                 <Route path={'/pais/*'} element={<Parents/>} />
                                 <Route path={'/secretaria/*'} element={<Secretary/>} />
-                                <Route path={'/institucional/*'} element={<Institution/>} />
-                                <Route path={'/fono/*'} element={<Therapist/>} />
                                 <Route path={'*'} element={
                                     <TopBar baseRoute={'/'}>
                                         <PageNotFound/>

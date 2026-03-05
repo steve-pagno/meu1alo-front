@@ -22,7 +22,7 @@ const getData = (isState, userId) => {
                         {
                             icon: <AddCircleOutline sx={{ fontSize: 27 }}/>,
                             label: 'Cadastrar Secretaria',
-                            route: '/secretaria/novo-cadastro' // <-- Ajustado para a nova rota
+                            route: '/secretaria/novo-cadastro'
                         }
                     ],
                     subTitle: 'Secretarias Municipais'

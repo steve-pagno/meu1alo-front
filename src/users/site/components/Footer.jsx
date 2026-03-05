@@ -6,10 +6,10 @@ import MPAWhiteIcon from '../../../components/icons/MPAWhiteIcon';
 import useFooterStyles from './useFooterStyles';
 
 const links = [
+    { route: '/fono', title: 'Área do Fonoaudiólogo' },
     { route: '/institucional', title: 'Área Instituicional' },
     { route: '/pais', title: 'Área dos Pais' },
-    { route: '/secretaria', title: 'Área da Secretaria' },
-    { route: '/fono', title: 'Área do Fonoaudiólogo' }
+    { route: '/secretaria', title: 'Área da Secretaria' }
 ];
 
 const email = 'meuprimeiroalo@univali.br';
@@ -45,7 +45,7 @@ const Footer = () => {
             </Grid>
             <Grid item xs={12} sx={styles.toCenter}>
                 <Typography variant="p" color='white' sx={styles.padding} >
-                    {currentYear} - Univali - Equipe PPSUS
+                    {currentYear} - Univali - Meu Primeiro Alô
                 </Typography>
             </Grid>
         </Grid>

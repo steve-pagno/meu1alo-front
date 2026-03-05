@@ -24,9 +24,9 @@ const RegisterSecretaryUser = () => {
                     {...register('name')} label="Nome completo"
                     inputProps={inputProps.general}
                     error={errors?.name}
-                    variant="outlined" size="small" required/>
+                    variant="outlined" size="small" required />
             </Grid>
-            <UserFieldsRegister register={register} errors={errors}/>
+            <UserFieldsRegister register={register} errors={errors} />
             <Grid item xs={12} sm={12} md={6}>
                 <AsyncRequest requestFunction={getStates} loaderChildren={<CircularProgress />}>
                     {(states) => (
@@ -38,7 +38,7 @@ const RegisterSecretaryUser = () => {
                 </AsyncRequest>
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
-                <AsyncRequest requestFunction={state? getZones: null} loaderChildren={<CircularProgress />}>
+                <AsyncRequest requestFunction={state ? getZones : null} loaderChildren={<CircularProgress />}>
                     {(zones) => (
                         <SelectField
                             title={'Região'} register={{ ...register('zone.id') }}
@@ -56,7 +56,7 @@ const RegisterSecretaryUser = () => {
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
-                <Typography  variant={'h6'}>
+                <Typography variant={'h6'}>
                     Contato
                 </Typography>
             </Grid>
@@ -74,6 +74,21 @@ const RegisterSecretaryUser = () => {
                     inputProps={inputProps.general}
                     variant="outlined" size="small"
                     error={errors?.emails && errors?.emails[1]}
+                />
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+                <TextField
+                    {...register('phones.0')} label="Telefone principal"
+                    variant="outlined" size="small" required
+                    error={errors?.phones && errors?.phones[0]}
+                />
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+                <TextField
+                    {...register('phones.1')} label="Telefone secundário"
+                    variant="outlined" size="small"
+                    error={errors?.phones && errors?.phones[1]}
                 />
             </Grid>
         </BaseRegisterPaper>
