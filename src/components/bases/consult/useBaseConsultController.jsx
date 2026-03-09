@@ -6,8 +6,11 @@ const useBaseConsultController = (serviceFunction, headers, title, fileName) => 
 
     const onSubmit = (data) => {
         serviceFunction(data).then((response) => {
-            if(response.isSuccess){
-                setRows(response.body);
+            console.log('Resposta da consulta:', response);
+
+            if (response.isSuccess) {
+                console.log('Body da consulta:', response.body);
+                setRows(response.body || []);
             }
         });
     };

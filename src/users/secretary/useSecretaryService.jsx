@@ -22,31 +22,30 @@ const SecretaryService = (genericLog) => {
         return HttpHelper.get(`${generic.pathName}/${generic.getUser().user.id}/is-state`, generic.getUser().token).then(genericLog);
     };
 
-    // 1. Método para atualizar a qual região a cidade pertence
+    const createInstitution = (data) => {
+        return HttpHelper.post('institution', data, generic.getUser().token).then(genericLog);
+    };
+
     const setZoneId = (cityId, zoneId) => {
-        // Se a cidade for arrastada para "Cidades sem região", enviamos zone: null
         const body = zoneId ? { zone: { id: zoneId } } : { zone: null };
-        // Agora usamos .patch para bater exatamente com a sua rota no CityRoutes
         return HttpHelper.patch(`${generic.pathName}/city/${cityId}`, body, generic.getUser().token).then(genericLog);
     };
 
-    // 2. Método para Criar a região
     const createZone = (zoneData) => {
         return HttpHelper.post(`${generic.pathName}/zone`, zoneData, generic.getUser().token).then(genericLog);
     };
 
-    // 3. Método para Deletar a região
     const deleteZone = (zoneId) => {
         return HttpHelper.deleted(`${generic.pathName}/zone/${zoneId}`, generic.getUser().token).then(genericLog);
     };
 
-    // Retornamos todos os métodos novos no objeto final
     return { 
         ...generic, 
         getAllZonesWithCities, 
         getZones, 
         isStateSecretary, 
         registerZoneUser, 
+        createInstitution,
         setZoneId, 
         createZone, 
         deleteZone 

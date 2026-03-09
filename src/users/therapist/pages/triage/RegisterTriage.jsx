@@ -18,28 +18,33 @@ const RegisterTriage = () => {
 
     const steps = [
         {
-            element: <RegisterResponsible errors={errors} register={register} setValue={setValue}/>,
+            element: <RegisterResponsible errors={errors} register={register} setValue={setValue} watch={watch} />,
             label: 'Cadastrar Responsáveis'
         },
         {
-            element: <RegisterBaby register={register} errors={errors}/>,
+            element: <RegisterBaby register={register} errors={errors} />,
             label: 'Cadastrar Bebê'
         },
         {
-            element: <RegisterResults register={register} errors={errors} watch={watch} setValue={setValue}/>,
+            element: <RegisterResults register={register} errors={errors} watch={watch} setValue={setValue} />,
             label: 'Registrar Resultados'
         }
     ];
 
-    // TODO: Steper não está salvando os dados ao retornar para o passo anterior
     return (
         <BaseRegisterPaper title={'Resultado da Triagem'} handleSubmit={handleSubmit} serviceFunction={service.consultationRegister} notSubmitButton={true} baseRoute={'/fono'}>
             <Grid item xs={12} sm={12} md={12}>
                 <Stepper activeStep={activeStep} alternativeLabel>
-                    {steps.map(({ label }) => (<Step key={label}><StepLabel>{label}</StepLabel></Step>))}
+                    {steps.map(({ label }) => (
+                        <Step key={label}>
+                            <StepLabel>{label}</StepLabel>
+                        </Step>
+                    ))}
                 </Stepper>
             </Grid>
+
             {steps[activeStep].element}
+
             <Grid item xs={12} sm={12} md={12}>
                 <Box sx={styles.box}>
                     <Button
@@ -51,10 +56,9 @@ const RegisterTriage = () => {
                         Anterior
                     </Button>
                     {
-                        activeStep === steps.length - 1?
-                            <Button type="submit">Finalizar Cadastro</Button>
-                            :
-                            <Button onClick={handleOnNext}>Próximo</Button>
+                        activeStep === steps.length - 1
+                            ? <Button type="submit">Finalizar Cadastro</Button>
+                            : <Button onClick={handleOnNext}>Próximo</Button>
                     }
                 </Box>
             </Grid>

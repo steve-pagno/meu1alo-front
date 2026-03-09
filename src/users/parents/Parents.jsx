@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import BaseUserRoute from '../../components/bases/userRoute/BaseUserRoute';
 import { RequireAuth } from '../../providers/auth/Auth';
 import MetaLinkMenu from './MetaLinkMenu';
+import ListParentTriages from './pages/ListParentTriages';
 import useParentsService from './useParentsService';
 
 const Parents = () => {
@@ -20,7 +21,14 @@ const Parents = () => {
             withNotifications={true}
             hasRegisterRoute={false}
         >
-            <Route path={'/meu-bebe'} element={<RequireAuth> informações </RequireAuth>} />
+            <Route
+                path={'/triagens'}
+                element={
+                    <RequireAuth>
+                        <ListParentTriages />
+                    </RequireAuth>
+                }
+            />
         </BaseUserRoute>
     );
 };

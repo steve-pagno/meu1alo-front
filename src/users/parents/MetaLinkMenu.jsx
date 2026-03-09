@@ -8,7 +8,8 @@ const data = [
                 subOptions: [
                     {
                         icon: <TbCheckupList size={25}/>,
-                        label: 'Resultados de triagens'
+                        label: 'Resultados de triagens',
+                        route: '/pais/triagens'
                     }
                 ],
                 title: 'triagens'
@@ -17,4 +18,5 @@ const data = [
         title: 'Consultar'
     }
 ];
+
 export default data;

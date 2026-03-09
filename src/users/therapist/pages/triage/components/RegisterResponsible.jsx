@@ -3,7 +3,7 @@ import { Button, Divider, Grid, Typography } from '@mui/material';
 import BaseRegisterResponsible from './BaseRegisterResponsible';
 import useRegisterResponsibleStyles from './useRegisterResponsibleStyles';
 
-const RegisterResponsible = ({ errors, register, setValue }) => { // ✅ mantemos apenas os props
+const RegisterResponsible = ({ errors, register, setValue, watch }) => {
     const styles = useRegisterResponsibleStyles();
     const [responsibleCount, setResponsibleCount] = useState(0);
 
@@ -12,7 +12,7 @@ const RegisterResponsible = ({ errors, register, setValue }) => { // ✅ mantemo
     };
 
     const removeClick = () => {
-        setValue(`responsible.${responsibleCount}`, undefined);
+        setValue(`baby.guardians.${responsibleCount - 1}`, undefined);
         setResponsibleCount(responsibleCount - 1);
     };
 
@@ -28,6 +28,7 @@ const RegisterResponsible = ({ errors, register, setValue }) => { // ✅ mantemo
                 register={register}
                 setValue={setValue}
                 errors={errors}
+                watch={watch}
                 prefixName={'baby.birthMother'}
             />
 
@@ -50,6 +51,7 @@ const RegisterResponsible = ({ errors, register, setValue }) => { // ✅ mantemo
                             register={register}
                             setValue={setValue}
                             errors={errors}
+                            watch={watch}
                             prefixName={`baby.guardians.${index}`}
                         />
                     </Fragment>

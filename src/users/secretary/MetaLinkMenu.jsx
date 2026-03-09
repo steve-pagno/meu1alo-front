@@ -1,7 +1,7 @@
 import React from 'react';
 import { GoGraph } from 'react-icons/go';
 import { TbCheckupList } from 'react-icons/tb';
-import { Home, AddCircleOutline, Edit } from '@mui/icons-material'; // Importados os novos ícones
+import { Home, AddCircleOutline, Edit } from '@mui/icons-material';
 
 const getData = (isState, userId) => {
     return [
@@ -37,10 +37,20 @@ const getData = (isState, userId) => {
                         {
                             icon: <Edit sx={{ fontSize: 25 }}/>,
                             label: 'Editar Meu Perfil',
-                            route: `/secretaria/minha-conta/${userId}` // <-- Link dinâmico com o ID do usuário
+                            route: `/secretaria/minha-conta/${userId}`
                         }
                     ],
                     subTitle: 'Configurações'
+                },
+                {
+                    subOptions: [
+                        {
+                            icon: <AddCircleOutline sx={{ fontSize: 27 }}/>,
+                            label: 'Cadastrar Instituição',
+                            route: '/secretaria/instituicao/cadastro'
+                        }
+                    ],
+                    subTitle: 'Instituições'
                 },
                 {
                     subOptions: [

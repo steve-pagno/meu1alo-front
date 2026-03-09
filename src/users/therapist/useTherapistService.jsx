@@ -18,6 +18,11 @@ const TherapistService = (genericLog) => {
         return HttpHelper.post(`${generic.pathName}/triage`, data, generic.getUser().token).then(genericLog);
     };
 
+    const findParentByCpf = (cpf) => {
+        const normalizedCpf = String(cpf || '').replace(/\D/g, '');
+        return HttpHelper.get(`parents/cpf/${normalizedCpf}`, generic.getUser().token).then(genericLog);
+    };
+
     const orientationRegister = (data) => {
         return HttpHelper.post(`${generic.pathName}/orientation`, data, generic.getUser().token).then(genericLog);
     };
@@ -207,17 +212,35 @@ const TherapistService = (genericLog) => {
         ).then(genericLog);
     };
 
-
     return {
         ...generic,
-        getLoggedTherapist,
-        updateLoggedTherapist,
         changePassword,
         conductRegister,
-        consultationRegister, deleteEquipment, deleteOrientation, equipmentRegister, getAllBabies, getAllConducts, getAllEquipments,
-        getAllEquipmentsActives, getAllIndicators, getAllInstitutions, getAllOrientations, getAllOrientationsActives, getAllTriages,
-        getChildBirthType, getConduct, getFileTriageReportsOrientations, getFileTriageReportsRetest, getFileTriageReportsTest, getTriageTypes,
-        getXpTypes, indicatorRegister, orientationRegister,
+        consultationRegister,
+        deleteEquipment,
+        deleteOrientation,
+        equipmentRegister,
+        findParentByCpf,
+        getAllBabies,
+        getAllConducts,
+        getAllEquipments,
+        getAllEquipmentsActives,
+        getAllIndicators,
+        getAllInstitutions,
+        getAllOrientations,
+        getAllOrientationsActives,
+        getAllTriages,
+        getChildBirthType,
+        getConduct,
+        getFileTriageReportsOrientations,
+        getFileTriageReportsRetest,
+        getFileTriageReportsTest,
+        getLoggedTherapist,
+        getTriageTypes,
+        getXpTypes,
+        indicatorRegister,
+        orientationRegister,
+        updateLoggedTherapist,
     };
 };
 
