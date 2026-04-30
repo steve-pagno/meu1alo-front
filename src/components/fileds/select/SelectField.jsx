@@ -6,24 +6,21 @@ import useSelectStyles from './useSelectStyles';
 const SelectField = ({ multiple, nameOfDescription = 'name', onChange, register, title, values, ...other }) => {
     const styles = useSelectStyles();
     const { configValueManipulation } = useSelectController(register, multiple, onChange, other);
-    const [selecteds, setSelecteds] = React.useState([]);
-
-    const handleChange = (selecteds) => {
-        setSelecteds(selecteds);
-    };
-
     const createRenderMultiple = (selected) => {
-        handleChange(selected);
-        if (multiple) {
-            return selected.map((selectedElement) => (
-                <Chip key={'chip-select-'+selectedElement} sx={styles.chipElement}
-                    label={values.filter(v => v.id === selectedElement)[0][nameOfDescription]}
-                />
-            ));
+        if (multiple && Array.isArray(selected)) {
+            return selected.map((selectedElement) => {
+                const found = values.find(v => String(v.id) === String(selectedElement));
+                return found ? (
+                    <Chip key={'chip-select-'+selectedElement} sx={styles.chipElement} label={found[nameOfDescription]} />
+                ) : null;
+            });
         }
 
-        return values.filter(v => v.id === selected)[0][nameOfDescription];
+        const found = values.find(v => String(v.id) === String(selected));
+        return found ? found[nameOfDescription] : '';
     };
+
+    const currentValue = configValueManipulation().value;
 
     return (
         <FormControl sx={styles.select} size={'small'} {...other} {...configValueManipulation()} >
@@ -44,8 +41,8 @@ const SelectField = ({ multiple, nameOfDescription = 'name', onChange, register,
                 )}
             >
                 {values.map((element, index) => (
-                    <MenuItem key={element.id+'_'+index} value={element.id} {...register}>
-                        {multiple &&  <Checkbox checked={selecteds && selecteds.indexOf(element.id) > -1} sx={{ pointerEvents: 'none' }} />}
+                    <MenuItem key={element.id+'_'+index} value={String(element.id)} {...register}>
+                        {multiple &&  <Checkbox checked={Array.isArray(currentValue) ? currentValue.some(val => String(val) === String(element.id)) : false} sx={{ pointerEvents: 'none' }} />}
 
                         {element[nameOfDescription]}
                     </MenuItem>

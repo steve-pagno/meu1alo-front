@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import SessionTimer from './SessionTimer';
 
 const AuthContext = React.createContext(null);
 
@@ -60,7 +61,12 @@ export const RequireAuth = ({ children }) => {
         return <Navigate to={auth.loginRoute} state={{ from: location }} replace />;
     }
 
-    return children;
+    return (
+        <React.Fragment>
+            {children}
+            <SessionTimer />
+        </React.Fragment>
+    );
 };
 
 export const RedirectIfAuth = ({ children }) => {

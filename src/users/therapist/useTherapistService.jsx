@@ -18,6 +18,10 @@ const TherapistService = (genericLog) => {
         return HttpHelper.post(`${generic.pathName}/triage`, data, generic.getUser().token).then(genericLog);
     };
 
+    const updateTriage = (id, data) => {
+        return HttpHelper.put(`${generic.pathName}/triage/${id}`, data, generic.getUser().token).then(genericLog);
+    };
+
     const findParentByCpf = (cpf) => {
         const normalizedCpf = String(cpf || '').replace(/\D/g, '');
         return HttpHelper.get(`parents/cpf/${normalizedCpf}`, generic.getUser().token).then(genericLog);
@@ -154,7 +158,7 @@ const TherapistService = (genericLog) => {
         const typeAll = '4';
 
         if (data.rightEar !== typeAll) {
-            params += `rightEar=${data.rightEar}`;
+            params += `rightEar=${data.rightEar}&`;
         }
 
         if (data.leftEar !== typeAll) {
@@ -166,10 +170,27 @@ const TherapistService = (genericLog) => {
         }
 
         if (data.evaluationDate) {
-            params += `evaluationDate=${data.evaluationDate}`;
+            params += `evaluationDate=${data.evaluationDate}&`;
+        }
+
+        if (data.babyName) {
+            params += `babyName=${data.babyName}&`;
+        }
+
+        if (data.responsibleName) {
+            params += `responsibleName=${data.responsibleName}&`;
+        }
+
+        // Remover o último '&' se existir
+        if (params.endsWith('&')) {
+            params = params.slice(0, -1);
         }
 
         return HttpHelper.get(`${generic.pathName}/triage?${params}`, generic.getUser().token).then(genericLog);
+    };
+
+    const getTriageById = (id) => {
+        return HttpHelper.get(`${generic.pathName}/triage/${id}`, generic.getUser().token).then(genericLog);
     };
 
     const getChildBirthType = () => {
@@ -236,11 +257,13 @@ const TherapistService = (genericLog) => {
         getFileTriageReportsRetest,
         getFileTriageReportsTest,
         getLoggedTherapist,
+        getTriageById,
         getTriageTypes,
         getXpTypes,
         indicatorRegister,
         orientationRegister,
         updateLoggedTherapist,
+        updateTriage,
     };
 };
 

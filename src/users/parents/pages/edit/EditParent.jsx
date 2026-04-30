@@ -1,14 +1,13 @@
 import React from 'react';
 import { Grid, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
 import BaseEditPaper from '../../../../components/bases/edit/BaseEditPaper';
-import useSecretaryService from '../../useSecretaryService';
+import useParentsService from '../../useParentsService';
+import BrazilianPhoneField from '../../../../components/fileds/phone/BrazilianPhoneField';
 
-const EditSecretary = () => {
+const EditParent = () => {
     const { formState: { errors }, handleSubmit, register, setValue } = useForm();
-    const service = useSecretaryService();
-    const { id } = useParams();
+    const service = useParentsService();
 
     const loadFormattedData = React.useCallback(async () => {
         const response = await service.getMe();
@@ -22,8 +21,12 @@ const EditSecretary = () => {
             const phone1 = Array.isArray(data.phones) && data.phones[0] ? data.phones[0].phoneNumber : '';
             const phone2 = Array.isArray(data.phones) && data.phones[1] ? data.phones[1].phoneNumber : '';
 
+            let formattedCpf = data.cpf || '';
+            if (formattedCpf) formattedCpf = formattedCpf.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+
             response.body = {
                 name: data.name || '',
+                cpf: formattedCpf,
                 password: '',
                 passwordConfirm: '',
                 'emails.0': email1,
@@ -38,26 +41,37 @@ const EditSecretary = () => {
 
     return (
         <BaseEditPaper
-            title={'Editar Dados da Secretaria'}
+            title={'Editar Meu Perfil'}
             handleSubmit={handleSubmit}
             serviceFunction={service.updateMe}
             serviceGetFunction={loadFormattedData}
             setValue={setValue}
-            id={id}
         >
             <Grid item xs={12} sm={12} md={12}>
                 <Typography variant={'h6'}>Informações Básicas</Typography>
             </Grid>
 
-            <Grid item xs={12} sm={12} md={12}>
+            <Grid item xs={12} sm={12} md={6}>
                 <TextField
                     {...register('name')}
-                    label="Nome da secretaria"
+                    label="Nome completo"
                     variant="outlined"
                     size="small"
                     fullWidth
                     required
                     error={!!errors?.name}
+                    InputLabelProps={{ shrink: true }}
+                />
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={6}>
+                <TextField
+                    {...register('cpf')}
+                    label="CPF"
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    disabled
                     InputLabelProps={{ shrink: true }}
                 />
             </Grid>
@@ -114,24 +128,22 @@ const EditSecretary = () => {
             </Grid>
 
             <Grid item xs={12} sm={12} md={6}>
-                <TextField
-                    {...register('phones.0')}
+                <BrazilianPhoneField
+                    register={register}
+                    name="phones.0"
+                    formErrors={errors}
                     label="Telefone Principal"
-                    variant="outlined"
-                    size="small"
-                    fullWidth
                     required
                     InputLabelProps={{ shrink: true }}
                 />
             </Grid>
 
             <Grid item xs={12} sm={12} md={6}>
-                <TextField
-                    {...register('phones.1')}
+                <BrazilianPhoneField
+                    register={register}
+                    name="phones.1"
+                    formErrors={errors}
                     label="Telefone Alternativo"
-                    variant="outlined"
-                    size="small"
-                    fullWidth
                     InputLabelProps={{ shrink: true }}
                 />
             </Grid>
@@ -139,4 +151,4 @@ const EditSecretary = () => {
     );
 };
 
-export default EditSecretary;
+export default EditParent;

@@ -17,15 +17,67 @@ const inputProps = {
 };
 
 const EditTherapist = () => {
-    const { formState: { errors }, handleSubmit, register, setValue } = useForm();
+    const { formState: { errors }, handleSubmit, register, setValue, watch } = useForm({
+        defaultValues: { institutions: [], xp: '' }
+    });
     const service = useTherapistService();
+    // Watch fields that require controlled values (Material-UI Select components)
+    const xpValue = watch('xp');
+    const institutionsValue = watch('institutions');
+
+    const loadFormattedData = React.useCallback(async () => {
+        const response = await service.getLoggedTherapist();
+
+        if (response && response.isSuccess && response.body) {
+            const data = response.body;
+
+            const email1 = Array.isArray(data.emails) && data.emails[0] ? data.emails[0].email : '';
+            const email2 = Array.isArray(data.emails) && data.emails[1] ? data.emails[1].email : '';
+
+            const phone1 = Array.isArray(data.phones) && data.phones[0] ? data.phones[0].phoneNumber : '';
+            const phone2 = Array.isArray(data.phones) && data.phones[1] ? data.phones[1].phoneNumber : '';
+
+            let xp = '';
+            if (data.xp) {
+                if (typeof data.xp === 'object' && data.xp.id !== undefined) {
+                    xp = String(data.xp.id);
+                } else {
+                    xp = String(data.xp);
+                }
+            }
+
+            let insts = [];
+            if (Array.isArray(data.institutions)) {
+                insts = data.institutions.map(i => String(i.id));
+            }
+
+            let formattedCrfa = data.crfa || '';
+            if (formattedCrfa && formattedCrfa.length > 0) {
+                formattedCrfa = formattedCrfa.replace(/\D/g, '').replace(/(\d{1})(\d{1,})/, '$1-$2');
+            }
+
+            response.body = {
+                name: data.name || '',
+                login: data.login || '',
+                crfa: formattedCrfa,
+                xp: xp,
+                institutions: insts,
+                'emails.0': email1,
+                'emails.1': email2,
+                'phones.0': phone1,
+                'phones.1': phone2
+            };
+        }
+
+        return response;
+    }, [service]);
 
     return (
         <BaseEditPaper
             title={'Meu Perfil'}
             handleSubmit={handleSubmit}
             serviceFunction={service.updateLoggedTherapist}
-            serviceGetFunction={service.getLoggedTherapist}
+            serviceGetFunction={loadFormattedData}
             setValue={setValue}
         // Removido o ID, pois o backend identificará o usuário pelo Token JWT
         >
@@ -73,6 +125,7 @@ const EditTherapist = () => {
                         <SelectField
                             title={'Tempo de experiência'}
                             register={{ ...register('xp') }}
+                            value={xpValue}
                             required values={xpTypes}
                         />
                     )}
@@ -84,6 +137,7 @@ const EditTherapist = () => {
                         <SelectField
                             title={'Instituições'}
                             register={{ ...register('institutions') }}
+                            value={institutionsValue}
                             required values={institutions} multiple
                         />
                     )}
@@ -112,14 +166,14 @@ const EditTherapist = () => {
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
                 <BrazilianPhoneField
-                    register={register} name="phones.0" formErrors={errors}
+                    register={register} name="phones.0" error={errors?.phones && errors?.phones[0]}
                     label="Telefone principal" variant="outlined" size="small"
                     InputLabelProps={{ shrink: true }} required
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
                 <BrazilianPhoneField
-                    register={register} name="phones.1" formErrors={errors}
+                    register={register} name="phones.1" error={errors?.phones && errors?.phones[1]}
                     label="Telefone alternativo" variant="outlined" size="small"
                     InputLabelProps={{ shrink: true }}
                 />

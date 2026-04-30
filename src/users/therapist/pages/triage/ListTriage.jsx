@@ -6,6 +6,8 @@ import RadioField from '../../../../components/fileds/radio/RadioField';
 import useTherapistService from '../../useTherapistService';
 
 const headers = [
+    { name: 'babyName', title: 'Criança' },
+    { name: 'responsibleName', title: 'Responsável' },
     { formatter: 'date', name: 'evaluationDate', title: 'Data avaliação' },
     { name: 'institution', title: 'Instituição' },
     { name: 'type', title: 'Tipo TAN' },
@@ -17,12 +19,10 @@ const headers = [
 
 const makeTableProperties = (service) => ({
     actions: {
+        view: { route: '/fono/triagem' },
+        edit: { route: '/fono/triagem/editar' },
         pdf: {
             options: [
-                // {
-                //     href: '',
-                //     name: 'detalhado da triagem'
-                // },
                 {
                     requestFunction: service.getFileTriageReportsOrientations,
                     title: 'Orientações fonoaudiológicas',
@@ -56,12 +56,31 @@ const ListTriage = () => {
         >
             <Grid item xs={12} sm={12} md={12}>
                 <TextField
+                    {...register('babyName')}
+                    label="Nome da Criança"
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                />
+            </Grid>
+            <Grid item xs={12} sm={12} md={12}>
+                <TextField
+                    {...register('responsibleName')}
+                    label="Nome do Responsável"
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                />
+            </Grid>
+            <Grid item xs={12} sm={12} md={12}>
+                <TextField
                     {...register('evaluationDate')}
                     label="Data da avaliação"
                     variant="outlined"
                     size="small"
                     type="date"
                     InputLabelProps={{ shrink: true }}
+                    fullWidth
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={12}>

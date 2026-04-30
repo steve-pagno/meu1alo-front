@@ -16,6 +16,7 @@ import RegisterTherapist from './pages/register/RegisterTherapist';
 import ListBaby from './pages/triage/components/ListBaby';
 import ListTriage from './pages/triage/ListTriage';
 import RegisterTriage from './pages/triage/RegisterTriage';
+import ViewTriage from './pages/triage/ViewTriage';
 import useTherapistService from './useTherapistService';
 
 const Therapist = () => {
@@ -32,7 +33,7 @@ const Therapist = () => {
             withDashboard={true}
             withNotifications={true}
             hasRegisterRoute={true}
-            // editRoute={'/fono/perfil'} 
+            editRoute={'/fono/perfil'} 
         >
             <Route path={'/cadastro'} element={
                 <RedirectIfAuth>
@@ -40,18 +41,28 @@ const Therapist = () => {
                 </RedirectIfAuth>
             } />
 
-            {/* <Route path={'/perfil'} element={
+            <Route path={'/perfil'} element={
                 <RequireAuth>
                     <EditTherapist />
                 </RequireAuth>
-            } /> */}
+            } />
 
             <Route path={'/triagem'} element={
                 <RequireAuth>
                     <ListTriage />
                 </RequireAuth>
             } />
+            <Route path={'/triagem/:id'} element={
+                <RequireAuth>
+                    <ViewTriage />
+                </RequireAuth>
+            } />
             <Route path={'/triagem/cadastro'} element={
+                <RequireAuth>
+                    <RegisterTriage />
+                </RequireAuth>
+            } />
+            <Route path={'/triagem/editar/:id'} element={
                 <RequireAuth>
                     <RegisterTriage />
                 </RequireAuth>

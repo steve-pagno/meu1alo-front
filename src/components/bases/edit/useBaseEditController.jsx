@@ -1,11 +1,17 @@
 import React, { useEffect } from 'react';
+import { useGenericLogger } from '../../../providers/genericLogger/GenericLogger';
 
 const hasId = (id) => id !== undefined && id !== null && id !== '' && !Number.isNaN(Number(id));
 
 const useBaseEditController = (serviceGetFunction, serviceFunction, id, setValue) => {
-    const onSubmit = (data) => {
-        if (hasId(id)) return serviceFunction(id, data);
-        return serviceFunction(data);
+    const { pushAlert } = useGenericLogger();
+
+    const onSubmit = async (data) => {
+        const response = await (hasId(id) ? serviceFunction(id, data) : serviceFunction(data));
+        if (response && response.isSuccess) {
+            pushAlert('success', 'Dados alterados com sucesso!');
+        }
+        return response;
     };
 
     useEffect(() => {

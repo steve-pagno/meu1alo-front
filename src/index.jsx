@@ -14,6 +14,7 @@ import Institution from './users/institution/Institution';
 import Parents from './users/parents/Parents';
 import Secretary from './users/secretary/Secretary';
 import PageNotFound from './users/site/pages/PageNotFound';
+import AboutPage from './users/site/pages/AboutPage';
 import Site from './users/site/Site';
 import Therapist from './users/therapist/Therapist';
 
@@ -37,6 +38,7 @@ const App = () => {
                         <BrowserRouter>
                             <RoutesRouter>
                                 <Route exact path={'/'} element={<Site/>} />
+                                <Route exact path={'/sobre'} element={<AboutPage/>} />
                                 <Route path={'/fono/*'} element={<Therapist/>} />
                                 <Route path={'/institucional/*'} element={<Institution/>} />
                                 <Route path={'/pais/*'} element={<Parents/>} />

@@ -17,7 +17,15 @@ const InstitutionService = (genericLog) => {
         return HttpHelper.get('referral-service/types', generic.getUser().token).then(genericLog);
     };
 
-    return { ...generic, getReferralServiceTypes, getTypes, referralServiceRegister };
+    const getMe = () => {
+        return HttpHelper.get(`${generic.pathName}/me`, generic.getUser().token).then(genericLog);
+    };
+
+    const updateMe = (data) => {
+        return HttpHelper.put(`${generic.pathName}/me`, data, generic.getUser().token).then(genericLog);
+    };
+
+    return { ...generic, getMe, updateMe, getReferralServiceTypes, getTypes, referralServiceRegister };
 };
 
 let institutionServiceInstance = null;

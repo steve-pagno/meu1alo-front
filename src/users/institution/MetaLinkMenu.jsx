@@ -1,7 +1,7 @@
 import React from 'react';
 import { GoGraph } from 'react-icons/go';
 import { TbCheckupList } from 'react-icons/tb';
-import { Home } from '@mui/icons-material';
+import { Home, Edit } from '@mui/icons-material';
 
 const data = [
     {
@@ -21,6 +21,16 @@ const data = [
     },
     {
         options: [
+            {
+                subOptions: [
+                    {
+                        icon: <Edit sx={{ fontSize: 25 }}/>,
+                        label: 'Editar Meu Perfil',
+                        route: '/institucional/minha-conta/editar'
+                    }
+                ],
+                subTitle: 'Configurações'
+            },
             {
                 subOptions: [
                     {

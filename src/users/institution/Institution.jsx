@@ -21,8 +21,9 @@ const Institution = () => {
             withDashboard={true}
             withNotifications={true}
             hasRegisterRoute={false}
+            editRoute={'/institucional/minha-conta/editar'}
         >
-            <Route path={'/minha-conta/:id'} element={<RequireAuth><EditInstitution /></RequireAuth>} />
+            <Route path={'/minha-conta/editar'} element={<RequireAuth><EditInstitution /></RequireAuth>} />
             <Route path={'/servico-referencia/cadastro'} element={<RequireAuth><RegisterReferralService /></RequireAuth>} />
         </BaseUserRoute>
     );

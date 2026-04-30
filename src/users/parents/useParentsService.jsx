@@ -10,9 +10,19 @@ const ParentsService = (genericLog) => {
         return HttpHelper.get('parents/triage', generic.getUser().token).then(genericLog);
     };
 
+    const getMe = () => {
+        return HttpHelper.get(`${generic.pathName}/me`, generic.getUser().token).then(genericLog);
+    };
+
+    const updateMe = (data) => {
+        return HttpHelper.put(`${generic.pathName}/me`, data, generic.getUser().token).then(genericLog);
+    };
+
     return {
         ...generic,
-        getAllTriages
+        getAllTriages,
+        getMe,
+        updateMe
     };
 };
 

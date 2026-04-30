@@ -11,15 +11,54 @@ import useInstitutionService from '../../useInstituionService';
 const EditInstitution = () => {
     const { formState: { errors }, handleSubmit, register, setValue } = useForm();
     const service = useInstitutionService();
-    const { id } = useParams();
+
+    const loadData = React.useCallback(async () => {
+        const response = await service.getMe();
+
+        if (response && response.isSuccess && response.body) {
+            const data = response.body;
+
+            const email1 = Array.isArray(data.emails) && data.emails[0] ? data.emails[0].email : '';
+            const email2 = Array.isArray(data.emails) && data.emails[1] ? data.emails[1].email : '';
+
+            const phone1 = Array.isArray(data.phones) && data.phones[0] ? data.phones[0].phoneNumber : '';
+            const phone2 = Array.isArray(data.phones) && data.phones[1] ? data.phones[1].phoneNumber : '';
+
+            let formattedCnpj = data.institution?.cnpj || '';
+            if (formattedCnpj) formattedCnpj = formattedCnpj.replace(/\D/g, '').replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+
+            response.body = {
+                institutionName: data.institution?.institutionName || '',
+                cnes: data.institution?.cnes || '',
+                cnpj: formattedCnpj,
+                institutionType: data.institution?.institutionType || '',
+                email: email1,
+                alternativeEmail: email2,
+                institutionPhone: phone1,
+                institutionCellphone: phone2,
+                cep: data.institution?.address?.cep || '',
+                publicArea: data.institution?.address?.street || '',
+                state: data.institution?.address?.city?.stateUf || '',
+                city: data.institution?.address?.city?.cityName || '',
+                number: data.institution?.address?.number || '',
+                complement: data.institution?.address?.adjunct || '',
+                responsibleName: data.name || '',
+                responsibleRole: data.role || '',
+                password: '',
+                passwordConfirm: ''
+            };
+        }
+
+        return response;
+    }, [service]);
 
     return (
         <BaseEditPaper
             title={'Instituição'}
             handleSubmit={handleSubmit}
-            serviceFunction={service.update}
-            serviceGetFunction={service.get}
-            setValue={setValue} id={id}
+            serviceFunction={service.updateMe}
+            serviceGetFunction={loadData}
+            setValue={setValue}
         >
             <Grid item xs={12} sm={12} md={12}>
                 <TextField

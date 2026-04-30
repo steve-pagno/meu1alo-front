@@ -39,6 +39,14 @@ const SecretaryService = (genericLog) => {
         return HttpHelper.deleted(`${generic.pathName}/zone/${zoneId}`, generic.getUser().token).then(genericLog);
     };
 
+    const getMe = () => {
+        return HttpHelper.get(`${generic.pathName}/me`, generic.getUser().token).then(genericLog);
+    };
+
+    const updateMe = (data) => {
+        return HttpHelper.put(`${generic.pathName}/me`, data, generic.getUser().token).then(genericLog);
+    };
+
     return { 
         ...generic, 
         getAllZonesWithCities, 
@@ -48,7 +56,9 @@ const SecretaryService = (genericLog) => {
         createInstitution,
         setZoneId, 
         createZone, 
-        deleteZone 
+        deleteZone,
+        getMe,
+        updateMe
     };
 };
 

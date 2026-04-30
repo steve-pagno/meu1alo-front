@@ -5,9 +5,10 @@ import CrefonoIcon from '../../../components/icons/CrefonoIcon';
 import FapescIcon from '../../../components/icons/FapescIcon';
 import NascerIcon from '../../../components/icons/NascerIcon';
 import SecretaryIcon from '../../../components/icons/SecretaryIcon';
-import UnieduIcon from '../../../components/icons/UnieduIcon';
+import UnieduIcon from '../../../components/icons/UgIcon';
 import UnivaliIcon from '../../../components/icons/UnivaliIcon';
 import usePartnersStyles from './usePartnersStyles';
+import UgIcon from '../../../components/icons/UgIcon';
 
 const Partners = () => {
     const styles = usePartnersStyles();
@@ -17,28 +18,28 @@ const Partners = () => {
             url: 'https://univali.br'
         },
         {
-            element: <SecretaryIcon size={'180px'}/>,
-            url: 'https://saude.sc.gov.br/'
+            element: <FapescIcon size={'175px'}/>,
+            url: 'https://fapesc.sc.gov.br/programa-nascer/'
         },
         {
             element: <CNPqIcon size={'130px'}/>,
             url: 'https://cnpq.br'
         },
         {
-            element: <UnieduIcon size={'85px'}/>,
-            url: 'http://www.uniedu.sed.sc.gov.br/'
-        },
-        {
             element: <CrefonoIcon size={'165px'}/>,
             url: 'https://crefono3.org.br/'
         },
         {
-            element: <FapescIcon size={'175px'}/>,
+            element: <NascerIcon size={'160px'}/>,
             url: 'https://fapesc.sc.gov.br/programa-nascer/'
         },
         {
-            element: <NascerIcon size={'160px'}/>,
-            url: 'https://fapesc.sc.gov.br/programa-nascer/'
+            element: <UgIcon size={'85px'}/>,
+            url: 'https://universidadegratuita.sc.gov.br/'
+        },
+        {
+            element: <SecretaryIcon size={'180px'}/>,
+            url: 'https://saude.sc.gov.br/'
         }
     ];
 
