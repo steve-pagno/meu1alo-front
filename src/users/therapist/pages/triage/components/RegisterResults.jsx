@@ -131,7 +131,6 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
                             register={register('institution.id')}
                             title={'Instituição'}
                             values={values}
-                            nameOfDescription={'institutionName'}
                             required
                         />
                     )}
