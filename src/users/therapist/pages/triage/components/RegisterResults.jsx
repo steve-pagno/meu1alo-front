@@ -115,6 +115,7 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
                             register={register('equipment.id')}
                             title={'Equipamento'}
                             values={values}
+                            value={watch('equipment.id')}
                             required
                         />
                     )}
@@ -131,6 +132,7 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
                             register={register('institution.id')}
                             title={'Instituição'}
                             values={values}
+                            value={watch('institution.id')}
                             required
                         />
                     )}
@@ -157,6 +159,7 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
                                 register={register('indicators')}
                                 title={'IRDA'}
                                 values={decoratedValues}
+                                value={watch('indicators')}
                                 multiple
                             />
                         );
@@ -281,6 +284,7 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
                             register={register('orientation.id')}
                             title={'Orientação'}
                             values={values}
+                            value={watch('orientation.id')}
                             nameOfDescription={'description'}
                             required
                         />

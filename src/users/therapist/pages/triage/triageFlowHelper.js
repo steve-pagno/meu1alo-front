@@ -30,10 +30,11 @@ function classifyIndicatorName(name) {
 }
 
 export function resolveRiskCategory(selectedIds = [], indicators = []) {
-    if (!selectedIds || selectedIds.length === 0) { return 'NONE_OR_IRDA1'; }
+    const idsArray = Array.isArray(selectedIds) ? selectedIds : (selectedIds ? [selectedIds] : []);
+    if (idsArray.length === 0) { return 'NONE_OR_IRDA1'; }
 
     const selected = indicators.filter((item) =>
-        selectedIds.map(Number).includes(Number(item.id))
+        idsArray.map(Number).includes(Number(item.id))
     );
 
     const hasIrda2 = selected.some((item) => classifyIndicatorName(item.name) === 'IRDA2');

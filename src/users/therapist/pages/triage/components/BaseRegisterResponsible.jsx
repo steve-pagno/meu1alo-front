@@ -340,6 +340,7 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
                             <CEPField
                                 register={register}
                                 name={`${prefixName}.address.cep`}
+                                value={watch(`${prefixName}.address.cep`)}
                                 setValue={setValue}
                                 onSearchStart={handleSearchStart}
                                 onAddressFound={handleAddressFound}

@@ -239,6 +239,7 @@ const RegisterBaby = ({ errors, register, setValue, watch }) => {
                             {(values) => (
                                 <SelectField
                                     register={register('baby.childBirthType')} values={values}
+                                    value={watch('baby.childBirthType')}
                                     title={'Tipo de parto'} required
                                 />
                             )}
