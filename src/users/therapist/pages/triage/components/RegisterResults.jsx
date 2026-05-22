@@ -123,6 +123,23 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
 
             <Grid item xs={12} sm={12} md={12}>
                 <AsyncRequest
+                    requestFunction={service.getAllInstitutions}
+                    loaderChildren={<CircularProgress/>}
+                >
+                    {(values) => (
+                        <SelectField
+                            register={register('institution.id')}
+                            title={'Instituição'}
+                            values={values}
+                            nameOfDescription={'institutionName'}
+                            required
+                        />
+                    )}
+                </AsyncRequest>
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={12}>
+                <AsyncRequest
                     requestFunction={service.getAllIndicators}
                     loaderChildren={<CircularProgress/>}
                 >
