@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Button, Divider, Grid, Typography } from '@mui/material';
+import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 import BaseRegisterResponsible from './BaseRegisterResponsible';
 import useRegisterResponsibleStyles from './useRegisterResponsibleStyles';
 
@@ -18,10 +18,13 @@ const RegisterResponsible = ({ errors, register, setValue, watch }) => {
 
     return (
         <Fragment>
-            <Grid item xs={12}>
-                <Typography variant="h6" style={styles.textTitle}>
-                    Informações da Mãe
-                </Typography>
+            <Grid item xs={12} sx={{ mb: 2, mt: 2 }}>
+                <Box sx={{ alignItems: 'center', borderBottom: '2px solid rgba(93, 48, 122, 0.12)', display: 'flex', gap: 1.5, pb: 1 }}>
+                    <Box sx={{ background: 'linear-gradient(#5D307A, #E83268)', borderRadius: 2, height: 24, width: 8 }} />
+                    <Typography variant="h6" sx={{ color: 'primary.main', fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.3px' }}>
+                        Informações da Mãe
+                    </Typography>
+                </Box>
             </Grid>
 
             <BaseRegisterResponsible
@@ -33,10 +36,13 @@ const RegisterResponsible = ({ errors, register, setValue, watch }) => {
             />
 
             {responsibleCount > 0 && (
-                <Grid item xs={12}>
-                    <Typography variant="h6" style={styles.textTitle}>
-                        Informações do Responsável
-                    </Typography>
+                <Grid item xs={12} sx={{ mb: 2, mt: 4 }}>
+                    <Box sx={{ alignItems: 'center', borderBottom: '2px solid rgba(93, 48, 122, 0.12)', display: 'flex', gap: 1.5, pb: 1 }}>
+                        <Box sx={{ background: 'linear-gradient(#5D307A, #E83268)', borderRadius: 2, height: 24, width: 8 }} />
+                        <Typography variant="h6" sx={{ color: 'primary.main', fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.3px' }}>
+                            Informações do Responsável
+                        </Typography>
+                    </Box>
                 </Grid>
             )}
 
@@ -57,26 +63,26 @@ const RegisterResponsible = ({ errors, register, setValue, watch }) => {
                     </Fragment>
                 ))}
 
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{ mt: 3 }}>
                 <Button
-                    sx={styles.finalButton}
+                    sx={styles.addButton}
                     color="secondary"
                     variant="contained"
                     onClick={addClick}
                 >
-                    Adicionar outro responsável
+                    + Adicionar outro responsável
                 </Button>
             </Grid>
 
             {responsibleCount > 0 && (
-                <Grid item xs={12}>
+                <Grid item xs={12} sx={{ mt: 1 }}>
                     <Button
-                        sx={styles.finalButton}
+                        sx={styles.removeButton}
                         color="primary"
                         variant="contained"
                         onClick={removeClick}
                     >
-                        Remover o último responsável
+                        - Remover o último responsável
                     </Button>
                 </Grid>
             )}

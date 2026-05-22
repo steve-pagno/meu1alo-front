@@ -2,7 +2,7 @@ import BasePasswordForgottenPaper from '../../../../components/bases/forgottenPa
 
 export default function ForgotPasswordInstitution() {
     return (
-        <BasePasswordForgottenPaper 
+        <BasePasswordForgottenPaper
             userTypeTitle="Instituição"
             userType="institution"
         />

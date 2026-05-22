@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FileHelper } from '../../../helpers/FileHelper';
 
 const useBaseConsultController = (serviceFunction, headers, title, fileName) => {
     const [rows, setRows] = useState([]);
 
-    const onSubmit = (data) => {
+    const onSubmit = React.useCallback((data) => {
         serviceFunction(data).then((response) => {
             console.log('Resposta da consulta:', response);
 
@@ -13,7 +13,11 @@ const useBaseConsultController = (serviceFunction, headers, title, fileName) => 
                 setRows(response.body || []);
             }
         });
-    };
+    }, [serviceFunction]);
+
+    useEffect(() => {
+        onSubmit({});
+    }, [onSubmit]);
 
     const onClickExportExcelButton = React.useCallback(() =>{
         FileHelper(headers).convertJsonToCsv(rows, 'Relatorio ' + fileName);

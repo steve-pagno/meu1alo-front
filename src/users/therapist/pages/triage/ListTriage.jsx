@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Grid, TextField } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography } from '@mui/material';
 import BaseConsult from '../../../../components/bases/consult/BaseConsult';
 import RadioField from '../../../../components/fileds/radio/RadioField';
 import useTherapistService from '../../useTherapistService';
@@ -19,7 +19,6 @@ const headers = [
 
 const makeTableProperties = (service) => ({
     actions: {
-        view: { route: '/fono/triagem' },
         edit: { route: '/fono/triagem/editar' },
         pdf: {
             options: [
@@ -37,6 +36,7 @@ const makeTableProperties = (service) => ({
                 }
             ]
         },
+        view: { route: '/fono/triagem' },
     }
 });
 
@@ -44,6 +44,16 @@ const ListTriage = () => {
     const { formState: { errors }, handleSubmit, register } = useForm();
     const service = useTherapistService();
     const tableProperties = React.useMemo(() => makeTableProperties(service), [service]);
+
+    const [institutions, setInstitutions] = useState([]);
+
+    useEffect(() => {
+        service.getAllInstitutions().then((response) => {
+            if (response.isSuccess) {
+                setInstitutions(response.body || []);
+            }
+        });
+    }, [service]);
 
     return(
         <BaseConsult
@@ -87,7 +97,7 @@ const ListTriage = () => {
                 <RadioField
                     register={register('testType')}
                     title={'Tipo de teste'}
-                    values={[{ id: 4, name: 'Todos' },{ id: 1, name: 'Teste' },{ id: 2, name: 'Reteste' },{ id: 3, name: 'Teste e reteste' }] }
+                    values={[{ id: 4, name: 'Todos' },{ id: 1, name: 'Teste' },{ id: 2, name: 'Reteste' }] }
                 />
             </Grid>
             <Grid item xs={6} sm={6} md={6}>
@@ -104,6 +114,27 @@ const ListTriage = () => {
                     values={[{ id: 4, name: 'Passou e Falhou' },{ id: 1, name: 'Passou' },{ id: 0, name: 'Falhou' }]}
                 />
             </Grid>
+            {institutions.length > 0 && (
+                <Grid item xs={12}>
+                    <Typography variant="subtitle2" color="primary" sx={{ fontWeight: 'bold', mb: 1, mt: 2 }}>
+                        Filtrar por Instituição:
+                    </Typography>
+                    <FormGroup>
+                        {institutions.map((inst) => (
+                            <FormControlLabel
+                                key={inst.id}
+                                control={
+                                    <Checkbox
+                                        {...register(`institution_${inst.id}`)}
+                                        size="small"
+                                    />
+                                }
+                                label={inst.institutionName || inst.name}
+                            />
+                        ))}
+                    </FormGroup>
+                </Grid>
+            )}
         </BaseConsult>
     );
 };

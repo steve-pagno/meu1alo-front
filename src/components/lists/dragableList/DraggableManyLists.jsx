@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { Grid } from '@mui/material';
 import DraggableList from './draggableList/DraggableList';
 
 const DraggableManyLists = ({ onDeleteValue, onDropSubValue, onEditValue, values, ...props }) =>  {

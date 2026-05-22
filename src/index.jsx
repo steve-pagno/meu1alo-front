@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Route, Routes as RoutesRouter } from 'react-router-dom';
-import { createTheme, CssBaseline, responsiveFontSizes, ThemeProvider } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { createTheme, CssBaseline, responsiveFontSizes, ThemeProvider } from '@mui/material';
 
 import HtmlHead from './components/HtmlHead';
 import TopBar from './components/TopBar';
@@ -13,8 +13,8 @@ import { getMuiTheme } from './Theme';
 import Institution from './users/institution/Institution';
 import Parents from './users/parents/Parents';
 import Secretary from './users/secretary/Secretary';
-import PageNotFound from './users/site/pages/PageNotFound';
 import AboutPage from './users/site/pages/AboutPage';
+import PageNotFound from './users/site/pages/PageNotFound';
 import Site from './users/site/Site';
 import Therapist from './users/therapist/Therapist';
 
@@ -30,7 +30,7 @@ const App = () => {
                     <LoggerProvider>
                         <CssBaseline/>
                         <HtmlHead/>
-                        
+
                         {/* 2. ADICIONE O CONTAINER AQUI */}
                         {/* Ele fica visível sobre qualquer rota */}
                         <ToastContainer autoClose={3000} position="top-right" />

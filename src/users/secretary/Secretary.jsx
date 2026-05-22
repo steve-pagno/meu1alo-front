@@ -5,8 +5,8 @@ import { RequireAuth } from '../../providers/auth/Auth';
 import MetaLinkMenu from './MetaLinkMenu';
 import EditSecretary from './pages/edit/EditSecretary';
 import EditZones from './pages/edit/EditZones';
-import RegisterSecretaryUser from './pages/register/RegisterSecretaryUser';
 import RegisterInstitutionBySecretary from './pages/register/RegisterInstitutionBySecretary';
+import RegisterSecretaryUser from './pages/register/RegisterSecretaryUser';
 import useSecretaryService from './useSecretaryService';
 
 const Secretary = () => {

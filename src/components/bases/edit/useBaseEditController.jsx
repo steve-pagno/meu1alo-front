@@ -20,7 +20,7 @@ const useBaseEditController = (serviceGetFunction, serviceFunction, id, setValue
             const resp = hasId(id) ? await serviceGetFunction(id) : await serviceGetFunction();
             const { body, isSuccess } = resp || {};
 
-            if (!isSuccess || !body) return;
+            if (!isSuccess || !body) { return; }
 
             // Preenche cada campo do useForm com os dados retornados da API
             Object.keys(body).forEach((key) => {
@@ -32,7 +32,7 @@ const useBaseEditController = (serviceGetFunction, serviceFunction, id, setValue
             });
         };
 
-        if (typeof serviceGetFunction === 'function') load();
+        if (typeof serviceGetFunction === 'function') { load(); }
         // Adicione serviceGetFunction e setValue às dependências para garantir a execução
     }, [id, serviceGetFunction, setValue]);
 

@@ -17,7 +17,7 @@ const currentYear = new Date().getFullYear();
 
 const Footer = () => {
     const styles = useFooterStyles();
-    
+
     return (
         <Grid container sx={styles.container} spacing={1} justifyContent={'center'}>
             {links.map((link, key) => (

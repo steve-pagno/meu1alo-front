@@ -47,17 +47,17 @@ const SecretaryService = (genericLog) => {
         return HttpHelper.put(`${generic.pathName}/me`, data, generic.getUser().token).then(genericLog);
     };
 
-    return { 
-        ...generic, 
-        getAllZonesWithCities, 
-        getZones, 
-        isStateSecretary, 
-        registerZoneUser, 
+    return {
+        ...generic,
         createInstitution,
-        setZoneId, 
-        createZone, 
+        createZone,
         deleteZone,
+        getAllZonesWithCities,
         getMe,
+        getZones,
+        isStateSecretary,
+        registerZoneUser,
+        setZoneId,
         updateMe
     };
 };

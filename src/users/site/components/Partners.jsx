@@ -5,10 +5,9 @@ import CrefonoIcon from '../../../components/icons/CrefonoIcon';
 import FapescIcon from '../../../components/icons/FapescIcon';
 import NascerIcon from '../../../components/icons/NascerIcon';
 import SecretaryIcon from '../../../components/icons/SecretaryIcon';
-import UnieduIcon from '../../../components/icons/UgIcon';
+import UgIcon from '../../../components/icons/UgIcon';
 import UnivaliIcon from '../../../components/icons/UnivaliIcon';
 import usePartnersStyles from './usePartnersStyles';
-import UgIcon from '../../../components/icons/UgIcon';
 
 const Partners = () => {
     const styles = usePartnersStyles();

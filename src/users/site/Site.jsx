@@ -1,14 +1,14 @@
 import React from 'react';
-import { Box, Container, Grid, Typography, Card, CardContent } from '@mui/material';
-import TopBar from '../../components/TopBar';
-import Footer from './components/Footer';
-import Partners from './components/Partners';
-import PublicHeaderActions from './components/PublicHeaderActions';
-import HeroSection from './components/HeroSection';
-
+import { Box, Card, CardContent, Container, Grid, Typography } from '@mui/material';
+import SpeedTwoToneIcon from '@mui/icons-material/SpeedTwoTone';
 import SupportAgentTwoToneIcon from '@mui/icons-material/SupportAgentTwoTone';
 import TimelineTwoToneIcon from '@mui/icons-material/TimelineTwoTone';
-import SpeedTwoToneIcon from '@mui/icons-material/SpeedTwoTone';
+import TopBar from '../../components/TopBar';
+import Footer from './components/Footer';
+
+import HeroSection from './components/HeroSection';
+import Partners from './components/Partners';
+import PublicHeaderActions from './components/PublicHeaderActions';
 
 const Site = () => {
     return (
@@ -17,23 +17,23 @@ const Site = () => {
                 baseRoute={'/'}
                 rightElement={<PublicHeaderActions />}
             />
-            
+
             <HeroSection />
 
-            <Box sx={{ py: 8, backgroundColor: '#f9fafc' }}>
+            <Box sx={{ backgroundColor: '#f9fafc', py: 8 }}>
                 <Container maxWidth="lg">
-                    <Box sx={{ textAlign: 'center', mb: 6 }}>
+                    <Box sx={{ mb: 6, textAlign: 'center' }}>
                         <Typography variant="h4" color="primary" sx={{ fontWeight: 'bold', mb: 2 }}>
                             Como funciona o Meu Primeiro Alô?
                         </Typography>
-                        <Typography variant="h6" color="text.secondary" sx={{ maxWidth: '700px', mx: 'auto', fontWeight: 400 }}>
+                        <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 400, maxWidth: '700px', mx: 'auto' }}>
                             Oferecemos um sistema inovador para acompanhamento neonatal.
                         </Typography>
                     </Box>
 
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={4}>
-                            <Card sx={{ height: '100%', borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', textAlign: 'center', p: 2 }}>
+                            <Card sx={{ borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', height: '100%', p: 2, textAlign: 'center' }}>
                                 <CardContent>
                                     <SupportAgentTwoToneIcon color="primary" sx={{ fontSize: 60, mb: 2 }} />
                                     <Typography variant="h5" color="primary" sx={{ fontWeight: 'bold', mb: 2 }}>
@@ -45,9 +45,9 @@ const Site = () => {
                                 </CardContent>
                             </Card>
                         </Grid>
-                        
+
                         <Grid item xs={12} md={4}>
-                            <Card sx={{ height: '100%', borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', textAlign: 'center', p: 2 }}>
+                            <Card sx={{ borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', height: '100%', p: 2, textAlign: 'center' }}>
                                 <CardContent>
                                     <SpeedTwoToneIcon color="secondary" sx={{ fontSize: 60, mb: 2 }} />
                                     <Typography variant="h5" color="secondary" sx={{ fontWeight: 'bold', mb: 2 }}>
@@ -59,9 +59,9 @@ const Site = () => {
                                 </CardContent>
                             </Card>
                         </Grid>
-                        
+
                         <Grid item xs={12} md={4}>
-                            <Card sx={{ height: '100%', borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', textAlign: 'center', p: 2 }}>
+                            <Card sx={{ borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.05)', height: '100%', p: 2, textAlign: 'center' }}>
                                 <CardContent>
                                     <TimelineTwoToneIcon color="primary" sx={{ fontSize: 60, mb: 2 }} />
                                     <Typography variant="h5" color="primary" sx={{ fontWeight: 'bold', mb: 2 }}>
@@ -76,7 +76,7 @@ const Site = () => {
                     </Grid>
                 </Container>
             </Box>
-            
+
             <Partners />
             <Footer/>
         </React.Fragment>

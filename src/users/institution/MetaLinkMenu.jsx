@@ -1,7 +1,7 @@
 import React from 'react';
 import { GoGraph } from 'react-icons/go';
 import { TbCheckupList } from 'react-icons/tb';
-import { Home, Edit } from '@mui/icons-material';
+import { Edit, Home } from '@mui/icons-material';
 
 const data = [
     {

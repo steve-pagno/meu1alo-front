@@ -10,13 +10,13 @@ export const getAddressByCep = async (cep) => {
     try {
         const response = await fetch(`https://viacep.com.br/ws/${cleanCep}/json/`);
         const data = await response.json();
-        
+
         console.log('[DEBUG] 2. Resposta do ViaCEP:', data); // <--- AQUI VOCÊ VÊ O RESULTADO
-        
+
         if (data.erro) {
             return { error: 'CEP não encontrado.' };
         }
-        
+
         return data;
     } catch (error) {
         console.error('[DEBUG] Erro na requisição:', error);

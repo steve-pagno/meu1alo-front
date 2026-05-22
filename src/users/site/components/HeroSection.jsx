@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Button, Container, Typography, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Box, Button, Container, Typography, useTheme } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import LocalHospitalTwoToneIcon from '@mui/icons-material/LocalHospitalTwoTone';
 
@@ -11,53 +11,53 @@ const HeroSection = () => {
     return (
         <Box
             sx={{
-                position: 'relative',
-                minHeight: '80vh',
-                display: 'flex',
+                '&::before': {
+                    // Soft overlay to ensure readability
+                    backdropFilter: 'blur(3px)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.45)',
+                    content: '""',
+                    height: '100%',
+                    left: 0,
+                    position: 'absolute',
+                    top: 0, width: '100%',
+                },
                 alignItems: 'center',
                 backgroundImage: 'url(/hero_banner.png)',
-                backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: 'rgba(255, 255, 255, 0.45)', // Soft overlay to ensure readability
-                    backdropFilter: 'blur(3px)',
-                }
+                backgroundSize: 'cover',
+                display: 'flex',
+                minHeight: '80vh',
+                position: 'relative'
             }}
         >
             <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
                 <Box
                     sx={{
-                        maxWidth: '650px',
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
                         backdropFilter: 'blur(12px)',
-                        padding: { xs: 4, md: 6 },
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        border: '1px solid rgba(255,255,255,0.6)',
                         borderRadius: '24px',
                         boxShadow: '0px 10px 40px rgba(0,0,0,0.08)',
-                        border: '1px solid rgba(255,255,255,0.6)'
+                        maxWidth: '650px',
+                        padding: { md: 6, xs: 4 }
                     }}
                 >
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                    <Box sx={{ alignItems: 'center', display: 'flex', gap: 1, mb: 2 }}>
                         <LocalHospitalTwoToneIcon color="primary" fontSize="large" />
-                        <Typography variant="overline" color="primary" sx={{ fontWeight: 'bold', letterSpacing: 1.5, fontSize: '1rem' }}>
+                        <Typography variant="overline" color="primary" sx={{ fontSize: '1rem', fontWeight: 'bold', letterSpacing: 1.5 }}>
                             Atenção Neonatal
                         </Typography>
                     </Box>
 
-                    <Typography 
-                        variant="h3" 
-                        color="text.primary" 
-                        sx={{ 
-                            fontWeight: 800, 
-                            mb: 3, 
-                            lineHeight: 1.2,
+                    <Typography
+                        variant="h3"
+                        color="text.primary"
+                        sx={{
                             background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                            fontWeight: 800,
+                            lineHeight: 1.2,
+                            mb: 3,
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent'
                         }}
@@ -65,28 +65,28 @@ const HeroSection = () => {
                         Cuidando da audição e do amanhã dos nossos bebês.
                     </Typography>
 
-                    <Typography variant="h6" color="text.secondary" sx={{ mb: 4, fontWeight: 400, lineHeight: 1.6 }}>
-                        O Meu Primeiro Alô é a plataforma completa de rastreamento do Teste da Orelhinha. 
+                    <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 400, lineHeight: 1.6, mb: 4 }}>
+                        O Meu Primeiro Alô é a plataforma completa de rastreamento do Teste da Orelhinha.
                         Tecnologia, agilidade e segurança na identificação de diagnósticos auditivos neonatais.
                     </Typography>
 
-                    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                        <Button 
-                            variant="contained" 
-                            color="primary" 
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                        <Button
+                            variant="contained"
+                            color="primary"
                             size="large"
                             onClick={() => navigate('/fono/login')}
-                            sx={{ borderRadius: '12px', paddingX: 4, paddingY: 1.5, fontWeight: 'bold' }}
+                            sx={{ borderRadius: '12px', fontWeight: 'bold', paddingX: 4, paddingY: 1.5 }}
                         >
                             Área do Fonoaudiólogo
                         </Button>
-                        <Button 
-                            variant="outlined" 
-                            color="secondary" 
+                        <Button
+                            variant="outlined"
+                            color="secondary"
                             size="large"
                             startIcon={<AssignmentIcon />}
                             onClick={() => navigate('/pais/login')}
-                            sx={{ borderRadius: '12px', paddingX: 4, paddingY: 1.5, fontWeight: 'bold', borderWidth: '2px', '&:hover': { borderWidth: '2px' } }}
+                            sx={{ '&:hover': { borderWidth: '2px' }, borderRadius: '12px', borderWidth: '2px', fontWeight: 'bold', paddingX: 4, paddingY: 1.5 }}
                         >
                             Área dos Pais/Responsáveis
                         </Button>

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Grid, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { Grid, TextField, Typography } from '@mui/material';
 import BaseEditPaper from '../../../../components/bases/edit/BaseEditPaper';
-import useParentsService from '../../useParentsService';
 import BrazilianPhoneField from '../../../../components/fileds/phone/BrazilianPhoneField';
+import useParentsService from '../../useParentsService';
 
 const EditParent = () => {
     const { formState: { errors }, handleSubmit, register, setValue } = useForm();
@@ -22,15 +22,15 @@ const EditParent = () => {
             const phone2 = Array.isArray(data.phones) && data.phones[1] ? data.phones[1].phoneNumber : '';
 
             let formattedCpf = data.cpf || '';
-            if (formattedCpf) formattedCpf = formattedCpf.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+            if (formattedCpf) { formattedCpf = formattedCpf.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'); }
 
             response.body = {
-                name: data.name || '',
                 cpf: formattedCpf,
-                password: '',
-                passwordConfirm: '',
                 'emails.0': email1,
                 'emails.1': email2,
+                name: data.name || '',
+                password: '',
+                passwordConfirm: '',
                 'phones.0': phone1,
                 'phones.1': phone2
             };

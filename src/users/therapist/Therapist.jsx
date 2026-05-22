@@ -33,7 +33,7 @@ const Therapist = () => {
             withDashboard={true}
             withNotifications={true}
             hasRegisterRoute={true}
-            editRoute={'/fono/perfil'} 
+            editRoute={'/fono/perfil'}
         >
             <Route path={'/cadastro'} element={
                 <RedirectIfAuth>

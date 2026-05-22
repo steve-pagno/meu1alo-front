@@ -36,13 +36,13 @@ const RegisterTherapist = () => {
             <Grid item xs={12} sm={12} md={6}>
                 <TextField
                     {...register('crfa', {
-                        setValueAs: (v) => v.replace(/\D/g, ''),
                         onChange: (e) => {
                             const rawValue = e.target.value.replace(/\D/g, '');
                             if (rawValue.length > 0) {
                                 e.target.value = rawValue.replace(/(\d{1})(\d{1,})/, '$1-$2');
                             }
-                        }
+                        },
+                        setValueAs: (v) => v.replace(/\D/g, '')
                     })}
                     label="CRFa"
                     inputProps={{ maxLength: 9 }}

@@ -25,7 +25,7 @@ const InstitutionService = (genericLog) => {
         return HttpHelper.put(`${generic.pathName}/me`, data, generic.getUser().token).then(genericLog);
     };
 
-    return { ...generic, getMe, updateMe, getReferralServiceTypes, getTypes, referralServiceRegister };
+    return { ...generic, getMe, getReferralServiceTypes, getTypes, referralServiceRegister, updateMe };
 };
 
 let institutionServiceInstance = null;

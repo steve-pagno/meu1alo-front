@@ -1,16 +1,16 @@
-import { useEffect, useState, useCallback } from 'react';
-import useSecretaryService from '../../useSecretaryService';
+import { useCallback, useEffect, useState } from 'react';
 import { useGenericLogger } from '../../../../providers/genericLogger/GenericLogger';
+import useSecretaryService from '../../useSecretaryService';
 
 const useEditZonesController = () => {
     const service = useSecretaryService();
     const { genericLog } = useGenericLogger(); // Importamos o disparador de avisos da tela
-    
+
     const [zones, setZones] = useState(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [newZoneName, setNewZoneName] = useState('');
 
-    const [isMaster, setIsMaster] = useState(false); 
+    const [isMaster, setIsMaster] = useState(false);
 
     const fetchZones = useCallback(() => {
         service.getAllZonesWithCities().then(r => r.body).then(setZones);
@@ -21,7 +21,7 @@ const useEditZonesController = () => {
 
         // Verificação Definitiva e à prova de falhas:
         const currentUser = service.getUser()?.user;
-        
+
         // Se o usuário logado existe e NÃO possui uma zona vinculada, ele é a Estadual (Master)
         if (currentUser && !currentUser.zone) {
             setIsMaster(true);
@@ -31,15 +31,15 @@ const useEditZonesController = () => {
     }, [fetchZones, service]);
 
     const onDropCity = ({ destination, sourceValueIndex, subValueIds }) => {
-        if (!zones) return;
+        if (!zones) { return; }
 
         // Bloqueio com aviso na tela
         if (!isMaster) {
-            genericLog({ type: 'error', message: 'Acesso Negado: Apenas a Secretaria Estadual pode mover municípios e editar regiões.' });
-            fetchZones(); 
+            genericLog({ message: 'Acesso Negado: Apenas a Secretaria Estadual pode mover municípios e editar regiões.', type: 'error' });
+            fetchZones();
             return;
         }
-        
+
         const newZones = [...zones];
         const sourceZoneCities = newZones[sourceValueIndex].values;
         const destZoneId = newZones[destination.valueIndex].id;
@@ -57,14 +57,14 @@ const useEditZonesController = () => {
         Promise.all(cities.map(city => service.setZoneId(city.id, destZoneId)))
             .catch(() => {
                 // Erro no banco usando aviso nativo
-                genericLog({ type: 'error', message: 'Ocorreu um erro ao salvar a alteração. A tela será recarregada.' });
-                fetchZones(); 
+                genericLog({ message: 'Ocorreu um erro ao salvar a alteração. A tela será recarregada.', type: 'error' });
+                fetchZones();
             });
     };
 
     const handleOpenDialog = () => {
-        if (!isMaster) return;
-        setNewZoneName(''); 
+        if (!isMaster) { return; }
+        setNewZoneName('');
         setIsDialogOpen(true);
     };
 
@@ -73,7 +73,7 @@ const useEditZonesController = () => {
     };
 
     const submitNewZone = () => {
-        if (!isMaster) return;
+        if (!isMaster) { return; }
 
         if (newZoneName && newZoneName.trim() !== '') {
             const stateId = service.getUser()?.user?.state?.id || service.getUser()?.user?.id;
@@ -82,23 +82,23 @@ const useEditZonesController = () => {
                 secretary: { name: newZoneName },
                 state: { id: stateId }
             }).then(() => {
-                genericLog({ type: 'success', message: 'Região criada com sucesso!' });
-                fetchZones(); 
-                setIsDialogOpen(false); 
+                genericLog({ message: 'Região criada com sucesso!', type: 'success' });
+                fetchZones();
+                setIsDialogOpen(false);
             }).catch(() => {
-                genericLog({ type: 'error', message: 'Erro ao criar a região. Verifique os dados.' });
+                genericLog({ message: 'Erro ao criar a região. Verifique os dados.', type: 'error' });
             });
         }
     };
 
     const onEditZone = (index) => {
-        if (!isMaster) return;
+        if (!isMaster) { return; }
         // Substitui o alerta feio por um aviso informativo ("info")
-        genericLog({ type: 'info', message: 'Para alterar o nome de uma região, edite o perfil daquela Secretaria Regional.' });
+        genericLog({ message: 'Para alterar o nome de uma região, edite o perfil daquela Secretaria Regional.', type: 'info' });
     };
 
     const onDeleteZone = (index) => {
-        if (!isMaster) return;
+        if (!isMaster) { return; }
 
         const newZones = [...zones];
         const zoneToDelete = newZones[index];
@@ -106,22 +106,22 @@ const useEditZonesController = () => {
         // O Confirm continua nativo porque ele exige que o usuário clique em "OK" ou "Cancelar" para prosseguir
         if (window.confirm(`Tem certeza que deseja excluir a região "${zoneToDelete.title}"?`)) {
             service.deleteZone(zoneToDelete.id).then(() => {
-                genericLog({ type: 'success', message: 'Região excluída com sucesso!' });
-                
+                genericLog({ message: 'Região excluída com sucesso!', type: 'success' });
+
                 const cities = newZones[index].values;
                 newZones[newZones.length - 1].values.push(...cities);
                 newZones.splice(index, 1);
                 setZones(newZones);
             }).catch(() => {
-                genericLog({ type: 'error', message: 'Ocorreu um erro ao tentar excluir a região.' });
+                genericLog({ message: 'Ocorreu um erro ao tentar excluir a região.', type: 'error' });
             });
         }
     };
 
-    return { 
-        onDeleteZone, onDropCity, onEditZone, zones,
-        isDialogOpen, handleOpenDialog, handleCloseDialog, newZoneName, setNewZoneName, submitNewZone,
-        isMaster 
+    return {
+        handleCloseDialog, handleOpenDialog, isDialogOpen, isMaster,
+        newZoneName, onDeleteZone, onDropCity, onEditZone, setNewZoneName, submitNewZone,
+        zones
     };
 };
 

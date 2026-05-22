@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { CircularProgress, Divider, Grid, TextField, Typography, Snackbar, Alert } from '@mui/material';
+import { Alert, CircularProgress, Divider, Grid, Snackbar, TextField, Typography } from '@mui/material';
 // 4 níveis estão corretos para este arquivo específico
 import AsyncRequest from '../../../../components/api/AsyncRequest';
+import CEPField from '../../../../components/fileds/address/CEPField';
 import CNPJField from '../../../../components/fileds/documents/CNPJField';
 import RadioField from '../../../../components/fileds/radio/RadioField';
 import useRegisterInstitutionController from './useRegisterInstitutionController';
-import CEPField from '../../../../components/fileds/address/CEPField';
 
 const inputProps = {
     cep: { maxLength: '8', pattern: '[0-9]+' },
     cnes: { maxLength: '11', pattern: '[0-9]+' },
     cnpj: { maxLength: '14', pattern: '[0-9]+' },
     general: { maxLength: '255' },
-    state: { maxLength: '2' },
-    number: { maxLength: '4', pattern: '[0-9]+' }
+    number: { maxLength: '4', pattern: '[0-9]+' },
+    state: { maxLength: '2' }
 };
 
 const RegisterInstitution = ({ register, setValue }) => {
@@ -21,32 +21,32 @@ const RegisterInstitution = ({ register, setValue }) => {
 
     // Estado para as notificações no canto da tela
     const [notify, setNotify] = useState({
-        open: false,
         message: '',
+        open: false,
         severity: 'info'
     });
 
     const handleCloseNotify = (event, reason) => {
-        if (reason === 'clickaway') return;
+        if (reason === 'clickaway') { return; }
         setNotify({ ...notify, open: false });
     };
 
     const handleSearchStart = () => {
         setNotify({
-            open: true,
             message: 'Buscando CEP...',
+            open: true,
             severity: 'info'
         });
         setValue('institution.address.street', '...');
         setValue('institution.address.adjunct', '...');
-        setValue('institution.address.state_uf', '...'); 
-        setValue('institution.address.city_name', '...'); 
+        setValue('institution.address.state_uf', '...');
+        setValue('institution.address.city_name', '...');
     };
 
     const handleAddressFound = (data) => {
         setNotify({
-            open: true,
             message: 'Endereço encontrado!',
+            open: true,
             severity: 'success'
         });
 
@@ -63,8 +63,8 @@ const RegisterInstitution = ({ register, setValue }) => {
 
     const handleError = (msg) => {
         setNotify({
-            open: true,
             message: msg || 'Erro ao localizar o CEP.',
+            open: true,
             severity: 'error'
         });
         setValue('institution.address.street', '');
@@ -76,11 +76,11 @@ const RegisterInstitution = ({ register, setValue }) => {
     return (
         <React.Fragment>
             {/* Componente de Notificação */}
-            <Snackbar 
-                open={notify.open} 
-                autoHideDuration={4000} 
+            <Snackbar
+                open={notify.open}
+                autoHideDuration={4000}
                 onClose={handleCloseNotify}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
                 <Alert onClose={handleCloseNotify} severity={notify.severity} variant="filled" sx={{ width: '100%' }}>
                     {notify.message}
@@ -158,7 +158,7 @@ const RegisterInstitution = ({ register, setValue }) => {
                     inputProps={inputProps.number} variant="outlined" size="small" required
                 />
             </Grid>
-            
+
             <Grid item xs={12} sm={12} md={6}>
                 <TextField
                     {...register('institution.address.adjunct')} label="Complemento"

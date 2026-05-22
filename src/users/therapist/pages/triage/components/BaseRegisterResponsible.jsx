@@ -1,7 +1,7 @@
 import React, { Fragment, useMemo, useState } from 'react';
-import { Alert, Button, Grid, Snackbar, TextField, Typography } from '@mui/material';
-import BrazilianPhoneField from '../../../../../components/fileds/phone/BrazilianPhoneField';
+import { Alert, Box, Button, Grid, Snackbar, TextField, Typography } from '@mui/material';
 import CEPField from '../../../../../components/fileds/address/CEPField';
+import BrazilianPhoneField from '../../../../../components/fileds/phone/BrazilianPhoneField';
 import useTherapistService from '../../../useTherapistService';
 
 const inputProps = {
@@ -26,13 +26,14 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
     const service = useTherapistService();
 
     const [notify, setNotify] = useState({
-        open: false,
         message: '',
+        open: false,
         severity: 'info'
     });
 
     const [lookupStatus, setLookupStatus] = useState('idle'); // idle | loading | found | not-found
     const [existingGuardian, setExistingGuardian] = useState(null);
+    const [isEditingExisting, setIsEditingExisting] = useState(false);
 
     const cpfValue = watch(`${prefixName}.cpf`);
 
@@ -42,12 +43,12 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
     );
 
     const handleCloseNotify = (_event, reason) => {
-        if (reason === 'clickaway') return;
+        if (reason === 'clickaway') { return; }
         setNotify({ ...notify, open: false });
     };
 
     const handleSearchStart = () => {
-        setNotify({ open: true, message: 'Buscando CEP...', severity: 'info' });
+        setNotify({ message: 'Buscando CEP...', open: true, severity: 'info' });
         setValue(`${prefixName}.address.street`, '...');
         setValue(`${prefixName}.address.adjunct`, '...');
         setValue(`${prefixName}.address.state_uf`, '...');
@@ -55,7 +56,7 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
     };
 
     const handleAddressFound = (data) => {
-        setNotify({ open: true, message: 'Endereço encontrado!', severity: 'success' });
+        setNotify({ message: 'Endereço encontrado!', open: true, severity: 'success' });
         setValue(`${prefixName}.address.street`, data.logradouro);
         setValue(`${prefixName}.address.adjunct`, data.complemento);
         setValue(`${prefixName}.address.state_uf`, data.uf);
@@ -68,7 +69,7 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
     };
 
     const handleError = (msg) => {
-        setNotify({ open: true, message: msg || 'Erro ao localizar o CEP.', severity: 'error' });
+        setNotify({ message: msg || 'Erro ao localizar o CEP.', open: true, severity: 'error' });
         setValue(`${prefixName}.address.street`, '');
         setValue(`${prefixName}.address.adjunct`, '');
         setValue(`${prefixName}.address.state_uf`, '');
@@ -89,13 +90,15 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
         setValue(`${prefixName}.address.city_name`, '');
         setValue(`${prefixName}.address.number`, '');
         setValue(`${prefixName}.address.adjunct`, '');
+        setValue('existingBabies', []);
+        setIsEditingExisting(false);
     };
 
     const handleCpfLookup = async () => {
         if (normalizedCpf.length !== 11) {
             setNotify({
-                open: true,
                 message: 'Informe um CPF válido com 11 dígitos.',
+                open: true,
                 severity: 'warning'
             });
             return;
@@ -111,13 +114,29 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
             const guardian = response.body;
             setExistingGuardian(guardian);
             setLookupStatus('found');
+            setIsEditingExisting(false);
 
             setValue(`${prefixName}.id`, guardian.id);
             setValue(`${prefixName}.cpf`, guardian.cpf || normalizedCpf);
+            setValue(`${prefixName}.name`, guardian.name || '');
+            setValue(`${prefixName}.birthDate`, guardian.birthDate?.split('T')[0] || '');
+            setValue(`${prefixName}.emails.0`, guardian.emails?.[0] || '');
+            setValue(`${prefixName}.emails.1`, guardian.emails?.[1] || '');
+            setValue(`${prefixName}.phones.0`, guardian.phones?.[0] || '');
+            setValue(`${prefixName}.phones.1`, guardian.phones?.[1] || '');
+            if (guardian.address) {
+                setValue(`${prefixName}.address.cep`, guardian.address.cep || '');
+                setValue(`${prefixName}.address.street`, guardian.address.street || '');
+                setValue(`${prefixName}.address.state_uf`, guardian.address.state_uf || '');
+                setValue(`${prefixName}.address.city_name`, guardian.address.city_name || '');
+                setValue(`${prefixName}.address.number`, guardian.address.number || '');
+                setValue(`${prefixName}.address.adjunct`, guardian.address.adjunct || '');
+            }
+            setValue('existingBabies', guardian.babies || []);
 
             setNotify({
-                open: true,
                 message: 'Responsável já cadastrado. Você pode seguir com o cadastro do bebê.',
+                open: true,
                 severity: 'success'
             });
             return;
@@ -125,17 +144,19 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
 
         setLookupStatus('not-found');
         setExistingGuardian(null);
+        setIsEditingExisting(false);
         clearFullForm();
         setValue(`${prefixName}.cpf`, normalizedCpf);
+        setValue('existingBabies', []);
 
         setNotify({
-            open: true,
             message: 'CPF não encontrado. Preencha os dados para cadastrar um novo responsável.',
+            open: true,
             severity: 'info'
         });
     };
 
-    const showFullForm = lookupStatus === 'not-found';
+    const showFullForm = lookupStatus === 'not-found' || isEditingExisting;
 
     return (
         <Fragment>
@@ -143,7 +164,7 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
                 open={notify.open}
                 autoHideDuration={4000}
                 onClose={handleCloseNotify}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
                 <Alert onClose={handleCloseNotify} severity={notify.severity} variant="filled" sx={{ width: '100%' }}>
                     {notify.message}
@@ -153,8 +174,13 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
             <input type="hidden" {...register(`${prefixName}.id`)} />
 
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <Typography variant="h6">Consulta por CPF</Typography>
+                <Grid item xs={12} sx={{ mb: 1, mt: 1 }}>
+                    <Box sx={{ alignItems: 'center', borderBottom: '2px solid rgba(93, 48, 122, 0.08)', display: 'flex', gap: 1.5, pb: 1 }}>
+                        <Box sx={{ background: 'linear-gradient(#5D307A, #E83268)', borderRadius: 2, height: 20, width: 6 }} />
+                        <Typography variant="h6" sx={{ color: 'primary.main', fontSize: '1.1rem', fontWeight: 700, letterSpacing: '-0.3px' }}>
+                            Consulta por CPF
+                        </Typography>
+                    </Box>
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={8}>
@@ -175,7 +201,21 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
                         color="secondary"
                         onClick={handleCpfLookup}
                         disabled={lookupStatus === 'loading'}
-                        sx={{ height: '40px', width: '100%' }}
+                        sx={{
+                            '&:hover': {
+                                background: 'linear-gradient(45deg, #cc2354 0%, #E83268 100%)',
+                                boxShadow: '0 6px 16px rgba(232, 50, 104, 0.4)',
+                                transform: 'translateY(-1px)'
+                            },
+                            background: 'linear-gradient(45deg, #E83268 0%, #ff5c8c 100%)',
+                            borderRadius: '12px',
+                            boxShadow: '0 4px 12px rgba(232, 50, 104, 0.2)',
+                            fontWeight: 700,
+                            height: '40px',
+                            textTransform: 'none',
+                            transition: 'all 0.2s ease-in-out',
+                            width: '100%'
+                        }}
                     >
                         {lookupStatus === 'loading' ? 'Consultando...' : 'Verificar CPF'}
                     </Button>
@@ -183,7 +223,19 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
 
                 {lookupStatus === 'found' && existingGuardian && (
                     <Grid item xs={12}>
-                        <Alert severity="success">
+                        <Alert
+                            severity="success"
+                            action={
+                                <Button
+                                    color="primary"
+                                    variant="outlined"
+                                    size="small"
+                                    onClick={() => setIsEditingExisting(!isEditingExisting)}
+                                >
+                                    {isEditingExisting ? 'Ocultar Formulário' : 'Editar Dados'}
+                                </Button>
+                            }
+                        >
                             <strong>Responsável encontrado.</strong><br />
                             Nome: {existingGuardian.name}<br />
                             CPF: {existingGuardian.cpf}<br />
@@ -220,8 +272,13 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
                             />
                         </Grid>
 
-                        <Grid item xs={12}>
-                            <Typography variant="h6">Contato</Typography>
+                        <Grid item xs={12} sx={{ mb: 1, mt: 3 }}>
+                            <Box sx={{ alignItems: 'center', borderBottom: '2px solid rgba(93, 48, 122, 0.08)', display: 'flex', gap: 1.5, pb: 1 }}>
+                                <Box sx={{ background: 'linear-gradient(#5D307A, #E83268)', borderRadius: 2, height: 20, width: 6 }} />
+                                <Typography variant="h6" sx={{ color: 'primary.main', fontSize: '1.1rem', fontWeight: 700, letterSpacing: '-0.3px' }}>
+                                    Contato
+                                </Typography>
+                            </Box>
                         </Grid>
 
                         <Grid item xs={12} sm={12} md={6}>
@@ -270,8 +327,13 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
                             />
                         </Grid>
 
-                        <Grid item xs={12}>
-                            <Typography variant="h6">Endereço</Typography>
+                        <Grid item xs={12} sx={{ mb: 1, mt: 3 }}>
+                            <Box sx={{ alignItems: 'center', borderBottom: '2px solid rgba(93, 48, 122, 0.08)', display: 'flex', gap: 1.5, pb: 1 }}>
+                                <Box sx={{ background: 'linear-gradient(#5D307A, #E83268)', borderRadius: 2, height: 20, width: 6 }} />
+                                <Typography variant="h6" sx={{ color: 'primary.main', fontSize: '1.1rem', fontWeight: 700, letterSpacing: '-0.3px' }}>
+                                    Endereço
+                                </Typography>
+                            </Box>
                         </Grid>
 
                         <Grid item xs={12} sm={12} md={6}>

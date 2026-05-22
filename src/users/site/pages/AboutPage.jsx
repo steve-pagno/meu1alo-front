@@ -3,11 +3,11 @@ import { Box, Typography } from '@mui/material';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
 
-import TopBar from '../../../components/TopBar';
 import TopicListIcon from '../../../components/lists/TopicListIcon';
-import PublicHeaderActions from '../components/PublicHeaderActions';
-import Partners from '../components/Partners';
+import TopBar from '../../../components/TopBar';
 import Footer from '../components/Footer';
+import Partners from '../components/Partners';
+import PublicHeaderActions from '../components/PublicHeaderActions';
 import TextParagraph from '../components/TextParagraph';
 import VideoAndText from '../components/VideoAndText';
 import VideoParagraph from '../components/VideoParagraph';
@@ -19,14 +19,14 @@ const AboutPage = () => {
                 baseRoute={'/'}
                 rightElement={<PublicHeaderActions />}
             />
-            <Box sx={{ pt: 6, pb: 4, backgroundColor: '#fcfcfc', minHeight: '80vh' }}>
+            <Box sx={{ backgroundColor: '#fcfcfc', minHeight: '80vh', pb: 4, pt: 6 }}>
                 <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
                     <InfoTwoToneIcon color="primary" sx={{ fontSize: 40, mr: 1 }} />
                     <Typography variant="h4" color="primary" sx={{ fontWeight: 'bold' }}>
                         Sobre o Meu Primeiro Alô
                     </Typography>
                 </Box>
-                
+
                 <TextParagraph title={'O que somos?'}>
                     Uma plataforma de rastreamento do teste da orelhinha sob LEI Nº 18.267, de 9 de dezembro de 2021.
                     Dispõe sobre a notificação compulsória do teste de triagem neonatal, para todas as crianças no Estado de Santa Catarina.
@@ -94,7 +94,7 @@ const AboutPage = () => {
                     />
                 </VideoAndText>
             </Box>
-            
+
             <Partners />
             <Footer />
         </React.Fragment>

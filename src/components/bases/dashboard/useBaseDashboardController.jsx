@@ -4,9 +4,9 @@ const isTypeSmall = (length) => length <= 5;
 
 const getSizes = (lengthTitle, isTypeSmall) => {
     if (lengthTitle > 50 || !isTypeSmall) {
-        return { xl: 6, xs: 12 };
+        return { lg: 12, md: 12, sm: 12, xl: 12, xs: 12 };
     }
-    return { lg: 4, md: 4, sm: 8, xl: 2, xs: 12 };
+    return { lg: 6, md: 6, sm: 12, xl: 6, xs: 12 };
 };
 
 const useBaseDashboardController = () => {

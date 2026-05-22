@@ -57,15 +57,15 @@ const EditTherapist = () => {
             }
 
             response.body = {
-                name: data.name || '',
-                login: data.login || '',
                 crfa: formattedCrfa,
-                xp: xp,
-                institutions: insts,
                 'emails.0': email1,
                 'emails.1': email2,
+                institutions: insts,
+                login: data.login || '',
+                name: data.name || '',
                 'phones.0': phone1,
-                'phones.1': phone2
+                'phones.1': phone2,
+                xp: xp
             };
         }
 
@@ -104,13 +104,13 @@ const EditTherapist = () => {
             <Grid item xs={12} sm={12} md={6}>
                 <TextField
                     {...register('crfa', {
-                        setValueAs: (v) => v.replace(/\D/g, ''), // Envia apenas números ao banco
+                        // Envia apenas números ao banco
                         onChange: (e) => {
                             const rawValue = e.target.value.replace(/\D/g, '');
                             if (rawValue.length > 0) {
                                 e.target.value = rawValue.replace(/(\d{1})(\d{1,})/, '$1-$2');
                             }
-                        }
+                        }, setValueAs: (v) => v.replace(/\D/g, '')
                     })}
                     label="CRFa"
                     inputProps={inputProps.crfa}

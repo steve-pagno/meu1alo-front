@@ -1,6 +1,5 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
 import { CircularProgress, Grid, TextField, Typography } from '@mui/material';
 import AsyncRequest from '../../../../components/api/AsyncRequest';
 import BaseEditPaper from '../../../../components/bases/edit/BaseEditPaper';
@@ -25,27 +24,27 @@ const EditInstitution = () => {
             const phone2 = Array.isArray(data.phones) && data.phones[1] ? data.phones[1].phoneNumber : '';
 
             let formattedCnpj = data.institution?.cnpj || '';
-            if (formattedCnpj) formattedCnpj = formattedCnpj.replace(/\D/g, '').replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+            if (formattedCnpj) { formattedCnpj = formattedCnpj.replace(/\D/g, '').replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5'); }
 
             response.body = {
-                institutionName: data.institution?.institutionName || '',
+                alternativeEmail: email2,
+                cep: data.institution?.address?.cep || '',
+                city: data.institution?.address?.city?.cityName || '',
                 cnes: data.institution?.cnes || '',
                 cnpj: formattedCnpj,
-                institutionType: data.institution?.institutionType || '',
-                email: email1,
-                alternativeEmail: email2,
-                institutionPhone: phone1,
-                institutionCellphone: phone2,
-                cep: data.institution?.address?.cep || '',
-                publicArea: data.institution?.address?.street || '',
-                state: data.institution?.address?.city?.stateUf || '',
-                city: data.institution?.address?.city?.cityName || '',
-                number: data.institution?.address?.number || '',
                 complement: data.institution?.address?.adjunct || '',
+                email: email1,
+                institutionCellphone: phone2,
+                institutionName: data.institution?.institutionName || '',
+                institutionPhone: phone1,
+                institutionType: data.institution?.institutionType || '',
+                number: data.institution?.address?.number || '',
+                password: '',
+                passwordConfirm: '',
+                publicArea: data.institution?.address?.street || '',
                 responsibleName: data.name || '',
                 responsibleRole: data.role || '',
-                password: '',
-                passwordConfirm: ''
+                state: data.institution?.address?.city?.stateUf || ''
             };
         }
 

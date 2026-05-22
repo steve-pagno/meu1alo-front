@@ -2,7 +2,7 @@ import BasePasswordForgottenPaper from '../../../../components/bases/forgottenPa
 
 export default function ForgotPasswordTherapist() {
     return (
-        <BasePasswordForgottenPaper 
+        <BasePasswordForgottenPaper
             userTypeTitle="Fonoaudiólogo"
             userType="therapist"
         />

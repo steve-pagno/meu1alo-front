@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Menu, MenuItem, Fade } from '@mui/material';
+import { Box, Button, Fade, Menu, MenuItem } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const PublicHeaderActions = () => {
@@ -26,21 +26,21 @@ const PublicHeaderActions = () => {
     };
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Button color="inherit" onClick={navigateToSobre} sx={{ display: { xs: 'none', sm: 'block' } }}>
+        <Box sx={{ alignItems: 'center', display: 'flex', gap: 2 }}>
+            <Button color="inherit" onClick={navigateToSobre} sx={{ display: { sm: 'block', xs: 'none' } }}>
                 Sobre a plataforma
             </Button>
             {/* <Button color="inherit" sx={{ display: { xs: 'none', md: 'block' } }}> */}
-                {/* Equipe */}
+            {/* Equipe */}
             {/* </Button> */}
-            
+
             <Button
                 variant="contained"
                 color="secondary"
                 disableElevation
                 onClick={handleLoginClick}
                 endIcon={<KeyboardArrowDownIcon />}
-                sx={{ borderRadius: '20px', paddingX: 3, fontWeight: 'bold' }}
+                sx={{ borderRadius: '20px', fontWeight: 'bold', paddingX: 3 }}
             >
                 Fazer login
             </Button>
@@ -51,15 +51,15 @@ const PublicHeaderActions = () => {
                 TransitionComponent={Fade}
                 PaperProps={{
                     elevation: 3,
-                    sx: { mt: 1.5, minWidth: 200, borderRadius: '12px' }
+                    sx: { borderRadius: '12px', minWidth: 200, mt: 1.5 }
                 }}
                 anchorOrigin={{
-                    vertical: 'bottom',
                     horizontal: 'right',
+                    vertical: 'bottom',
                 }}
                 transformOrigin={{
-                    vertical: 'top',
                     horizontal: 'right',
+                    vertical: 'top',
                 }}
             >
                 <MenuItem onClick={() => handleNavigate('/fono/login')}>

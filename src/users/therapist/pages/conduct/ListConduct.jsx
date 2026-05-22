@@ -26,7 +26,7 @@ const ListConduct = () => {
             <Grid item xs={12} sm={12} md={6}>
                 <RadioField
                     register={register('testType')} title={'Tipo de teste'}
-                    values={[{ id: 4, name: 'Todos' },{ id: 1, name: 'Teste' },{ id: 2, name: 'Reteste' },{ id: 3, name: 'Teste e reteste' }] }
+                    values={[{ id: 4, name: 'Todos' },{ id: 1, name: 'Teste' },{ id: 2, name: 'Reteste' }] }
                 />
             </Grid>
             <Grid item xs={12} sm={12} md={6}>

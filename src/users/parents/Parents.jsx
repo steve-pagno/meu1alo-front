@@ -3,8 +3,8 @@ import { Route } from 'react-router-dom';
 import BaseUserRoute from '../../components/bases/userRoute/BaseUserRoute';
 import { RequireAuth } from '../../providers/auth/Auth';
 import MetaLinkMenu from './MetaLinkMenu';
-import ListParentTriages from './pages/ListParentTriages';
 import EditParent from './pages/edit/EditParent';
+import ListParentTriages from './pages/ListParentTriages';
 import useParentsService from './useParentsService';
 
 const Parents = () => {

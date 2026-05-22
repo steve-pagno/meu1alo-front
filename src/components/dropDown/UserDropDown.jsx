@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Divider } from '@mui/material'; // Adicionado Divider
+import { Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip } from '@mui/material'; // Adicionado Divider
 import { AccountCircle as AccountCircleIcon, Logout as LogoutIcon } from '@mui/icons-material';
 import useUserDropDownController from './useUserDropDownController';
 import useUserDropDownStyles from './useUserDropDownStyles';

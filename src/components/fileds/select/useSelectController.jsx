@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const useSelectController = (register, multiple, onChange, other) => {
     const [value, setValue] = useState(other.value || other.defaultValue || register.value || (multiple? [] : ''));

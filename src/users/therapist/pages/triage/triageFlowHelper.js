@@ -30,7 +30,7 @@ function classifyIndicatorName(name) {
 }
 
 export function resolveRiskCategory(selectedIds = [], indicators = []) {
-    if (!selectedIds || selectedIds.length === 0) return 'NONE_OR_IRDA1';
+    if (!selectedIds || selectedIds.length === 0) { return 'NONE_OR_IRDA1'; }
 
     const selected = indicators.filter((item) =>
         selectedIds.map(Number).includes(Number(item.id))
@@ -49,12 +49,12 @@ function allTrue(values) {
 }
 
 export function buildConductPreview({
-    riskCategory,
-    testType,
     eoaLeftEar,
     eoaRightEar,
     peateaLeftEar,
     peateaRightEar,
+    riskCategory,
+    testType,
 }) {
     if (riskCategory === 'IRDA2') {
         const eoaPassed = allTrue([eoaLeftEar, eoaRightEar]);
@@ -68,16 +68,16 @@ export function buildConductPreview({
                 return {
                     finalLeftEar,
                     finalRightEar,
-                    type: 'PEATEA',
                     name: 'Passa EOA + PEATE-A. Encaminhamento para monitoramento em serviços especializados ou CER.',
+                    type: 'PEATEA',
                 };
             }
 
             return {
                 finalLeftEar,
                 finalRightEar,
-                type: 'PEATEA',
                 name: 'Falha no teste. Realizar reteste em até 15 dias com exame que apresentou falha.',
+                type: 'PEATEA',
             };
         }
 
@@ -85,16 +85,16 @@ export function buildConductPreview({
             return {
                 finalLeftEar,
                 finalRightEar,
-                type: 'PEATEA',
                 name: 'Passa EOA + PEATE-A. Encaminhamento para monitoramento em serviços especializados ou CER.',
+                type: 'PEATEA',
             };
         }
 
         return {
             finalLeftEar,
             finalRightEar,
-            type: 'PEATEA',
             name: 'Falha no reteste. Encaminhamento para diagnóstico em serviço especializado ou CER.',
+            type: 'PEATEA',
         };
     }
 
@@ -105,16 +105,16 @@ export function buildConductPreview({
             return {
                 finalLeftEar: true,
                 finalRightEar: true,
-                type: 'EOET',
                 name: 'Passa no teste. Encaminhamento para APS para acompanhamento.',
+                type: 'EOET',
             };
         }
 
         return {
             finalLeftEar: Boolean(eoaLeftEar),
             finalRightEar: Boolean(eoaRightEar),
-            type: 'EOET',
             name: 'Falha no teste. Realizar reteste em até 15 dias com EOA.',
+            type: 'EOET',
         };
     }
 
@@ -122,15 +122,15 @@ export function buildConductPreview({
         return {
             finalLeftEar: true,
             finalRightEar: true,
-            type: 'EOET',
             name: 'Passa no reteste. Encaminhamento para APS para acompanhamento.',
+            type: 'EOET',
         };
     }
 
     return {
         finalLeftEar: Boolean(eoaLeftEar),
         finalRightEar: Boolean(eoaRightEar),
-        type: 'EOET',
         name: 'Falha no reteste. Encaminhamento para diagnóstico em serviço especializado ou CER.',
+        type: 'EOET',
     };
 }

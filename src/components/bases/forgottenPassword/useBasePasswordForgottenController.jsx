@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
-import HttpHelper from '../../../helpers/HttpHelper';
 import { toast } from 'react-toastify';
+import HttpHelper from '../../../helpers/HttpHelper';
 
 const useBasePasswordForgottenController = (userType) => {
-    const { handleSubmit, register, formState: { isSubmitting } } = useForm();
+    const { formState: { isSubmitting }, handleSubmit, register } = useForm();
 
     const onSubmit = async (formData) => {
         try {
@@ -25,15 +25,15 @@ const useBasePasswordForgottenController = (userType) => {
                 toast.warning(msg);
             }
         } catch (error) {
-            console.error("Erro na recuperação:", error);
+            console.error('Erro na recuperação:', error);
             toast.error('Não foi possível conectar ao servidor.');
         }
     };
 
-    return { 
-        onSubmit: handleSubmit(onSubmit), 
-        register,
-        loading: isSubmitting
+    return {
+        loading: isSubmitting,
+        onSubmit: handleSubmit(onSubmit),
+        register
     };
 };
 

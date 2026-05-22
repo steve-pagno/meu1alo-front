@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Box, Button, Card, CardContent, Divider, Grid, Typography, CircularProgress } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Button, Card, CardContent, CircularProgress, Divider, Grid, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import useTherapistService from '../../useTherapistService';
 
@@ -18,7 +18,7 @@ const ViewTriage = () => {
                     setTriage(response.body || response.result || response);
                 })
                 .catch((error) => {
-                    console.error("Erro ao carregar os detalhes da triagem:", error);
+                    console.error('Erro ao carregar os detalhes da triagem:', error);
                 })
                 .finally(() => setLoading(false));
         }
@@ -47,11 +47,11 @@ const ViewTriage = () => {
     const responsible = baby?.birthMother || baby?.guardians?.[0];
 
     const formatDate = (dateString) => {
-        if (!dateString) return 'N/A';
+        if (!dateString) { return 'N/A'; }
         const date = new Date(dateString);
         return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(date);
     };
-    
+
     const formatBoolean = (val) => val === true || val === 1 ? 'Sim/Passou' : (val === false || val === 0 ? 'Não/Falhou' : 'N/A');
 
     return (
@@ -77,7 +77,7 @@ const ViewTriage = () => {
                             <Typography><strong>Peso:</strong> {baby?.weight ? `${baby.weight} kg` : 'N/A'}</Typography>
                             <Typography><strong>Altura:</strong> {baby?.height ? `${baby.height} cm` : 'N/A'}</Typography>
                             <Typography><strong>Semanas de Gestação:</strong> {baby?.gestationalWeeks || 'N/A'}</Typography>
-                            
+
                             <Typography variant="h6" color="secondary" sx={{ mt: 3 }} gutterBottom>Dados do Responsável</Typography>
                             <Divider sx={{ mb: 2 }} />
                             <Typography><strong>Nome:</strong> {responsible?.name || 'N/A'}</Typography>
@@ -97,7 +97,7 @@ const ViewTriage = () => {
                             <Typography><strong>Tipo da Triagem:</strong> {triage.type || 'N/A'}</Typography>
                             <Typography><strong>Orelha Esquerda:</strong> {formatBoolean(triage.leftEar)}</Typography>
                             <Typography><strong>Orelha Direita:</strong> {formatBoolean(triage.rightEar)}</Typography>
-                            
+
                             <Typography variant="subtitle1" color="primary" sx={{ mt: 2 }}>Detalhes EOA</Typography>
                             <Typography><strong>Esquerda:</strong> {formatBoolean(triage.eoaLeftEar)}</Typography>
                             <Typography><strong>Direita:</strong> {formatBoolean(triage.eoaRightEar)}</Typography>
@@ -109,7 +109,7 @@ const ViewTriage = () => {
                                     <Typography><strong>Direita:</strong> {formatBoolean(triage.peateaRightEar)}</Typography>
                                 </>
                             )}
-                            
+
                             <Typography sx={{ mt: 2 }}><strong>Observação:</strong> {triage.observation || 'Nenhuma'}</Typography>
                         </CardContent>
                     </Card>

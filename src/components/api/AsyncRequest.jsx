@@ -33,19 +33,20 @@ const AsyncRequest = ({ children, defaultValue, isReloadAllowed = false, loaderC
         return loaderChildren;
     }
 
-    return <Fragment>
-        <div style={{ display: 'flex' }}>
-            {children(values)}
-            {
-                isReloadAllowed &&
-                (
-                    <IconButton onClick={executeRequest} size="small">
-                        <ReplayIcon color={'primary'}/>
-                    </IconButton>
-                )
-            }
-        </div>
-    </Fragment>;
+    if (!isReloadAllowed) {
+        return <Fragment>{children(values)}</Fragment>;
+    }
+
+    return (
+        <Fragment>
+            <div style={{ display: 'flex' }}>
+                {children(values)}
+                <IconButton onClick={executeRequest} size="small">
+                    <ReplayIcon color={'primary'}/>
+                </IconButton>
+            </div>
+        </Fragment>
+    );
 };
 
 export default AsyncRequest;

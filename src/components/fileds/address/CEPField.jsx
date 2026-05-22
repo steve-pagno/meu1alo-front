@@ -3,8 +3,8 @@ import { IMaskInput } from 'react-imask';
 import { TextField } from '@mui/material';
 import useCEPFieldController from './useCEPFieldController';
 
-const CEPField = ({ name, register, setValue, onAddressFound, onSearchStart, onError, ...other }) => {
-    const { onChange, onBlur, ref, ...registerProps } = register(name);
+const CEPField = ({ name, onAddressFound, onError, onSearchStart, register, setValue, ...other }) => {
+    const { onBlur, onChange, ref, ...registerProps } = register(name);
 
     return (
         <TextField
@@ -16,13 +16,13 @@ const CEPField = ({ name, register, setValue, onAddressFound, onSearchStart, onE
             InputProps={{
                 inputComponent: CEPMask,
             }}
-            inputProps={{ 
+            inputProps={{
                 name,
-                onChange,
-                onBlur,
                 onAddressFound,
-                onSearchStart,
+                onBlur,
+                onChange,
                 onError,
+                onSearchStart,
                 setValue,
                 ...other
             }}

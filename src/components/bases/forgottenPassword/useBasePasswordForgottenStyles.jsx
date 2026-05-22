@@ -5,33 +5,49 @@ const useBasePasswordForgottenStyles = () => {
     const theme = useTheme();
 
     return {
-        finalButton: {
-            marginTop: '35px',
-            width: 'fit-content',
-        },
-        grid: {
-            [theme.breakpoints.up('xl')]: {
-                width: '1200px',
-            },
-            display: 'grid',
-            gap: 2,
-            width: 'auto',
+        container: {
+            alignItems: 'center',
+            // Fundo roxo escuro de fallback
+            background: 'radial-gradient(circle at 100% 0%, #5D307A 0%, #2E1147 100%)', backgroundColor: '#3b1c55',
+            display: 'flex',
+            justifyContent: 'center',
+            minHeight: '100vh',
+            overflow: 'hidden',
+            padding: '24px 16px',
+            position: 'relative',
+            width: '100%'
         },
         paper: {
-            [theme.breakpoints.up('sm')]: {
-                margin: '40px',
-            },
-            [theme.breakpoints.up('md')]: {
-                marginLeft: '10%',
-                marginRight: '10%',
-            },
-
-            margin: '0px',
-            padding: '30px',
+            backdropFilter: 'blur(20px)',
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            border: '1px solid rgba(255, 255, 255, 0.4)',
+            borderRadius: '28px',
+            boxShadow: '0 25px 60px -15px rgba(26, 8, 41, 0.4)',
+            margin: 'auto',
+            maxWidth: '460px',
+            padding: { md: '48px 40px', xs: '36px 24px' },
+            position: 'relative',
+            textAlign: 'center',
+            width: '100%',
+            zIndex: 2
         },
-        textTitle:{
-            marginBottom: '40px',
+        partnersColor: 'transparent',
+        subtitle: {
+            color: '#718096',
+            fontFamily: 'Outfit, Inter, sans-serif',
+            fontSize: '0.9rem',
+            lineHeight: 1.5,
+            marginBottom: '8px'
         },
+        title: {
+            color: '#5D307A',
+            fontFamily: 'Outfit, Inter, sans-serif',
+            fontSize: { md: '1.9rem', xs: '1.65rem' },
+            fontWeight: 800,
+            letterSpacing: '-0.5px',
+            lineHeight: 1.25,
+            marginBottom: '8px'
+        }
     };
 };
 

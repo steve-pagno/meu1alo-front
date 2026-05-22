@@ -63,4 +63,4 @@ const makeUrl = (path) => {
     return `${baseUrl}/${cleanPath}`;
 };
 
-export default { deleted, get, login, logout, makeUrl, post, put, patch };
+export default { deleted, get, login, logout, makeUrl, patch, post, put };

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Box, Typography, Chip } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
+import { Box, Chip, Typography } from '@mui/material';
 import TimerTwoToneIcon from '@mui/icons-material/TimerTwoTone';
 import { useAuth } from './Auth';
 
@@ -26,7 +26,7 @@ const SessionTimer = () => {
     useEffect(() => {
         // Escutadores de atividade
         const events = ['mousemove', 'keydown', 'click', 'touchstart', 'scroll'];
-        
+
         events.forEach(event => {
             window.addEventListener(event, resetTimer, { passive: true });
         });
@@ -59,20 +59,20 @@ const SessionTimer = () => {
     }, [auth]);
 
     // Oculta o timer se por algum motivo for injetado em rota livre, mas como usamos em RequireAuth sempre terá usuário.
-    if (!auth || !auth.user) return null;
+    if (!auth || !auth.user) { return null; }
 
     const isExpiringSoon = remainingTime <= 300; // Últimos 5 minutos
 
     return (
-        <Box 
+        <Box
             sx={{
-                position: 'fixed',
+                '&:hover': { opacity: 1 },
                 bottom: 24,
                 left: 24,
-                zIndex: 9999,
                 opacity: isExpiringSoon ? 1 : 0.6,
+                position: 'fixed',
                 transition: 'opacity 0.3s',
-                '&:hover': { opacity: 1 }
+                zIndex: 9999
             }}
         >
             <Chip
@@ -85,9 +85,9 @@ const SessionTimer = () => {
                 color={isExpiringSoon ? 'error' : 'default'}
                 variant={isExpiringSoon ? 'filled' : 'outlined'}
                 sx={{
+                    backdropFilter: 'blur(10px)',
                     backgroundColor: isExpiringSoon ? undefined : 'background.paper',
                     boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-                    backdropFilter: 'blur(10px)',
                 }}
             />
         </Box>

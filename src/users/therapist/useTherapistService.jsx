@@ -153,32 +153,47 @@ const TherapistService = (genericLog) => {
         return HttpHelper.get(`${generic.pathName}/triage/types`, generic.getUser().token).then(genericLog);
     };
 
-    const getAllTriages = (data) => {
+    const getAllTriages = (data = {}) => {
         let params = '';
         const typeAll = '4';
 
-        if (data.rightEar !== typeAll) {
-            params += `rightEar=${data.rightEar}&`;
-        }
+        if (data) {
+            if (data.rightEar && data.rightEar !== typeAll) {
+                params += `rightEar=${data.rightEar}&`;
+            }
 
-        if (data.leftEar !== typeAll) {
-            params += `leftEar=${data.leftEar}&`;
-        }
+            if (data.leftEar && data.leftEar !== typeAll) {
+                params += `leftEar=${data.leftEar}&`;
+            }
 
-        if (data.testType !== typeAll) {
-            params += `testType=${data.testType}&`;
-        }
+            if (data.testType && data.testType !== typeAll) {
+                params += `testType=${data.testType}&`;
+            }
 
-        if (data.evaluationDate) {
-            params += `evaluationDate=${data.evaluationDate}&`;
-        }
+            if (data.evaluationDate) {
+                params += `evaluationDate=${data.evaluationDate}&`;
+            }
 
-        if (data.babyName) {
-            params += `babyName=${data.babyName}&`;
-        }
+            if (data.babyName) {
+                params += `babyName=${data.babyName}&`;
+            }
 
-        if (data.responsibleName) {
-            params += `responsibleName=${data.responsibleName}&`;
+            if (data.responsibleName) {
+                params += `responsibleName=${data.responsibleName}&`;
+            }
+
+            const institutionIds = [];
+            Object.keys(data).forEach((key) => {
+                if (key.startsWith('institution_') && data[key]) {
+                    institutionIds.push(key.replace('institution_', ''));
+                }
+            });
+
+            if (institutionIds.length > 0) {
+                institutionIds.forEach((id) => {
+                    params += `institutionIds[]=${id}&`;
+                });
+            }
         }
 
         // Remover o último '&' se existir

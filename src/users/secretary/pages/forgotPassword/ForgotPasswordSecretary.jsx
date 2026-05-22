@@ -2,7 +2,7 @@ import BasePasswordForgottenPaper from '../../../../components/bases/forgottenPa
 
 export default function ForgotPasswordSecretary() {
     return (
-        <BasePasswordForgottenPaper 
+        <BasePasswordForgottenPaper
             userTypeTitle="Secretaria"
             userType="secretary"
         />

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { CircularProgress, Grid, TextField, Typography, Snackbar, Alert } from '@mui/material';
+import { Alert, CircularProgress, Grid, Snackbar, TextField, Typography } from '@mui/material';
 import AsyncRequest from '../../../../components/api/AsyncRequest';
 import BaseRegisterPaper from '../../../../components/bases/register/BaseRegisterPaper';
+import CEPField from '../../../../components/fileds/address/CEPField';
 import CNPJField from '../../../../components/fileds/documents/CNPJField';
 import BrazilianPhoneField from '../../../../components/fileds/phone/BrazilianPhoneField';
 import RadioField from '../../../../components/fileds/radio/RadioField';
-import CEPField from '../../../../components/fileds/address/CEPField';
 import useInstitutionService from '../../useInstituionService';
 // Endereço segue a mesma lógica do cadastro de Instituição (ViaCEP + UF/Cidade por texto)
 
@@ -33,18 +33,18 @@ const RegisterReferralService = () => {
 
     // Notificações (mesma UX do cadastro de Instituição)
     const [notify, setNotify] = useState({
-        open: false,
         message: '',
+        open: false,
         severity: 'info'
     });
 
     const handleCloseNotify = (_event, reason) => {
-        if (reason === 'clickaway') return;
+        if (reason === 'clickaway') { return; }
         setNotify({ ...notify, open: false });
     };
 
     const handleSearchStart = () => {
-        setNotify({ open: true, message: 'Buscando CEP...', severity: 'info' });
+        setNotify({ message: 'Buscando CEP...', open: true, severity: 'info' });
         setValue('address.street', '...');
         setValue('address.adjunct', '...');
         setValue('address.state_uf', '...');
@@ -52,18 +52,18 @@ const RegisterReferralService = () => {
     };
 
     const handleAddressFound = (data) => {
-        setNotify({ open: true, message: 'Endereço encontrado!', severity: 'success' });
+        setNotify({ message: 'Endereço encontrado!', open: true, severity: 'success' });
         setValue('address.street', data.logradouro);
         setValue('address.adjunct', data.complemento);
         setValue('address.state_uf', data.uf);
         setValue('address.city_name', data.localidade);
 
         const numberField = document.querySelector('input[name="address.number"]');
-        if (numberField) numberField.focus();
+        if (numberField) { numberField.focus(); }
     };
 
     const handleError = (msg) => {
-        setNotify({ open: true, message: msg || 'Erro ao localizar o CEP.', severity: 'error' });
+        setNotify({ message: msg || 'Erro ao localizar o CEP.', open: true, severity: 'error' });
         setValue('address.street', '');
         setValue('address.adjunct', '');
         setValue('address.state_uf', '');
@@ -72,11 +72,11 @@ const RegisterReferralService = () => {
 
     return (
         <BaseRegisterPaper handleSubmit={handleSubmit} title={'de Serviço de Saúde Auditiva'} serviceFunction={service.referralServiceRegister} baseRoute={'/institucional'}>
-            <Snackbar 
-                open={notify.open} 
-                autoHideDuration={4000} 
+            <Snackbar
+                open={notify.open}
+                autoHideDuration={4000}
                 onClose={handleCloseNotify}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
                 <Alert onClose={handleCloseNotify} severity={notify.severity} variant="filled" sx={{ width: '100%' }}>
                     {notify.message}

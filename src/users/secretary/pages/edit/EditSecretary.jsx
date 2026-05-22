@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { Grid, TextField, Typography } from '@mui/material';
 import BaseEditPaper from '../../../../components/bases/edit/BaseEditPaper';
 import useSecretaryService from '../../useSecretaryService';
 
@@ -23,11 +23,11 @@ const EditSecretary = () => {
             const phone2 = Array.isArray(data.phones) && data.phones[1] ? data.phones[1].phoneNumber : '';
 
             response.body = {
+                'emails.0': email1,
+                'emails.1': email2,
                 name: data.name || '',
                 password: '',
                 passwordConfirm: '',
-                'emails.0': email1,
-                'emails.1': email2,
                 'phones.0': phone1,
                 'phones.1': phone2
             };

@@ -1,7 +1,7 @@
 import React from 'react';
-import { 
-    Box, Button, CircularProgress, Grid, Typography, 
-    Dialog, DialogTitle, DialogContent, DialogActions, TextField, Alert 
+import {
+    Alert, Box, Button, CircularProgress, Dialog,
+    DialogActions, DialogContent, DialogTitle, Grid, TextField, Typography
 } from '@mui/material';
 import DraggableManyLists from '../../../../components/lists/dragableList/DraggableManyLists';
 import useEditZonesController from './useEditZonesController';
@@ -9,10 +9,10 @@ import useEditZonesStyles from './useEditZonesStyles';
 
 const EditZones = () => {
     const styles = useEditZonesStyles();
-    const { 
-        onDeleteZone, onDropCity, onEditZone, zones,
-        isDialogOpen, handleOpenDialog, handleCloseDialog, newZoneName, setNewZoneName, submitNewZone,
-        isMaster
+    const {
+        handleCloseDialog, handleOpenDialog, isDialogOpen, isMaster,
+        newZoneName, onDeleteZone, onDropCity, onEditZone, setNewZoneName, submitNewZone,
+        zones
     } = useEditZonesController();
 
     return (
@@ -22,7 +22,7 @@ const EditZones = () => {
                     {isMaster ? 'Gerenciar regiões' : 'Visualizar regiões e municípios'}
                 </Typography>
             </Grid>
-            
+
             <Grid item xs={12}>
                 {isMaster ? (
                     <Box sx={styles.grid}>
@@ -59,11 +59,11 @@ const EditZones = () => {
 
             <Grid item xs={12}>
                 {!zones ? <CircularProgress/> : (
-                    <DraggableManyLists 
-                        values={zones} 
-                        onDropSubValue={onDropCity} 
+                    <DraggableManyLists
+                        values={zones}
+                        onDropSubValue={onDropCity}
                         // Se não for master, não envia as funções para o componente filho (escondendo os botões se ele suportar)
-                        onDeleteValue={isMaster ? onDeleteZone : undefined} 
+                        onDeleteValue={isMaster ? onDeleteZone : undefined}
                         onEditValue={isMaster ? onEditZone : undefined}
                     />
                 )}
@@ -90,10 +90,10 @@ const EditZones = () => {
                         <Button onClick={handleCloseDialog} color="inherit">
                             Cancelar
                         </Button>
-                        <Button 
-                            onClick={submitNewZone} 
-                            color="primary" 
-                            variant="contained" 
+                        <Button
+                            onClick={submitNewZone}
+                            color="primary"
+                            variant="contained"
                             disabled={!newZoneName || newZoneName.trim() === ''}
                         >
                             Salvar

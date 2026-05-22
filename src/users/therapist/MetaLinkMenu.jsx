@@ -3,7 +3,7 @@ import { AiOutlineTool } from 'react-icons/ai';
 import { BsFileEarmarkText } from 'react-icons/bs';
 import { GoGraph } from 'react-icons/go';
 import { TbCheckupList, TbPresentation } from 'react-icons/tb';
-import { Home, AccountCircle } from '@mui/icons-material'; // Adicionado AccountCircle
+import { Home } from '@mui/icons-material'; // Adicionado AccountCircle
 
 const data = [
     {

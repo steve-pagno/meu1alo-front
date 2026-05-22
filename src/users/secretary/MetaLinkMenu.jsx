@@ -1,7 +1,7 @@
 import React from 'react';
 import { GoGraph } from 'react-icons/go';
 import { TbCheckupList } from 'react-icons/tb';
-import { Home, AddCircleOutline, Edit } from '@mui/icons-material';
+import { AddCircleOutline, Edit, Home } from '@mui/icons-material';
 
 const getData = (isState, userId) => {
     return [
