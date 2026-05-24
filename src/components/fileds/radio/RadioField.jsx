@@ -2,7 +2,7 @@ import React from 'react';
 import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import useRadioStyles from './useRadioStyles';
 
-const RadioField = ({ register, title, values, ...props }) => {
+const RadioField = ({ register, title, values, value, ...props }) => {
     const styles = useRadioStyles();
     return (
         <React.Fragment>
@@ -18,6 +18,7 @@ const RadioField = ({ register, title, values, ...props }) => {
                 {values.length > 0 &&
                     <RadioGroup
                         defaultValue={values[0].id}
+                        value={value !== undefined ? value : undefined}
                         {...register}
                     >
                         {values.map((element, index) => (

@@ -24,6 +24,21 @@ const data = [
             {
                 subOptions: [
                     {
+                        icon: <TbCheckupList size={27}/>,
+                        label: 'Visualizar Triagens',
+                        route: '/institucional/triagem'
+                    }
+                ],
+                subTitle: '',
+            },
+        ],
+        title: 'Visualizar'
+    },
+    {
+        options: [
+            {
+                subOptions: [
+                    {
                         icon: <Edit sx={{ fontSize: 25 }}/>,
                         label: 'Editar Meu Perfil',
                         route: '/institucional/minha-conta/editar'

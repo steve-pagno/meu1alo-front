@@ -4,7 +4,7 @@ import { TextField } from '@mui/material';
 import useCEPFieldController from './useCEPFieldController';
 
 const CEPField = ({ name, onAddressFound, onError, onSearchStart, register, setValue, ...other }) => {
-    const { onBlur, onChange, ref, ...registerProps } = register(name);
+    const { maxLength, pattern, ...filteredInputProps } = other.inputProps || {};
 
     return (
         <TextField
@@ -12,19 +12,16 @@ const CEPField = ({ name, onAddressFound, onError, onSearchStart, register, setV
             size="small"
             label="CEP"
             {...other}
-            {...registerProps}
+            {...register(name)}
             InputProps={{
                 inputComponent: CEPMask,
             }}
             inputProps={{
-                name,
                 onAddressFound,
-                onBlur,
-                onChange,
                 onError,
                 onSearchStart,
                 setValue,
-                ...other
+                ...filteredInputProps
             }}
         />
     );

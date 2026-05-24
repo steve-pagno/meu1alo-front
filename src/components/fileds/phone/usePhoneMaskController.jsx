@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const getMask = (value) => {
     const valueClear = value.replace(' ', '').replace('-', '').replace('(', '').replace(')', '');
@@ -10,6 +10,15 @@ const getMask = (value) => {
 
 const usePhoneMaskController = ({ name, onChange, ...other }) => {
     const [data, setData] = useState(other.value || other.defaultValue || '');
+    const lastSentValueRef = useRef(other.value || other.defaultValue || '');
+
+    useEffect(() => {
+        const val = other.value !== undefined ? other.value : other.defaultValue;
+        if (val !== undefined && val !== lastSentValueRef.current) {
+            lastSentValueRef.current = val || '';
+            setData(val || '');
+        }
+    }, [other.value, other.defaultValue]);
 
     const onAccept = (value) => {
         onChange({ target: { name: name, value: value } });

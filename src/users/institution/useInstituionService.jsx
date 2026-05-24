@@ -25,7 +25,24 @@ const InstitutionService = (genericLog) => {
         return HttpHelper.put(`${generic.pathName}/me`, data, generic.getUser().token).then(genericLog);
     };
 
-    return { ...generic, getMe, getReferralServiceTypes, getTypes, referralServiceRegister, updateMe };
+    const getAllTriages = (data) => {
+        let params = '';
+        if (data) {
+            if (data.babyName) params += `babyName=${data.babyName}&`;
+            if (data.responsibleName) params += `responsibleName=${data.responsibleName}&`;
+            if (data.evaluationDate) params += `evaluationDate=${data.evaluationDate}&`;
+            if (data.testType) params += `testType=${data.testType}&`;
+            if (data.rightEar) params += `rightEar=${data.rightEar}&`;
+            if (data.leftEar) params += `leftEar=${data.leftEar}&`;
+        }
+        return HttpHelper.get(`${generic.pathName}/triage?${params}`, generic.getUser().token).then(genericLog);
+    };
+
+    const getTriageById = (id) => {
+        return HttpHelper.get(`therapist/triage/${id}`, generic.getUser().token).then(genericLog);
+    };
+
+    return { ...generic, getMe, getReferralServiceTypes, getTypes, referralServiceRegister, updateMe, getAllTriages, getTriageById };
 };
 
 let institutionServiceInstance = null;

@@ -1,16 +1,20 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import AddressHelper from '../../../helpers/AddressHelper';
 
 const useCEPFieldController = ({ name, onAddressFound, onChange, onError, onSearchStart, ...other }) => {
     const [data, setData] = useState(other.value || other.defaultValue || '');
+    const lastSentValueRef = useRef(other.value || other.defaultValue || '');
 
     useEffect(() => {
-        if (other.value !== undefined && other.value !== data) {
-            setData(other.value || '');
+        const val = other.value !== undefined ? other.value : other.defaultValue;
+        if (val !== undefined && val !== lastSentValueRef.current) {
+            lastSentValueRef.current = val || '';
+            setData(val || '');
         }
-    }, [other.value, data]);
+    }, [other.value, other.defaultValue]);
 
     const onAccept = useCallback((value) => {
+        lastSentValueRef.current = value;
         onChange({ target: { name: name, value: value } });
         setData(value);
     }, [name, onChange]);

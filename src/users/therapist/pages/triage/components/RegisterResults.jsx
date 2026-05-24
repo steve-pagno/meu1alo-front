@@ -184,6 +184,7 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
                     register={register('testType')}
                     title={'Etapa'}
                     values={[{ id: 1, name: 'Teste' },{ id: 2, name: 'Reteste' }]}
+                    value={watchTestType}
                     required
                 />
             </Grid>

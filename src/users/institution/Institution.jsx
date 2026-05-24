@@ -5,6 +5,8 @@ import { RequireAuth } from '../../providers/auth/Auth';
 import MetaLinkMenu from './MetaLinkMenu';
 import EditInstitution from './pages/edit/EditInstitution';
 import RegisterReferralService from './pages/referralService/RegisterReferralService';
+import ListTriage from './pages/triage/ListTriage';
+import ViewTriage from './pages/triage/ViewTriage';
 import useInstitutionService from './useInstituionService';
 
 const Institution = () => {
@@ -25,6 +27,8 @@ const Institution = () => {
         >
             <Route path={'/minha-conta/editar'} element={<RequireAuth><EditInstitution /></RequireAuth>} />
             <Route path={'/servico-referencia/cadastro'} element={<RequireAuth><RegisterReferralService /></RequireAuth>} />
+            <Route path={'/triagem'} element={<RequireAuth><ListTriage /></RequireAuth>} />
+            <Route path={'/triagem/:id'} element={<RequireAuth><ViewTriage /></RequireAuth>} />
         </BaseUserRoute>
     );
 };

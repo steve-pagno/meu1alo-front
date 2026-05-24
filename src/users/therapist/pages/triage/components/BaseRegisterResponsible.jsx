@@ -308,6 +308,7 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
                             <BrazilianPhoneField
                                 register={register}
                                 name={`${prefixName}.phones.0`}
+                                defaultValue={existingGuardian?.phones?.[0] || ''}
                                 formErrors={errors}
                                 label="Telefone residencial"
                                 variant="outlined"
@@ -320,6 +321,7 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
                             <BrazilianPhoneField
                                 register={register}
                                 name={`${prefixName}.phones.1`}
+                                defaultValue={existingGuardian?.phones?.[1] || ''}
                                 formErrors={errors}
                                 label="Telefone celular"
                                 size="small"
@@ -340,8 +342,7 @@ const BaseRegisterResponsible = ({ errors, prefixName, register, setValue, watch
                             <CEPField
                                 register={register}
                                 name={`${prefixName}.address.cep`}
-                                value={watch(`${prefixName}.address.cep`)}
-                                setValue={setValue}
+                                defaultValue={existingGuardian?.address?.cep || ''}
                                 onSearchStart={handleSearchStart}
                                 onAddressFound={handleAddressFound}
                                 onError={handleError}

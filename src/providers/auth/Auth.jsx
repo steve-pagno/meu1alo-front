@@ -1,6 +1,8 @@
 import React from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import SessionTimer from './SessionTimer';
+import HttpHelper from '../../helpers/HttpHelper';
+import ForcePasswordResetModal from '../../components/auth/ForcePasswordResetModal';
 
 const AuthContext = React.createContext(null);
 
@@ -34,6 +36,26 @@ export const AuthProvider = ({ baseRoute, children, loginRoute, service }) => {
         return service.sendPasswordResetEmail(email);
     };
 
+    const forcePasswordResetSubmit = (newPassword) => {
+        return HttpHelper.post('user/reset-password', {
+            password: newPassword,
+            userType: service.pathName
+        }, user.token).then((response) => {
+            if (response.isSuccess) {
+                const updatedUser = {
+                    ...user,
+                    user: {
+                        ...user.user,
+                        forcePasswordReset: false
+                    }
+                };
+                localStorage.setItem(service.sessionStorageKey, JSON.stringify(updatedUser));
+                setUser(updatedUser);
+            }
+            return response;
+        });
+    };
+
     // Objeto de valor que será compartilhado com toda a aplicação via contexto
     const value = {
         baseRoute,
@@ -41,11 +63,17 @@ export const AuthProvider = ({ baseRoute, children, loginRoute, service }) => {
         loginRoute,
         logout,
         sendPasswordResetEmail, // <- ADICIONADA A NOVA FUNÇÃO AO VALUE
+        forcePasswordResetSubmit,
         token: user.token,
         user: user.user
     };
 
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={value}>
+            {children}
+            <ForcePasswordResetModal />
+        </AuthContext.Provider>
+    );
 };
 
 export const useAuth = () => {

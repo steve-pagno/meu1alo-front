@@ -71,9 +71,31 @@ const getOptionColors = (label) => {
     }
 };
 
+import useParentsService from '../../../users/parents/useParentsService';
+import ParentTriagePortal from '../../../users/parents/components/ParentTriagePortal';
+
 const BaseHome = ({ meta }) => {
     const auth = useAuth();
     const navigate = useNavigate();
+
+    const isParent = auth.baseRoute === '/pais';
+    const parentService = useParentsService();
+    const [parentTriages, setParentTriages] = React.useState([]);
+    const [parentLoading, setParentLoading] = React.useState(false);
+
+    React.useEffect(() => {
+        if (isParent) {
+            setParentLoading(true);
+            parentService.getAllTriages()
+                .then(res => {
+                    if (res && res.isSuccess) {
+                        setParentTriages(res.body || []);
+                    }
+                })
+                .catch(err => console.error('Erro ao buscar triagens:', err))
+                .finally(() => setParentLoading(false));
+        }
+    }, [isParent]);
 
     return (
         <Container maxWidth="xl" sx={{ padding: { md: '40px 36px', xs: '20px 16px' } }}>
@@ -126,6 +148,33 @@ const BaseHome = ({ meta }) => {
                     </Typography>
                 </Box>
             </Box>
+
+            {/* Seção de Triagens dos Filhos para Pais */}
+            {isParent && (
+                <Box sx={{ marginBottom: '48px' }}>
+                    <Box sx={{ alignItems: 'center', display: 'flex', gap: 2, marginBottom: '24px', position: 'relative' }}>
+                        <Box sx={{
+                            background: 'linear-gradient(180deg, #5D307A 0%, #E83268 100%)',
+                            borderRadius: '3px',
+                            height: '28px',
+                            width: '6px'
+                        }} />
+                        <Typography
+                            variant="h5"
+                            sx={{
+                                color: '#1a202c',
+                                fontFamily: 'Outfit, Inter, sans-serif',
+                                fontSize: '1.4rem',
+                                fontWeight: 800,
+                                letterSpacing: '-0.3px'
+                            }}
+                        >
+                            Triagens do(s) meu(s) filho(s)
+                        </Typography>
+                    </Box>
+                    <ParentTriagePortal triages={parentTriages} loading={parentLoading} />
+                </Box>
+            )}
 
             {/* Loop das Categorias */}
             {meta && meta.map((item, key) => (

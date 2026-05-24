@@ -73,7 +73,7 @@ const EditInstitution = () => {
                     {...register('password')}
                     label="Senha" type="password"
                     variant="outlined"
-                    size="small" required
+                    size="small"
                     InputLabelProps={{ shrink: true }}
                 />
             </Grid>
@@ -82,7 +82,7 @@ const EditInstitution = () => {
                     {...register('passwordConfirm')}
                     label="Confirmação de senha"
                     type="password" variant="outlined"
-                    size="small" required
+                    size="small"
                     InputLabelProps={{ shrink: true }}
                 />
             </Grid>

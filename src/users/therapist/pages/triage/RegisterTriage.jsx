@@ -45,8 +45,8 @@ const RegisterTriage = () => {
                         if (triage.baby.birthMother.address) {
                             setValue('baby.birthMother.address.cep', triage.baby.birthMother.address.cep);
                             setValue('baby.birthMother.address.street', triage.baby.birthMother.address.street);
-                            setValue('baby.birthMother.address.state_uf', triage.baby.birthMother.address.state_uf);
-                            setValue('baby.birthMother.address.city_name', triage.baby.birthMother.address.city_name);
+                            setValue('baby.birthMother.address.state_uf', triage.baby.birthMother.address.state_uf || triage.baby.birthMother.address.city?.state?.uf || '');
+                            setValue('baby.birthMother.address.city_name', triage.baby.birthMother.address.city_name || triage.baby.birthMother.address.city?.name || '');
                             setValue('baby.birthMother.address.number', triage.baby.birthMother.address.number);
                             setValue('baby.birthMother.address.adjunct', triage.baby.birthMother.address.adjunct || '');
                         }
@@ -65,8 +65,8 @@ const RegisterTriage = () => {
                             if (g.address) {
                                 setValue(`baby.guardians[${idx}].address.cep`, g.address.cep);
                                 setValue(`baby.guardians[${idx}].address.street`, g.address.street);
-                                setValue(`baby.guardians[${idx}].address.state_uf`, g.address.state_uf);
-                                setValue(`baby.guardians[${idx}].address.city_name`, g.address.city_name);
+                                setValue(`baby.guardians[${idx}].address.state_uf`, g.address.state_uf || g.address.city?.state?.uf || '');
+                                setValue(`baby.guardians[${idx}].address.city_name`, g.address.city_name || g.address.city?.name || '');
                                 setValue(`baby.guardians[${idx}].address.number`, g.address.number);
                                 setValue(`baby.guardians[${idx}].address.adjunct`, g.address.adjunct || '');
                             }
