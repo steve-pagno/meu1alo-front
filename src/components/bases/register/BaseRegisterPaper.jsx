@@ -36,7 +36,7 @@ const BaseRegisterPaper = ({ baseRoute, children, handleSubmit, notSubmitButton,
 
             <HtmlHead userType={title} subTitle={'Cadastro'}/>
             <Typography sx={styles.textTitle} variant={'h4'}>
-                Cadastrar {title}
+                {title.startsWith('Editar') || title.startsWith('Cadastrar') ? title : `Cadastrar ${title}`}
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={styles.grid}>

@@ -28,6 +28,23 @@ const logout = (path, token) => {
 
 const _isSuccess = (status) => status >= 200 && status <= 299;
 
+let activeRequests = 0;
+
+const startRequest = () => {
+    activeRequests++;
+    if (activeRequests === 1) {
+        window.dispatchEvent(new CustomEvent('global-loading', { detail: true }));
+    }
+};
+
+const endRequest = () => {
+    activeRequests--;
+    if (activeRequests <= 0) {
+        activeRequests = 0;
+        window.dispatchEvent(new CustomEvent('global-loading', { detail: false }));
+    }
+};
+
 const _genericFetch = (method, path, data, auth, accept = 'application/json') => {
     const init = {
         headers: {
@@ -39,6 +56,7 @@ const _genericFetch = (method, path, data, auth, accept = 'application/json') =>
     if(auth) { init.headers['authorization'] = auth; }
     if(data) { init['body'] = JSON.stringify(data); }
 
+    startRequest();
     return fetch(makeUrl(path), init).then(response => {
         let responseBodyPromise;
 
@@ -48,12 +66,21 @@ const _genericFetch = (method, path, data, auth, accept = 'application/json') =>
             responseBodyPromise = response.blob();
         }
 
-        return responseBodyPromise.then(body => ({
-            body,
-            isSuccess: _isSuccess(response.status),
-            message: response.message,
-            status: response.status
-        }));
+        return responseBodyPromise.then(body => {
+            endRequest();
+            return {
+                body,
+                isSuccess: _isSuccess(response.status),
+                message: response.message,
+                status: response.status
+            };
+        }).catch(err => {
+            endRequest();
+            throw err;
+        });
+    }).catch(err => {
+        endRequest();
+        throw err;
     });
 };
 

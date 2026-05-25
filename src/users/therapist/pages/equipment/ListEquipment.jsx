@@ -26,10 +26,10 @@ const ListEquipment = () => {
                 method: service.deleteEquipment,
                 route: ''
             },
-            // edit: {
-            //     genericField: 'dateOfDeactivation',
-            //     route: ''
-            // }
+            edit: {
+                genericField: 'dateOfDeactivation',
+                route: '/fono/equipamento/editar'
+            }
         }
     };
 

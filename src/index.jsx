@@ -17,6 +17,7 @@ import AboutPage from './users/site/pages/AboutPage';
 import PageNotFound from './users/site/pages/PageNotFound';
 import Site from './users/site/Site';
 import Therapist from './users/therapist/Therapist';
+import LoadingBackdrop from './components/loading/LoadingBackdrop';
 
 let theme = getMuiTheme();
 theme = createTheme(theme);
@@ -34,6 +35,7 @@ const App = () => {
                         {/* 2. ADICIONE O CONTAINER AQUI */}
                         {/* Ele fica visível sobre qualquer rota */}
                         <ToastContainer autoClose={3000} position="top-right" />
+                        <LoadingBackdrop />
 
                         <BrowserRouter>
                             <RoutesRouter>

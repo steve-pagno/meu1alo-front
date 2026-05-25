@@ -8,6 +8,7 @@ import useTherapistService from '../../useTherapistService';
 const headers = [
     { name: 'babyName', title: 'Criança' },
     { name: 'responsibleName', title: 'Responsável' },
+    { name: 'irda', title: 'IRDA' },
     { formatter: 'date', name: 'evaluationDate', title: 'Data avaliação' },
     { name: 'institution', title: 'Instituição' },
     { name: 'type', title: 'Tipo TAN' },

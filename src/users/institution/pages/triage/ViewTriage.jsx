@@ -76,7 +76,7 @@ const ViewTriage = () => {
                             <Typography><strong>Data de Nascimento:</strong> {formatDate(baby?.birthDate)}</Typography>
                             <Typography><strong>Peso:</strong> {baby?.weight ? `${baby.weight} kg` : 'N/A'}</Typography>
                             <Typography><strong>Altura:</strong> {baby?.height ? `${baby.height} cm` : 'N/A'}</Typography>
-                            <Typography><strong>Semanas de Gestação:</strong> {baby?.gestationalWeeks || 'N/A'}</Typography>
+                            <Typography><strong>Semanas de Gestação:</strong> {baby?.gestationalAge || 'N/A'}</Typography>
 
                             <Typography variant="h6" color="secondary" sx={{ mt: 3 }} gutterBottom>Dados do Responsável</Typography>
                             <Divider sx={{ mb: 2 }} />
@@ -97,6 +97,7 @@ const ViewTriage = () => {
                             <Typography><strong>Tipo da Triagem:</strong> {triage.type || 'N/A'}</Typography>
                             <Typography><strong>Orelha Esquerda:</strong> {formatBoolean(triage.leftEar)}</Typography>
                             <Typography><strong>Orelha Direita:</strong> {formatBoolean(triage.rightEar)}</Typography>
+                            <Typography><strong>IRDA:</strong> {triage.indicators && triage.indicators.length > 0 ? triage.indicators.map(ind => `${ind.name}`).join(', ') : 'Nenhum'}</Typography>
 
                             <Typography variant="subtitle1" color="primary" sx={{ mt: 2 }}>Detalhes EOA</Typography>
                             <Typography><strong>Esquerda:</strong> {formatBoolean(triage.eoaLeftEar)}</Typography>

@@ -61,7 +61,7 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
             setValue('conductDescription', preview.name);
         }
 
-        if (!usesPeateA) {
+        if (!usesPeateA && indicators.length > 0) {
             setValue('peateaLeftEar', null);
             setValue('peateaRightEar', null);
         }
@@ -75,6 +75,7 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
         watchPeateaRightEar,
         watchTestType,
         isConductEdited,
+        indicators,
     ]);
 
     return (
@@ -203,6 +204,7 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
                     register={register('eoaRightEar')}
                     title={'EOA - Orelha Direita'}
                     values={[{ id: 1, name: 'Passou' },{ id: 0, name: 'Falhou' }]}
+                    value={watchEoaRightEar !== undefined && watchEoaRightEar !== null ? Number(watchEoaRightEar) : undefined}
                     required
                 />
             </Grid>
@@ -212,6 +214,7 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
                     register={register('eoaLeftEar')}
                     title={'EOA - Orelha Esquerda'}
                     values={[{ id: 1, name: 'Passou' },{ id: 0, name: 'Falhou' }]}
+                    value={watchEoaLeftEar !== undefined && watchEoaLeftEar !== null ? Number(watchEoaLeftEar) : undefined}
                     required
                 />
             </Grid>
@@ -232,6 +235,7 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
                             register={register('peateaRightEar')}
                             title={'PEATE-A - Orelha Direita'}
                             values={[{ id: 1, name: 'Passou' },{ id: 0, name: 'Falhou' }]}
+                            value={watchPeateaRightEar !== undefined && watchPeateaRightEar !== null ? Number(watchPeateaRightEar) : undefined}
                             required
                         />
                     </Grid>
@@ -241,6 +245,7 @@ const RegisterResults = ({ errors, register, setValue, watch }) => {
                             register={register('peateaLeftEar')}
                             title={'PEATE-A - Orelha Esquerda'}
                             values={[{ id: 1, name: 'Passou' },{ id: 0, name: 'Falhou' }]}
+                            value={watchPeateaLeftEar !== undefined && watchPeateaLeftEar !== null ? Number(watchPeateaLeftEar) : undefined}
                             required
                         />
                     </Grid>

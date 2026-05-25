@@ -29,8 +29,11 @@ const RegisterTriage = () => {
                         setValue('baby.birthDate', triage.baby.birthDate?.split('T')[0]);
                         setValue('baby.weight', triage.baby.weight);
                         setValue('baby.height', triage.baby.height);
+                        setValue('baby.circumference', triage.baby.circumference);
                         setValue('baby.gestationalWeeks', triage.baby.gestationalWeeks);
+                        setValue('baby.gestationalAge', triage.baby.gestationalAge);
                         setValue('baby.childBirthType', triage.baby.childBirthType);
+                        setValue('baby.maternalDeath', triage.baby.maternalDeath);
                     }
                     if (triage.baby?.birthMother) {
                         setValue('baby.birthMother.id', triage.baby.birthMother.id);

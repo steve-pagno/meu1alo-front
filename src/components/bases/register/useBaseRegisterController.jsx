@@ -15,7 +15,11 @@ const useBaseRegisterController = (serviceFunction, baseRoute, setNotify) => {
                         open: true,
                         severity: 'success'
                     });
-                    setTimeout(() => navigate(baseRoute), 2000);
+                    window.dispatchEvent(new CustomEvent('global-loading', { detail: true }));
+                    setTimeout(() => {
+                        window.dispatchEvent(new CustomEvent('global-loading', { detail: false }));
+                        navigate(baseRoute);
+                    }, 2000);
                 } else {
                     // Se não houver setNotify, apenas navega sem alert
                     console.log(message);

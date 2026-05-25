@@ -8,6 +8,7 @@ import useInstitutionService from '../../useInstituionService';
 const headers = [
     { name: 'babyName', title: 'Criança' },
     { name: 'responsibleName', title: 'Responsável' },
+    { name: 'irda', title: 'IRDA' },
     { formatter: 'date', name: 'evaluationDate', title: 'Data avaliação' },
     { name: 'type', title: 'Tipo TAN' },
     { formatter: 'type-of-test', name: 'testType', title: 'Tipo teste' },

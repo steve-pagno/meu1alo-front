@@ -220,6 +220,10 @@ const TherapistService = (genericLog) => {
         return HttpHelper.deleted(`${generic.pathName}/equipment/${id}`, generic.getUser().token).then(genericLog);
     };
 
+    const updateEquipment = (id, data) => {
+        return HttpHelper.put(`${generic.pathName}/equipment/${id}`, data, generic.getUser().token).then(genericLog);
+    };
+
     const deleteOrientation = (id) => {
         return HttpHelper.deleted(`${generic.pathName}/orientation/${id}`, generic.getUser().token).then(genericLog);
     };
@@ -254,6 +258,7 @@ const TherapistService = (genericLog) => {
         conductRegister,
         consultationRegister,
         deleteEquipment,
+        updateEquipment,
         deleteOrientation,
         equipmentRegister,
         findParentByCpf,

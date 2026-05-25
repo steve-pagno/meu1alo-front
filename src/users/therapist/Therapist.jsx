@@ -94,6 +94,11 @@ const Therapist = () => {
                     <RegisterEquipment />
                 </RequireAuth>
             } />
+            <Route path={'/equipamento/editar/:id'} element={
+                <RequireAuth>
+                    <RegisterEquipment />
+                </RequireAuth>
+            } />
 
             <Route path={'/conduta'} element={
                 <RequireAuth>
