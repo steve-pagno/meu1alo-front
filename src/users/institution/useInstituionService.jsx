@@ -53,7 +53,7 @@ const InstitutionService = (genericLog) => {
                             ...t,
                             email: emailObj ? emailObj.email : 'N/A',
                             phone: phoneObj ? phoneObj.phoneNumber || phoneObj.numero || 'N/A' : 'N/A',
-                            xpLabel: t.xp === 2 ? 'Mais de 5 anos' : t.xp === 1 ? 'De 2 a 5 anos' : 'Menos de 2 anos',
+                            xpLabel: t.xp || 'N/A',
                             dateOfDeactivation: null
                         };
                     });
