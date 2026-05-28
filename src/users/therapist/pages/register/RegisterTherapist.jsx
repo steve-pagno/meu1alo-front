@@ -61,17 +61,7 @@ const RegisterTherapist = () => {
                     )}
                 </AsyncRequest>
             </Grid>
-            <Grid item xs={12} sm={12} md={12}>
-                <AsyncRequest requestFunction={service.getAllInstitutions} loaderChildren={<CircularProgress />}>
-                    {(institutions) => (
-                        <SelectField
-                            title={'Instituições'}
-                            register={{ ...register('institutions') }}
-                            required values={institutions} multiple
-                        />
-                    )}
-                </AsyncRequest>
-            </Grid>
+
             <Grid item xs={12} sm={12} md={12}>
                 <Typography variant={'h6'}>
                     Contato

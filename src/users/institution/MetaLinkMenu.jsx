@@ -12,6 +12,11 @@ const data = [
                         icon: <TbCheckupList size={27}/>,
                         label: 'Serviço de referencia',
                         route: '/institucional/servico-referencia/cadastro'
+                    },
+                    {
+                        icon: <TbCheckupList size={27}/>,
+                        label: 'Fonoaudiólogos',
+                        route: '/institucional/fonoaudiologos'
                     }
                 ],
                 subTitle: '',

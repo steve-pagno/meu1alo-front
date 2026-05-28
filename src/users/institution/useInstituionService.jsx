@@ -42,7 +42,47 @@ const InstitutionService = (genericLog) => {
         return HttpHelper.get(`therapist/triage/${id}`, generic.getUser().token).then(genericLog);
     };
 
-    return { ...generic, getMe, getReferralServiceTypes, getTypes, referralServiceRegister, updateMe, getAllTriages, getTriageById };
+    const getTherapists = () => {
+        return HttpHelper.get(`${generic.pathName}/therapist`, generic.getUser().token)
+            .then(res => {
+                if (res && res.isSuccess && res.body && Array.isArray(res.body)) {
+                    res.body = res.body.map(t => {
+                        const emailObj = t.emails?.find(e => e.isPrincipal || e.is_principal) || t.emails?.[0];
+                        const phoneObj = t.phones?.find(p => p.isPrincipal || p.is_principal) || t.phones?.[0];
+                        return {
+                            ...t,
+                            email: emailObj ? emailObj.email : 'N/A',
+                            phone: phoneObj ? phoneObj.phoneNumber || phoneObj.numero || 'N/A' : 'N/A',
+                            xpLabel: t.xp === 2 ? 'Mais de 5 anos' : t.xp === 1 ? 'De 2 a 5 anos' : 'Menos de 2 anos',
+                            dateOfDeactivation: null
+                        };
+                    });
+                }
+                return res;
+            })
+            .then(genericLog);
+    };
+
+    const checkTherapistByCrfa = (crfa) => {
+        return HttpHelper.get(`${generic.pathName}/therapist/check-crfa/${crfa}`, generic.getUser().token).then(genericLog);
+    };
+
+    const addOrRegisterTherapist = (data) => {
+        return HttpHelper.post(`${generic.pathName}/therapist`, data, generic.getUser().token).then(genericLog);
+    };
+
+    const removeTherapist = (id) => {
+        return HttpHelper.deleted(`${generic.pathName}/therapist/${id}`, generic.getUser().token)
+            .then(res => {
+                if (res && res.isSuccess) {
+                    res.body = { id, dateOfDeactivation: new Date().toISOString() };
+                }
+                return res;
+            })
+            .then(genericLog);
+    };
+
+    return { ...generic, getMe, getReferralServiceTypes, getTypes, referralServiceRegister, updateMe, getAllTriages, getTriageById, getTherapists, checkTherapistByCrfa, addOrRegisterTherapist, removeTherapist };
 };
 
 let institutionServiceInstance = null;

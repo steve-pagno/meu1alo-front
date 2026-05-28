@@ -7,6 +7,8 @@ import EditInstitution from './pages/edit/EditInstitution';
 import RegisterReferralService from './pages/referralService/RegisterReferralService';
 import ListTriage from './pages/triage/ListTriage';
 import ViewTriage from './pages/triage/ViewTriage';
+import ListTherapists from './pages/therapist/ListTherapists';
+import RegisterTherapistByInstitution from './pages/therapist/RegisterTherapistByInstitution';
 import useInstitutionService from './useInstituionService';
 
 const Institution = () => {
@@ -29,6 +31,8 @@ const Institution = () => {
             <Route path={'/servico-referencia/cadastro'} element={<RequireAuth><RegisterReferralService /></RequireAuth>} />
             <Route path={'/triagem'} element={<RequireAuth><ListTriage /></RequireAuth>} />
             <Route path={'/triagem/:id'} element={<RequireAuth><ViewTriage /></RequireAuth>} />
+            <Route path={'/fonoaudiologos'} element={<RequireAuth><ListTherapists /></RequireAuth>} />
+            <Route path={'/fonoaudiologos/cadastro'} element={<RequireAuth><RegisterTherapistByInstitution /></RequireAuth>} />
         </BaseUserRoute>
     );
 };

@@ -21,6 +21,7 @@ const EditTherapist = () => {
         defaultValues: { institutions: [], xp: '' }
     });
     const service = useTherapistService();
+    const [myInstitutions, setMyInstitutions] = React.useState([]);
     // Watch fields that require controlled values (Material-UI Select components)
     const xpValue = watch('xp');
     const institutionsValue = watch('institutions');
@@ -31,11 +32,19 @@ const EditTherapist = () => {
         if (response && response.isSuccess && response.body) {
             const data = response.body;
 
-            const email1 = Array.isArray(data.emails) && data.emails[0] ? data.emails[0].email : '';
-            const email2 = Array.isArray(data.emails) && data.emails[1] ? data.emails[1].email : '';
+            const email1 = Array.isArray(data.emails) && data.emails[0]
+                ? (typeof data.emails[0] === 'string' ? data.emails[0] : data.emails[0].email || '')
+                : '';
+            const email2 = Array.isArray(data.emails) && data.emails[1]
+                ? (typeof data.emails[1] === 'string' ? data.emails[1] : data.emails[1].email || '')
+                : '';
 
-            const phone1 = Array.isArray(data.phones) && data.phones[0] ? data.phones[0].phoneNumber : '';
-            const phone2 = Array.isArray(data.phones) && data.phones[1] ? data.phones[1].phoneNumber : '';
+            const phone1 = Array.isArray(data.phones) && data.phones[0]
+                ? (typeof data.phones[0] === 'string' ? data.phones[0] : data.phones[0].phoneNumber || '')
+                : '';
+            const phone2 = Array.isArray(data.phones) && data.phones[1]
+                ? (typeof data.phones[1] === 'string' ? data.phones[1] : data.phones[1].phoneNumber || '')
+                : '';
 
             let xp = '';
             if (data.xp) {
@@ -49,6 +58,9 @@ const EditTherapist = () => {
             let insts = [];
             if (Array.isArray(data.institutions)) {
                 insts = data.institutions.map(i => String(i.id));
+                setMyInstitutions(data.institutions);
+            } else {
+                setMyInstitutions([]);
             }
 
             let formattedCrfa = data.crfa || '';
@@ -132,16 +144,29 @@ const EditTherapist = () => {
                 </AsyncRequest>
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
-                <AsyncRequest requestFunction={service.getAllInstitutions} loaderChildren={<CircularProgress />}>
-                    {(institutions) => (
-                        <SelectField
-                            title={'Instituições'}
-                            register={{ ...register('institutions') }}
-                            value={institutionsValue}
-                            required values={institutions} multiple
-                        />
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1, color: 'text.secondary' }}>
+                    Instituições que faço parte:
+                </Typography>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {myInstitutions.length > 0 ? (
+                        myInstitutions.map((inst, index) => (
+                            <span key={index} style={{
+                                backgroundColor: 'rgba(93, 48, 122, 0.08)',
+                                color: '#5D307A',
+                                padding: '6px 12px',
+                                borderRadius: '16px',
+                                fontSize: '0.9rem',
+                                fontWeight: 500
+                            }}>
+                                {inst.institutionName || 'Instituição'}
+                            </span>
+                        ))
+                    ) : (
+                        <span style={{ color: 'gray', fontStyle: 'italic' }}>
+                            Nenhuma instituição vinculada (Independente)
+                        </span>
                     )}
-                </AsyncRequest>
+                </div>
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
                 <Typography variant={'h6'}>

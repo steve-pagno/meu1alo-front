@@ -12,7 +12,7 @@ const links = [
     { route: '/secretaria', title: 'Área da Secretaria' }
 ];
 
-const email = 'meuprimeiroalo@univali.br';
+const email = 'suporte@meuprimeiroalo.com.br';
 const currentYear = new Date().getFullYear();
 
 const Footer = () => {

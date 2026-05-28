@@ -17,11 +17,19 @@ const EditInstitution = () => {
         if (response && response.isSuccess && response.body) {
             const data = response.body;
 
-            const email1 = Array.isArray(data.emails) && data.emails[0] ? data.emails[0].email : '';
-            const email2 = Array.isArray(data.emails) && data.emails[1] ? data.emails[1].email : '';
+            const email1 = Array.isArray(data.emails) && data.emails[0]
+                ? (typeof data.emails[0] === 'string' ? data.emails[0] : data.emails[0].email || '')
+                : '';
+            const email2 = Array.isArray(data.emails) && data.emails[1]
+                ? (typeof data.emails[1] === 'string' ? data.emails[1] : data.emails[1].email || '')
+                : '';
 
-            const phone1 = Array.isArray(data.phones) && data.phones[0] ? data.phones[0].phoneNumber : '';
-            const phone2 = Array.isArray(data.phones) && data.phones[1] ? data.phones[1].phoneNumber : '';
+            const phone1 = Array.isArray(data.phones) && data.phones[0]
+                ? (typeof data.phones[0] === 'string' ? data.phones[0] : data.phones[0].phoneNumber || '')
+                : '';
+            const phone2 = Array.isArray(data.phones) && data.phones[1]
+                ? (typeof data.phones[1] === 'string' ? data.phones[1] : data.phones[1].phoneNumber || '')
+                : '';
 
             let formattedCnpj = data.institution?.cnpj || '';
             if (formattedCnpj) { formattedCnpj = formattedCnpj.replace(/\D/g, '').replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5'); }
